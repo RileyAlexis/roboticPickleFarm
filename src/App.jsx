@@ -21,7 +21,7 @@ const engine = require('./modules/engine'); //Primary game engine
 
 // //Game Objects
 let mainMenu = [
-  {name: 'Plant Seed', onClick: engine.plantSeed, display: true},
+  {name: 'Plant Seed', onClick: engine.plantSeed, display: true, coolDown: 3000},
   {name: 'Pick Cucumbers', onClick: engine.pickCucumbers, display: true},
   {name: 'Build Robot', onClick: 'engine.buildRobot', display: false},
   {name: 'Buy Seeds', onClick: engine.buySeeds, display: false}

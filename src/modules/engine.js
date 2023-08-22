@@ -13,6 +13,12 @@ const engine = {
     plants: [],
     ripeCucumbers: 0,
     currentGrowthRate: 0,
+    mainBoxMenu: [
+        {id: 'Plant Seeds', coolDown: 4000, dis: false, active: true},
+        {id: 'Pick Cucumbers', coolDown: 2000, dis: false, active: true},
+    ],
+
+
 
 
     updatePlants() {
@@ -36,6 +42,8 @@ const engine = {
         engine.cycle++;
     },
     plantSeed() {
+        engine.mainBoxMenu[0].dis = true;
+        setTimeout(() => engine.mainBoxMenu[0].dis = false, engine.mainBoxMenu[0].coolDown);
         if (engine.resources.seeds >= 1) {
             engine.plants.push(new Plants());
             engine.resources.seeds--;
@@ -47,6 +55,8 @@ const engine = {
         engine.cycle++;
     },
     pickCucumbers() {
+        engine.mainBoxMenu[1].dis = true;
+        setTimeout(() => engine.mainBoxMenu[1].dis = false, engine.mainBoxMenu[1].coolDown);
         engine.plants.forEach((obj) => {
             if (obj.ripeCucumbers >= 1) { obj.ripeCucumbers--; engine.resources.cucumbers++ };
 
@@ -74,9 +84,6 @@ const prices = {
 }
 
 
-
-
-
 class Plants {
     constructor() {
         this.survival = 50;
@@ -93,6 +100,7 @@ class Plants {
         this.seedYield = 0.1;
         this.seeds = 0;
         this.dead = false;
+        this.timeToPlant = 10000;
         this.log = '';
     }
     update() {
