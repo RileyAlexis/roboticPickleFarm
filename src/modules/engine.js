@@ -9,15 +9,60 @@ const engine = {
         pickles: 0,
         pickleJars: 0
     },
+    prices: {
+    seeds: [5, 50],
+    pickerBot: [1, 100],
+    planterBot: [1, 100],
+    picklerBot: [1, 100]
+    },
     log: [],
     plants: [],
+    pickerBots: {
+        qty: 0,
+        speed: 1,
+        cost: 50,
+    },
+    planterBots: {
+        qty: 0,
+        speed: 1,
+        cost: 50,
+    },
+    picklerBots: {
+        qty: 0,
+        speed: 1,
+        cost: 50
+    },
     ripeCucumbers: 0,
     currentGrowthRate: 0,
-    mainBoxMenu: [
-        {id: 'Plant Seeds', coolDown: 4000, dis: false, active: true},
-        {id: 'Pick Cucumbers', coolDown: 2000, dis: false, active: true},
+    farmMenu: [
+        {name: 'Plant', coolDown: 4000, dis: false, show: true},
+        {name: 'Pick', coolDown: 2000, dis: false, show: true},
+        {name: 'Buy Seeds', coolDown:2000, dis: false, show: false},
+        {name: 'Pickle', coolDown: 5000, dis:false, show: true},
     ],
-
+    robotMenu: [
+        {name: 'Buy Planter Bot', coolDown: 8000, dis:false, active: true},
+        {name: 'Buy Picker Bot', cooldDown: 8000, dis:false, active: true},
+        {name: 'Buy Pickler Bot', coolDown: 8000, dis:false, active:true}
+    ],
+    locationMenu: [
+        {id: 'farm', title: 'Farm', show: true, activeTab: true},
+        {id: 'robots', title: 'Robots', show: false, activeTab: false},
+        {id: 'buildings', title: 'Buildings', show: false, activeTab: false},
+        {id: 'powerUps', title: 'Power Ups', show:false, activeTab: false}
+    ],
+    buttonCall(name) {
+        console.log(name);
+        switch (name) {
+            case 'Plant': engine.plantSeed(); break;
+            case 'Pick': engine.pickCucumbers(); break;
+            case 'Pickle': engine.makePickles(); break;
+            case 'Buy Planter Bot': engine.buyPlanterBot(); break;
+            case 'Buy Picker Bot': engine.buyPickerBot(); break;
+            case 'Buy Pickler Bot': engine.buyPicklerBot(); break;
+        
+        }
+    },
 
 
 
@@ -26,24 +71,66 @@ const engine = {
         this.currentGrowthRate = 0;
         engine.plants.forEach((obj) => {
             obj.update()
-            engine.resources.seeds += obj.seeds;
+            this.resources.seeds += obj.seeds;
             obj.seeds = 0;
             this.ripeCucumbers += obj.ripeCucumbers;
             this.currentGrowthRate += obj.currentGrowthRate;
-            if (obj.log !== '') { engine.gameLog(obj.log); obj.log = ''; }
+            if (obj.log !== '') { this.gameLog(obj.log); obj.log = ''; }
         });
-        engine.plants = engine.plants.filter((obj) => obj.dead === false);
+        this.plants = this.plants.filter((obj) => obj.dead === false);
 
-        engine.cycle++;
+        this.cycle++;
     },
+    makePickles() {
+        if (this.resources.cucumbers >= 5) {
+            this.farmMenu[2].dis = true;
+            setTimeout(() => engine.farmMenu[2].dis = false, engine.farmMenu[2].coolDown);
+            this.resources.cucumbers -= 5;
+            this.resources.pickles += 5;
+        }
+        else if (this.resources.cucumbers < 5) {
+            this.gameLog('Need at least 5 cucumbers to pickle');
+        }
+        },
+    
+    updateBots() {
+       
+    },
+    buyPickerBot() {
+       if (engine.resources.pickles >= engine.prices.pickerBot[1]) {
+            engine.pickerBot.qty++;
+            engine.resources.pickles -= engine.prices.pickerBot[1];
+       }
+       else if (engine.resources.pickles < engine.prices.pickerBot[1]) {
+        engine.gameLog('Not enough Pickles!');
+       }
+    },
+    buyPlanterBot() {
+        if (engine.resources.pickles >= engine.prices.planterBot[1]) {
+             engine.planterBot.qty++;
+             engine.resources.pickles -= engine.prices.planterBot[1];
+        }
+        else if (engine.resources.pickles < engine.prices.planterBot[1]) {
+         engine.gameLog('Not enough Pickles!');
+        }
+     },
+     buyPicklerBot() {
+        if (engine.resources.pickles >= engine.prices.picklerBot[1]) {
+             engine.picklerBot.qty++;
+             engine.resources.pickles -= engine.prices.picklerBot[1];
+        }
+        else if (engine.resources.pickles < engine.prices.picklerBot[1]) {
+         engine.gameLog('Not enough Pickles!');
+        }
+     },
     gameLog(logText) {
         engine.log.push(engine.cycle + ' ' + logText);
         engine.log = engine.log.slice(-10);
         engine.cycle++;
     },
     plantSeed() {
-        engine.mainBoxMenu[0].dis = true;
-        setTimeout(() => engine.mainBoxMenu[0].dis = false, engine.mainBoxMenu[0].coolDown);
+        engine.farmMenu[0].dis = true;
+        setTimeout(() => engine.farmMenu[0].dis = false, engine.farmMenu[0].coolDown);
         if (engine.resources.seeds >= 1) {
             engine.plants.push(new Plants());
             engine.resources.seeds--;
@@ -55,17 +142,17 @@ const engine = {
         engine.cycle++;
     },
     pickCucumbers() {
-        engine.mainBoxMenu[1].dis = true;
-        setTimeout(() => engine.mainBoxMenu[1].dis = false, engine.mainBoxMenu[1].coolDown);
+        engine.farmMenu[1].dis = true;
+        setTimeout(() => engine.farmMenu[1].dis = false, engine.farmMenu[1].coolDown);
         engine.plants.forEach((obj) => {
             if (obj.ripeCucumbers >= 1) { obj.ripeCucumbers--; engine.resources.cucumbers++ };
 
         })
     },
     buySeeds() {
-        if (engine.resources.cucumbers >= 50) {
+        if (engine.resources.cucumbers >= prices.seeds[1]) {
             engine.resources.seeds += 5;
-            engine.resources.cucumbers -= 50;
+            engine.resources.cucumbers -= prices.seeds[1];
             engine.gameLog('Five seeds purchased for 50 cucumbers')
         }
         else if (engine.resources.cucumbers <= 50) {
@@ -79,8 +166,9 @@ const engine = {
 
 const prices = {
     seeds: [5, 50],
-    pickerBot: [1, 50],
-    planterBox: [1, 50],
+    pickerBot: [1, 100],
+    planterBot: [1, 100],
+    pickleBot: [1, 100]
 }
 
 

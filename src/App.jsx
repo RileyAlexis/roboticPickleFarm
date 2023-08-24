@@ -15,35 +15,28 @@ import MainBox from './components/MainBox';
 import RobotData from './components/RobotData';
 import LogBox from './components/LogBox';
 import PlantsList from './components/PlantsList';
+import GameButton from './components/GameButton';
 
 //Modules
 const engine = require('./modules/engine'); //Primary game engine
 
-// //Game Objects
-let mainMenu = [
-  {name: 'Plant Seed', onClick: engine.plantSeed, display: true, coolDown: 3000},
-  {name: 'Pick Cucumbers', onClick: engine.pickCucumbers, display: true},
-  {name: 'Build Robot', onClick: 'engine.buildRobot', display: false},
-  {name: 'Buy Seeds', onClick: engine.buySeeds, display: false}
-  
-];
+
 
 
 function App() {
 
 //State Variables
   const [resources, setResources] = useState(engine.resources);
-  const [mainBoxMenuItems, setMainBoxMenuItems] = useState(mainMenu);
+  const [farmMenuItems, setFarmMenuItems] = useState(engine.farmMenu);
   const [plants, setPlants] = useState(engine.plants);
   const [cycle, setCycle] = useState(engine.cycle);
-
+  const [locationMenu, setLocationMenu] = useState(engine.locationMenu);
+  const [robotMenu, setRobotMenu] = useState(engine.robotMenu);
   //Updates all stats each game interval(default 1/sec);
   function runUpdate() {
 
     engine.updatePlants();
-
-    if (engine.resources.cucumbers >= 50) {mainMenu[3].display = true;}
-    setMainBoxMenuItems(mainMenu);
+    setFarmMenuItems([...engine.farmMenu]);
     setResources(engine.resources);
     setPlants(engine.plants);
     setCycle(engine.cycle);
@@ -55,9 +48,9 @@ useEffect(() => {
     runUpdate();
   }, engine.gameSpeed);
   return () => clearInterval(interval);
-
   }, []);
-// console.log(plants[0]?.ripeCucumbers, plants[0]?.currentYield);
+
+  
   return (
     <div className="container">
       <div className="game-menu">
@@ -70,12 +63,11 @@ useEffect(() => {
           <Resources resources={resources} />
           <PlantsList plants={plants} engine={engine}/>
             </div>
-        <div className="robot-box">
-          {/* <RobotData robotsState={robotsState}/>  */}
-        </div>
-      <div className="main-box">
-        <MainBox mainBoxMenuItems={mainBoxMenuItems} engine={engine}/>
-      </div>
+        <MainBox 
+          locationMenu={locationMenu} 
+          farmMenuItems={farmMenuItems} 
+          robotMenu={robotMenu}
+          engine={engine}/>
       <LogBox log={engine.log} />
 
     </div>
