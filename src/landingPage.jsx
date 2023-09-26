@@ -32,10 +32,10 @@ function LandingPage() {
 
         axios.post('/game/login', dataObj)
             .then((response) => {
-                if (response.detail) {
-                    setError(response.detail);
+                if (response.data.detail) {
+                    setError(response.data.detail);
                     return;
-                } else {
+                } else if (!response.data.detail) {
                     setCookie('Email', response.data.email);
                     setCookie('AuthToken', response.data.token);
                     dispatch({ type: 'SET_USERID', payload: response.data.email });

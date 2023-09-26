@@ -1,5 +1,6 @@
 import { useCookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import Button from '@mui/material/Button';
 
@@ -14,9 +15,14 @@ function GameMenu () {
         window.location.reload();
     }
 
+    const saveGame = () => {
+        const store = useSelector.getState();
+        
+    }
+
     return (
         <>
-        <Button color="primary">Save</Button>
+        <Button onClick={saveGame} color="primary">Save</Button>
         <Button color="primary">Settings</Button>
         <Button onClick={handleSignOut} color="primary">Sign Out</Button>
         </>

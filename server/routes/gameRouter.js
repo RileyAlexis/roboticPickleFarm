@@ -13,7 +13,7 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
     let userRole = '';
 
-    const queryString = `SELECT * FROM users WHERE email = $1`; 
+    const queryString = `SELECT * FROM users WHERE email ILIKE $1`; 
     //Searches for existing email. Since usernames must be unique the database 
     //will only return 1 or 0 users
 
@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
             console.log('Password matches', passwordsMatch);
             if (!passwordsMatch) {
                 res.json({ detail: 'Invalid Credentials' });
-            } else {
+            } else if (passwordsMatch) {
                 const token = jwt.sign({ email }, jwtkey, { expiresIn: '1hr' });
                 res.json({ 'email': email, 'token': token, 'role': userRole });
             }
