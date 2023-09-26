@@ -1,17 +1,15 @@
-function RobotData ({robotsState}) {
+function RobotData ({engine}) {
            
-    if (robotsState !== null && robotsState[0]) 
-        {return (
+  return (
             <>
             <h3>robotsState:</h3>
-            <li>Robot Count: {robotsState.length}</li>
-            <li>Picking Rate: {robotsState[0].picks}</li>
-            <li>Planting Rate: {robotsState[0].plants}</li>
+            <li>Planter Bots: {engine.planterBots.qty}</li>
+            <li>Picker Bots: {engine.pickerBots.qty}</li>
+            <li>Picking Rate: {engine.picklerBots.qty}</li>
             </>
-            )}
+            )
             
-        else {
-        return (null);}
+
 
 }
 

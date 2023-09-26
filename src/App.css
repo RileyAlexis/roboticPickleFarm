@@ -20,21 +20,34 @@ body {
     display:flex;
   }
 
-  .game-menu {
+  .landingPage {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 6;
+    border: 1px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    text-align: center;
+    min-height: 50vh;
+  }
+
+  .game-Menu-Box {
     grid-column: 3 / span 1;
     grid-row: 1 / span 1;
+    height: min-content;
     border-bottom: 1px solid black;
   }
   
-  .main-menu {
+  .main-menu-box {
     grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
+    grid-row: 1 / span 1;
+    height: min-content;
     border-bottom: 1px solid black;
   }
   
   .resources-box {
     grid-column: 1 / span 1;
-    grid-row: 3 / span 3;
+    grid-row: 2 / span 3;
     border: 1px solid black;
     padding-left: 20px;
     min-height: 50vh;
@@ -43,7 +56,7 @@ body {
   
   .main-box {
     grid-column: 2 / span 1;
-    grid-row: 3 / span 3;
+    grid-row: 2 / span 3;
     display:flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -81,10 +94,8 @@ body {
     transition: all 0.4s;
     border: 1px solid black;
     background: rgba(195, 129, 21, 0.232);
-    box-shadow: inset 1px -1px 4px rgba(0,0,0,0.4);
+    box-shadow: 1px -1px 4px rgba(0,0,0,0.1);
   }
-
-
 
   .main-box-nav li:first-child {
     border-bottom-left-radius: 2rem;
@@ -103,6 +114,7 @@ body {
 
   .main-box-nav li.active {
     background: #157041;
+    box-shadow: inset 1px -1px 4px rgba(0,0,0,0.4);
   }
 
   .main-box-outlet {

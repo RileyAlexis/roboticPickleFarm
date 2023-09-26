@@ -1,8 +1,10 @@
+import Button from '@mui/material/Button';
+
 function GameMenu () {
     return (
         <>
-        <span>Save - </span>
-        <span>Settings - </span>
+        <Button color="primary">Save</Button>
+        <Button color="primary">Settings</Button>
         </>
     )
 }

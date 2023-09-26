@@ -4,9 +4,9 @@ function RobotMenu({robotMenu, engine}) {
     return (
         <>
         {robotMenu?.map((item) => 
-         {if (item.active) return (
-            <GameButton key={item.name} 
-                name={item.name} 
+         {if (item.show) return (
+            <GameButton key={item.id} 
+                name={item.title} 
                 buttonCall={engine.buttonCall} 
                 disable={item.dis} 
                 coolDown={item.coolDown} />

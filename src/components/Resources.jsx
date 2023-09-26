@@ -1,4 +1,8 @@
-function Resources ({resources}) {
+import { useSelector } from "react-redux";
+
+function Resources () {
+
+    const resources = useSelector(store => store.resources);
 
     return (
         <>

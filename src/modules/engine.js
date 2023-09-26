@@ -10,10 +10,10 @@ const engine = {
         pickleJars: 0
     },
     prices: {
-    seeds: [5, 50],
-    pickerBot: [1, 100],
-    planterBot: [1, 100],
-    picklerBot: [1, 100]
+        seeds: [5, 50],
+        pickerBot: [1, 100],
+        planterBot: [1, 100],
+        picklerBot: [1, 100]
     },
     log: [],
     plants: [],
@@ -41,15 +41,15 @@ const engine = {
         {name: 'Pickle', coolDown: 5000, dis:false, show: true},
     ],
     robotMenu: [
-        {name: 'Buy Planter Bot', coolDown: 8000, dis:false, active: true},
-        {name: 'Buy Picker Bot', cooldDown: 8000, dis:false, active: true},
-        {name: 'Buy Pickler Bot', coolDown: 8000, dis:false, active:true}
+        {id: 'buyPickerBot', title: 'Buy Planter Bot', dis:false, show: true},
+        {id: 'butPlanterBot', title: 'Buy Picker Bot', dis:false, show: true},
+        {id: 'buyPicklerBot', title: 'Buy Pickler Bot', dis:false, show:true}
     ],
     locationMenu: [
         {id: 'farm', title: 'Farm', show: true, activeTab: true},
         {id: 'robots', title: 'Robots', show: false, activeTab: false},
         {id: 'buildings', title: 'Buildings', show: false, activeTab: false},
-        {id: 'powerUps', title: 'Power Ups', show:false, activeTab: false}
+        {id: 'powerUps', title: 'Power Ups', show:false, activeTab: false},
     ],
     buttonCall(name) {
         console.log(name);
@@ -57,9 +57,9 @@ const engine = {
             case 'Plant': engine.plantSeed(); break;
             case 'Pick': engine.pickCucumbers(); break;
             case 'Pickle': engine.makePickles(); break;
-            case 'Buy Planter Bot': engine.buyPlanterBot(); break;
-            case 'Buy Picker Bot': engine.buyPickerBot(); break;
-            case 'Buy Pickler Bot': engine.buyPicklerBot(); break;
+            case 'buyPickerBot': engine.buyPlanterBot(); break;
+            case 'buyPickerBot': engine.buyPickerBot(); break;
+            case 'buyPickerBot': engine.buyPicklerBot(); break;
         
         }
     },
@@ -98,7 +98,7 @@ const engine = {
     },
     buyPickerBot() {
        if (engine.resources.pickles >= engine.prices.pickerBot[1]) {
-            engine.pickerBot.qty++;
+            engine.pickerBots.qty++;
             engine.resources.pickles -= engine.prices.pickerBot[1];
        }
        else if (engine.resources.pickles < engine.prices.pickerBot[1]) {
@@ -107,7 +107,7 @@ const engine = {
     },
     buyPlanterBot() {
         if (engine.resources.pickles >= engine.prices.planterBot[1]) {
-             engine.planterBot.qty++;
+             engine.planterBots.qty++;
              engine.resources.pickles -= engine.prices.planterBot[1];
         }
         else if (engine.resources.pickles < engine.prices.planterBot[1]) {
@@ -116,7 +116,7 @@ const engine = {
      },
      buyPicklerBot() {
         if (engine.resources.pickles >= engine.prices.picklerBot[1]) {
-             engine.picklerBot.qty++;
+             engine.picklerBots.qty++;
              engine.resources.pickles -= engine.prices.picklerBot[1];
         }
         else if (engine.resources.pickles < engine.prices.picklerBot[1]) {

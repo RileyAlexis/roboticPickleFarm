@@ -1,12 +1,13 @@
 //React
 import react from 'react';
 import {useState, useEffect} from 'react';
-
+import { useSelector } from 'react-redux';
 //Libraries
 import axios from 'axios';
 
 //CSS
 import './app.css';
+
 
 //Components
 import Resources from './components/Resources';
@@ -16,12 +17,18 @@ import RobotData from './components/RobotData';
 import LogBox from './components/LogBox';
 import PlantsList from './components/PlantsList';
 import GameButton from './components/GameButton';
+import LandingPage from './landingPage';
+
+//Material UI
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+
 
 //Modules
 const engine = require('./modules/engine'); //Primary game engine
-
-
-
 
 function App() {
 
@@ -32,6 +39,12 @@ function App() {
   const [cycle, setCycle] = useState(engine.cycle);
   const [locationMenu, setLocationMenu] = useState(engine.locationMenu);
   const [robotMenu, setRobotMenu] = useState(engine.robotMenu);
+
+  //Redux Store variables
+  const userId = useSelector(store => store.userId);
+  const authorized = useSelector(store => store.authorized);
+
+
   //Updates all stats each game interval(default 1/sec);
   function runUpdate() {
 
@@ -50,27 +63,48 @@ useEffect(() => {
   return () => clearInterval(interval);
   }, []);
 
-  
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+
+
   return (
     <div className="container">
-      <div className="game-menu">
+      {!authorized &&
+          <LandingPage /> 
+      }
+      {authorized &&
+      <>
+      <div className="game-Menu-Box">
+        <GameMenu />
+        </div>
+      
+      <div className="main-menu-box">
         <GameMenu />
       </div>
-      <div className="main-menu">
-        
-      </div>
+
       <div className="resources-box">
           <Resources resources={resources} />
-          <PlantsList plants={plants} engine={engine}/>
-            </div>
+          <PlantsList plants={plants} engine={engine} />
+          <RobotData engine={engine} />
+          </div>
+
         <MainBox 
           locationMenu={locationMenu} 
           farmMenuItems={farmMenuItems} 
           robotMenu={robotMenu}
           engine={engine}/>
       <LogBox log={engine.log} />
-
+      </>
+      }
+ 
     </div>
+    
+      
   );
 }
 
