@@ -1,7 +1,8 @@
 import react from 'react';
 import { useCookies } from 'react-cookie';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 } from 'uuid';
 import axios from 'axios';
 
 //Material UI Components
@@ -17,10 +18,30 @@ function LandingPage() {
     const [error, setError] = useState('');
     const [gameId, setGameId] = useState('');
     const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
-    const dispatch = useDispatch();
-
-    const initializeGame = () => {
     
+    const dispatch = useDispatch();
+    const genId = v4();
+    const authorized = useSelector(store => store.authorized);
+    
+    
+    const initializeGame = () => {
+        if (!authorized) {
+            dispatch({ type: 'SET_AUTH', payload: true });
+            dispatch({ type: 'SET_USERID', payload: genId });
+
+        } 
+    
+    dispatch({ type: 'addResources.seeds', payload: 5});
+
+
+
+    axios.post('/game/savenewgame', )
+        .then((response) => {
+            dispatch({type: 'ADD_LOG', payload: `Game Saved`});
+        }).catch((error) => {
+            console.error(error);
+        })
+        
     }
 
     const processLogin = () => {
@@ -38,7 +59,8 @@ function LandingPage() {
                 } else if (!response.data.detail) {
                     setCookie('Email', response.data.email);
                     setCookie('AuthToken', response.data.token);
-                    dispatch({ type: 'SET_USERID', payload: response.data.email });
+                    dispatch({ type: 'SET_EMAIL', payload: response.data.email });
+                    dispatch({ type: 'SET_USERID', payload: response.data.userId })
                     dispatch({ type: 'SET_AUTH', payload: true });
                 }
             })
@@ -52,7 +74,6 @@ function LandingPage() {
             const dataObj = {
                 email: email,
                 password: password,
-                gameId: gameId
             }
             axios.post('/game/newUser', dataObj)
                 .then((response) => {
@@ -62,9 +83,9 @@ function LandingPage() {
                         console.log(response.data.email);
                         setCookie('Email', response.data.email);
                         setCookie('AuthToken', response.data.token);
-                        dispatch({ type: 'SET_USERID', payload: response.data.email });
+                        dispatch({ type: 'SET_EMAIL', payload: response.data.email });
                         dispatch({ type: 'SET_AUTH', payload: true });
-                        dispatch({ type: 'SET_GAMEID', payload: gameId })
+                        initializeGame();
                     }
                 })
         }

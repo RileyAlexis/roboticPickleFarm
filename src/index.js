@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './App';
@@ -13,6 +14,13 @@ import { pickles } from './modules/themes';
 
 const userId = (state = '', action) => {
   if (action.type === 'SET_USERID') {
+    return action.payload;
+  }
+  return state;
+}
+
+const userEmail = (state = '', action) => {
+  if (action.type === 'SET_EMAIL') {
     return action.payload;
   }
   return state;
@@ -92,10 +100,15 @@ const picklerBots = (state = {}, action) => {
   return state;
 }
 
+const upgrades = (state = {}, action) => {
+  return state;
+}
+
 const storeInstance = createStore(
   // reducers,{
   combineReducers({
     userId,
+    userEmail,
     authorized,
     gameId,
     cycles,
@@ -105,9 +118,10 @@ const storeInstance = createStore(
     plants,
     pickerBots,
     planterBots,
-    picklerBots
+    picklerBots,
+    upgrades
   }),
-  applyMiddleware(logger)
+  applyMiddleware(thunk, logger)
 );
 
 

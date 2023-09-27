@@ -5,10 +5,11 @@ CREATE TABLE "games" (
     "prices" JSONB,
     "pickerBots" JSONB,
     "planterBots" JSONB,
-    "pickletBots" JSONB,
+    "picklerBots" JSONB,
     "upgrades" JSONB,
     "cycle" INT,
-    "gameSpeed" INT
+    "gameSpeed" INT,
+    "log" TEXT
 );
 
 CREATE TABLE "users" (
@@ -17,3 +18,11 @@ CREATE TABLE "users" (
     "hashed_password" VARCHAR(120),
     "role" VARCHAR(20)
 );
+
+-- Inserting JSON data into table:
+INSERT INTO "games" ("resources", "prices", "pickerBots", 
+    "planterBots", "picklerBots", "upgrades", "cycle", "gameSpeed", "log")
+VALUES ('{"seeds": 5, "plants": 2, "cucumbers": 20}', 
+    '{"seeds": 50, "bots": 100}', '{"qty": 5, "speed": 1}', 
+    '{"qty": 2, "speed": 1}', '{"qty": 1, "speed": 1}', 
+    '{"superspeed": 1}' , 563, 1000, 'log data');
