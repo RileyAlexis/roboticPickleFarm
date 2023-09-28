@@ -37,7 +37,8 @@ function LandingPage() {
 
     axios.post('/game/savenewgame', )
         .then((response) => {
-            dispatch({type: 'ADD_LOG', payload: `Game Saved`});
+            dispatch({type: 'ADD_LOG', payload: `Created New Game`});
+            console.log('Created new Game');
         }).catch((error) => {
             console.error(error);
         })
@@ -110,8 +111,8 @@ function LandingPage() {
                 />
                 <br /> <br /><br />
                 <div className="buttonBox" >
-                <Button variant='outlined' onClick={(e) => setLogin(!login)}>New User</Button>
                 <Button variant='outlined' onClick={processLogin}>Log In</Button>
+                <Button variant='outlined' onClick={(e) => setLogin(!login)}>New User</Button>
                 <Button variant='outlined' onClick={initializeGame}>New Game</Button>
                 </div>
                 {error && <Typography m={2} color="red" variant='body'>{error}</Typography>}

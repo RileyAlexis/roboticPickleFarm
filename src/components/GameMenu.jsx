@@ -48,10 +48,8 @@ function GameMenu () {
                         dispatch({type: 'ADD_LOG', payload: `Game Saved at Cycle ${cycles}`});
                     }).catch((error) => {
                         console.error(error);
-                    })
-            
+                    }) 
         }
-        
     }
 
     return (

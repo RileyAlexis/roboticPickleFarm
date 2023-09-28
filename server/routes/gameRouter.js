@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { gameSpeed } = require('../../src/modules/engine');
 
-const jwtkey = '';
+const jwtkey = '27a0f208255909db32ddf82acef0d742b30f7bd3088d457f3d441ac075aa7b939e92187f2ddfa8e0a9a0472999e0a715568b992720663d5a28a8ee382546895a';
 
 router.post('/login', (req, res) => {
     console.log('login route call');
