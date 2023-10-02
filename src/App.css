@@ -31,6 +31,12 @@ body {
     min-height: 50vh;
   }
 
+  .title-box {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    padding: 15px 15px;
+  }
+
   .game-Menu-Box {
     grid-column: 3 / span 1;
     grid-row: 1 / span 1;

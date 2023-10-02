@@ -1,5 +1,7 @@
-function LogBox({log}) {
+import { useSelector } from "react-redux";
 
+function LogBox() {
+    const log = useSelector(store => store.log);
     let revArr = log.toReversed();
 
     return (

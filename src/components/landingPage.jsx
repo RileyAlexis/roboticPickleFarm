@@ -16,7 +16,7 @@ function LandingPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const [gameId, setGameId] = useState('');
+
     const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
     
     const dispatch = useDispatch();
@@ -30,8 +30,14 @@ function LandingPage() {
             dispatch({ type: 'SET_USERID', payload: genId });
 
         } 
-    
-    dispatch({ type: 'addResources.seeds', payload: 5});
+        const initialValues = {
+            Seeds: 5,
+            Cucumbers: 0,
+            Pickles: 0,
+            PickleJars: 0
+        }
+
+    dispatch({ type: 'SET_RESOURCES', payload: initialValues});
 
 
 
@@ -42,7 +48,6 @@ function LandingPage() {
         }).catch((error) => {
             console.error(error);
         })
-        
     }
 
     const processLogin = () => {

@@ -1,14 +1,18 @@
+import { useSelector, useDispatch } from "react-redux";
 import GameButton from "./GameButton";
+import store from '../modules/store';
 
-function FarmMenu({farmMenuItems, engine}) {
-
+function FarmMenu() {
+    const farmMenu = useSelector(store => store.farmMenu);
+    const buttonCall = useSelector(store => store.buttonCall);
+    console.log('ButtonCall', buttonCall)
     return (
         <div className="buttonBox">
-        {farmMenuItems?.map((item) => 
+        {farmMenu?.map((item) => 
             {if (item.show) return (
                     <GameButton key={item.name} 
                         name={item.name} 
-                        buttonCall={engine.buttonCall} 
+                        buttonCall={() => buttonCall(item.name)} 
                         disable={item.dis}
                         show={item.show}
                         coolDown={item.coolDown} />
@@ -16,6 +20,7 @@ function FarmMenu({farmMenuItems, engine}) {
             else return (null)
             }
         )}
+       
     </div>
     )
 }

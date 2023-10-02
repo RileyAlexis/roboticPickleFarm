@@ -1,4 +1,4 @@
-
+import { useSelector } from 'react-redux';
 import {useState} from 'react';
 
 import FarmMenu from './FarmMenu';
@@ -6,8 +6,9 @@ import RobotMenu from './RobotMenu';
 import TabNavItem from './TabNavItem';
 import TabContent from './TabContent';
 
-function MainBox({locationMenu, farmMenuItems, robotMenu, engine}) {
+function MainBox() {
     const [activeTab, setActiveTab] = useState('farm');
+    const locationMenu = useSelector(store => store.locationMenu);
 
     return (
         <div className="main-box">
@@ -19,10 +20,10 @@ function MainBox({locationMenu, farmMenuItems, robotMenu, engine}) {
         </ul>
         <div className="main-box-outlet">
             <TabContent id="farm" activeTab={activeTab}>
-                <FarmMenu farmMenuItems={farmMenuItems} engine={engine} />
+                <FarmMenu  />
             </TabContent>
             <TabContent id="robots" activeTab={activeTab}>
-                <RobotMenu robotMenu={robotMenu} engine={engine} />
+                <RobotMenu />
             </TabContent>
             <TabContent id="buildings" activeTab={activeTab}>
                 <p>buildings tab</p>

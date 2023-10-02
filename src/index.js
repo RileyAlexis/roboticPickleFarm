@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './App';

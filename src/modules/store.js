@@ -1,7 +1,26 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux';
+import { combineReducers, configureStore, createSlice, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { valFarmMenu, valRobotMenu, valLocationMenu, valButtonCall } from './initialState';
+
+//Slices
+import resourcesSlice from './reducers/resourcesSlice';
+import robotsSlice from './reducers/robotsSlice';
+import plantSlice from './reducers/plantSlice';
+import logSlice from './reducers/logSlice';
+import robotsMenuSlice from './reducers/robotsMenuSlice';
+import locationMenuSlice from './locationMenuSlice';
+import farmMenuSlice from './reducers/farmMenuSlice';
+import pricesSlice from './pricesSlice';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const buttonCall = (state = valButtonCall, action) => {
+  return state;
+}
 
 const userId = (state = '', action) => {
     if (action.type === 'SET_USERID') {
@@ -24,13 +43,12 @@ const userId = (state = '', action) => {
     return state;
   }
   
-  const authorized = (state = null, action) => {
+  const authorized = (state = false, action) => {
     if (action.type === 'SET_AUTH') {
       return action.payload;
     }
     return state;
   }
-  
   
   const cycles = (state = 0, action) => {
     if (action.type === 'UPDATE_CYCLE') {
@@ -38,81 +56,54 @@ const userId = (state = '', action) => {
     }
     return state;
   }
-  
-  const resources = (state = {}, action) => {
-  
-    switch (action.type) {
-      case 'addResources.seeds': return state.seeds += action.payload;
-      case 'addResources.cucumbers': return state.cucumbers += action.payload;
-      case 'addResources.pickles': return state.pickles += action.payload;
-      case 'addResources.pickleJars': return state.pickleJars += action.payload;
-      default: return state;
-      }
-    return state;
-  }
-  
-  
-  const prices = (state = {}, action) => {
-    return state;
-  }
-  
-  const log = (state = [], action) => {
-    if (action.type === 'ADD_LOG') {
-      return [...state, action.payload];
-    }
-    return state;
-  }
-  
-  const plants = (state = 0, action) => {
-    if (action.type === 'ADD_PLANT') {
-      return state += action.payload;
-    }
-    return state;
-  }
-  
-  const pickerBots = (state = {}, action) => {
-    if (action.type === 'SET_PICKERBOTS') {
-      return action.payload;
-    }
-    return state;
-  }
-  
-  const planterBots = (state = {}, action) => {
-    if (action.type === 'SET_PLANTERBOTS') {
-      return action.payload;
-    }
-    return state;
-  }
-  
-  const picklerBots = (state = {}, action) => {
-    if (action.type === 'SET_PICKLERBOTS') {
-      return action.payload;
-    }
-    return state;
-  }
-  
+
   const upgrades = (state = {}, action) => {
     return state;
   }
-  
-  const storeInstance = createStore(
-    // reducers,{
-    combineReducers({
-      userId,
-      userEmail,
-      authorized,
-      gameId,
-      cycles,
-      resources,
-      prices,
-      log,
-      plants,
-      pickerBots,
-      planterBots,
-      picklerBots,
-      upgrades
-    }),
-    applyMiddleware(thunk, logger)
-  );
+
+  const rootReducer = combineReducers({
+    resources: resourcesSlice,
+    robots: robotsSlice,
+    plants: plantSlice,
+    log: logSlice,
+    authorized: authorized,
+    userId: userId,
+    userEmail: userEmail,
+    farmMenu: farmMenuSlice,
+    locationMenu: locationMenuSlice,
+    robotMenu: robotsMenuSlice,
+    prices: pricesSlice,
+    buttonCall: buttonCall,
+});
+
+  const storeInstance = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(sagaMiddleware, logger),
+  })
+
+
+  // const storeInstance = createStore(
+  //   // reducers,{
+  //   combineReducers({
+  //     userId,
+  //     userEmail,
+  //     authorized,
+  //     gameId,
+  //     cycles,
+  //     resources,
+  //     prices,
+  //     log,
+  //     plants,
+  //     pickerBots,
+  //     planterBots,
+  //     picklerBots,
+  //     upgrades,
+  //     farmMenu,
+  //     locationMenu,
+  //     robotMenu,
+  //     buttonCall
+  //   }),
+  //   applyMiddleware(thunk, logger)
+  // );
 
   export default storeInstance;
