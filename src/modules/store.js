@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
-import { valFarmMenu, valRobotMenu, valLocationMenu, valButtonCall } from './initialState';
+
 
 //Slices
 import resourcesSlice from './reducers/resourcesSlice';
@@ -15,10 +15,12 @@ import robotsMenuSlice from './reducers/robotsMenuSlice';
 import locationMenuSlice from './locationMenuSlice';
 import farmMenuSlice from './reducers/farmMenuSlice';
 import pricesSlice from './pricesSlice';
+import plantSettingsSlice from './reducers/plantSettings';
+import { buttonCallInit } from './engine';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const buttonCall = (state = valButtonCall, action) => {
+const buttonCall = (state = buttonCallInit, action) => {
   return state;
 }
 
@@ -49,6 +51,10 @@ const userId = (state = '', action) => {
     }
     return state;
   }
+
+  const gameSpeed = (state = 1000, action) => {
+    return state;
+  }
   
   const cycles = (state = 0, action) => {
     if (action.type === 'UPDATE_CYCLE') {
@@ -73,37 +79,14 @@ const userId = (state = '', action) => {
     locationMenu: locationMenuSlice,
     robotMenu: robotsMenuSlice,
     prices: pricesSlice,
+    plantSettings: plantSettingsSlice,
     buttonCall: buttonCall,
+    gameSpeed: gameSpeed,
 });
 
   const storeInstance = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(sagaMiddleware, logger),
   })
-
-
-  // const storeInstance = createStore(
-  //   // reducers,{
-  //   combineReducers({
-  //     userId,
-  //     userEmail,
-  //     authorized,
-  //     gameId,
-  //     cycles,
-  //     resources,
-  //     prices,
-  //     log,
-  //     plants,
-  //     pickerBots,
-  //     planterBots,
-  //     picklerBots,
-  //     upgrades,
-  //     farmMenu,
-  //     locationMenu,
-  //     robotMenu,
-  //     buttonCall
-  //   }),
-  //   applyMiddleware(thunk, logger)
-  // );
 
   export default storeInstance;

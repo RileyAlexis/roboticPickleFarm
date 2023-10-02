@@ -14,7 +14,7 @@ import LogBox from './components/LogBox';
 import LandingPage from './components/landingPage';
 
 //Modules
-
+import { updateTicker } from './modules/engine';
 
 //Material UI
 import { Typography } from '@mui/material';
@@ -28,8 +28,7 @@ function App() {
 
   //Updates all stats each game interval(default 1/sec);
   function runUpdate() {
-
-
+    updateTicker();
 }
 
 //Sets game timer based on gameSpeed setting

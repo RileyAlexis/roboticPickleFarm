@@ -14,27 +14,20 @@ export const resourcesSlice = createSlice({
         setAllResources: (state, action) => {
             return action.payload;
         },
-        changeSeeds: (state, action) => {
-            return state.seeds += action.payload;
+        changeResources: (state, action) => {
+            const value = action.payload.value;
+            const title = action.payload.title;
+            switch (title) {
+                case 'seeds': state.seeds += value; break;
+                case 'cucumbers': state.cucumbers += value; break;
+                case 'pickles': state.pickles += value; break;
+                case 'pickleJars': state.pickleJars += value; break;
+            default: return state;
+            }
         },
-        changeCucumbers: (state, action) => {
-            return state.cucumbers += action.payload;
-        },
-        changePickles: (state, action) => {
-            return state.pickles += action.payload;
-        },
-        changePickleJars: (state, action) => {
-            return state.pickleJars += action.payload;
-        }
-       
     }
 })
 
-export const {setAllResources, 
-            changeSeeds, 
-            changeCucumbers, 
-            changePickles, 
-            changePickleJars
-            } = resourcesSlice.actions;
+export const {setAllResources, changeResources} = resourcesSlice.actions;
 
 export default resourcesSlice.reducer;

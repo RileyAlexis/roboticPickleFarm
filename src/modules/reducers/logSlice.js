@@ -8,11 +8,7 @@ export const logSlice = createSlice({
             return action.payload;
         },
         addLog: (state, action) => {
-            state.push(action.payload);
-            if (state.log.length > 20) {
-                state.log = state.log.slice(-20);
-            }
-            return state;
+            return [...state, action.payload];
         },
     }
 })

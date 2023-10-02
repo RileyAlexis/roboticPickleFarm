@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    plants: [],
-}
-
 const plantSlice = createSlice({
     name: 'plants',
-    initialState: initialState,
+    initialState: [],
     reducers: {
         setAllPlants: (state, action) => {
             return action.payload;
