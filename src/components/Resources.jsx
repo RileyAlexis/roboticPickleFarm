@@ -4,16 +4,10 @@ function Resources () {
 
     const resources = useSelector(store => store.resources);
     const plants = useSelector(store => store.plants);
-    const ripeCucumbers = useSelector(store => store.resources.ripeCucumbers);
-    let totalGrowth = 0;
-    let maxYield = 0;
-    let averageAge = 0;
-
-    const runStats = plants.forEach((plant) => {
-        totalGrowth += plant.growthRate;
-        maxYield += plant.maxYield;
-        averageAge += Math.floor(plant.age / plants.length * 100);
-    })
+    const ripeCucumbers = useSelector(store => store.stats.ripeCucumbers);
+    const maxYield = useSelector(store => store.stats.maxYield);
+    const totalGrowthRate = useSelector(store => store.stats.totalGrowthRate)
+    const averageAge = useSelector(store => store.stats.averageAge);
         
     return (
         <>
@@ -26,7 +20,7 @@ function Resources () {
             else return (null);
         })}
         <h3>Plants: {plants.length}</h3>
-        <p>Growth Rate: {totalGrowth} / s</p>
+        <p>Growth Rate: {totalGrowthRate} / s</p>
         <p>Max Yield: {maxYield}</p>
         <p>Average Age: {averageAge}</p>
         <p>Ripe Cucumbers: {ripeCucumbers}</p>

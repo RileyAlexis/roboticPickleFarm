@@ -1,3 +1,4 @@
+import { toHaveTextContent } from '@testing-library/jest-dom/matchers';
 import store from './store';
 
 class Plants {
@@ -21,6 +22,9 @@ export function updateTicker() {
     const state = store.getState();
     const plants = state.plants;
     const resources = state.resources;
+    let ripeCucumbers = 0;
+    let maxYield = 0;
+    let totalGrowthRate = 0;
     const robots = state.robots;
     const log = state.log;
 
@@ -36,21 +40,34 @@ export function updateTicker() {
         }
         //Sets the cyclical growth of each plant
         if (!plant.dead && plant.currentYield < plant.maxYield) {
-        plant.maxedOut = false;
-        plant.currentYield += (plant.growthRate * plant.modifier * plant.growthModifer) ;
+        plant.currentYield += (plant.growthRate * (plant.modifier + plant.growthModifer)) ;
         plant.age += plant.aging;
-        //Once a whole cucumber is grown move it to ripeCucumbers
-        if (!plant.dead && plant.currentYield >= 1) {
-            store.dispatch({type: 'resources/changeResources', payload: {title: 'ripeCucumbers', value: 1}});
-            plant.currentYield--;
+
+        } else if (!plant.dead && plant.currentYield >= plant.maxYield) {
+            plant.currentYield = plant.maxYield;
         }
         if (plant.age > plant.maxAge) { 
             plant.dead = true;
         }
-        } else if (!plant.dead && plant.currentYield >= plant.maxYield) {
-            plant.maxedOut = true;
-        } 
+        //Compile stats from each plant to dispatch after loop exits
+        plant.currentYield >=1 ? ripeCucumbers += 1 : ripeCucumbers += 0;
+        maxYield += plant.maxYield;
+        totalGrowthRate += plant.growthRate * (plant.modifier + plant.growthModifer);
+
     }) //End ForEach loop
+
+    //Dispatch total current yield, max yield and total Growth Rate to state
+    store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
+    store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
+    store.dispatch({type: 'stats/setStats', payload: {title: 'totalGrowthRate', value: totalGrowthRate}});
+    
+    //Caclulate average plant age and dispatch to stats reducer
+    const sum = plants.reduce((accumulator, obj) => {
+        return accumulator + obj.age;
+      }, 0);
+      const average = sum / plants.length;
+      store.dispatch({type: 'stats/setStats', payload: {title: 'averageAge', value: average}});
+
 
     //Reduce length of log before log dispatches
     if (log.length > 20) {
@@ -59,10 +76,11 @@ export function updateTicker() {
     }
         const deadPlants = plants.filter((plant) => plant.dead);
         const maxedOut = plants.filter((plant) => plant.maxedOut);
-        if (deadPlants > 0) {
+        console.log('Maxed Out', maxedOut);
+        if (deadPlants.length > 0) {
             store.dispatch({type: 'log/addLog', payload: `${deadPlants.length} died of natural causes`});
         }
-        if (maxedOut > 0) {
+        if (maxedOut.length > 0) {
             store.dispatch({type: 'log/addLog', payload: `${maxedOut.length} plants have cucumbers rotting on the vine!`});
         }
         //Delete dead plants from object
@@ -79,7 +97,6 @@ export function plantSeed() {
     if (state.resources.seeds > 0) {
         const decon = state.plantSettings;
         const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
-        console.log('New Plant ===========', state.plantSettings);
         store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
         store.dispatch({type: 'log/addLog', payload: 'New Seedling Planted!'});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
@@ -90,19 +107,23 @@ export function plantSeed() {
 
 export function pickCucumbers() {
     const state = store.getState();
-    const cucumbers = state.resources.cucumbers;
-    const ripeCucumbers = state.resources.ripeCucumbers;
+    const plants = state.plants;
+    const picked = 0;
 
-    if (ripeCucumbers > 0) {
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'ripeCucumbers', value: -1}});
+    for (let i = 0; i < plants.length; i++) {
+        if (plants[i].currentYield >= 1) {
+            plants[i].currentYield--;
+            picked++;
+            break;
+        }
     }
-    
-}
+    if (picked >= 1) {
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
+    }
+    }
 
 export function makePickles() {
     const state = store.getState();
-    const pickles = state.resources.pickles;
     const cucumbers = state.resources.cucumbers;
 
     if (cucumbers >= 5) {
@@ -115,7 +136,13 @@ export function makePickles() {
 }
 
 export function buyBot(botType) {
-    console.log(botType);
+    const state = store.getState();
+    const pickles = store.resources.pickles;
+    const botPrice = store.prices.bots;
+
+    if (botType === 'planter' && pickles >= botPrice[0]) {
+
+    }
 }
 
 export const buttonCallInit = (name) => {

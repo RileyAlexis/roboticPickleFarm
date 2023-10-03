@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     modifier: 1,
-    growthRate: 0.09,
-    growthModifer: 1,
+    growthRate: 0.01,
+    growthModifer: 0,
     maxYield: 5,
-    deathChance: 0.02,
-    aging: 0.01,
+    deathChance: 0.01,
+    aging: 0.001,
     maxAge: 270,
-    seedChance: 0.002
+    seedChance: 0.0001
 }
 
 export const plantSettingsSlice = createSlice({

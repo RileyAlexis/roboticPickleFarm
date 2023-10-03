@@ -16,6 +16,7 @@ import locationMenuSlice from './locationMenuSlice';
 import farmMenuSlice from './reducers/farmMenuSlice';
 import pricesSlice from './pricesSlice';
 import plantSettingsSlice from './reducers/plantSettings';
+import statsSlice from './reducers/statsSlice';
 import { buttonCallInit } from './engine';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -69,6 +70,7 @@ const userId = (state = '', action) => {
 
   const rootReducer = combineReducers({
     resources: resourcesSlice,
+    stats: statsSlice,
     robots: robotsSlice,
     plants: plantSlice,
     log: logSlice,
