@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    seeds: 5,
+    seeds: 25,
     cucumbers: 0,
     pickles: 0,
-    pickleJars: 0
+    pickleJars: 0,
+    ripeCucumbers: 0,
 }
 
 export const resourcesSlice = createSlice({
@@ -22,6 +23,7 @@ export const resourcesSlice = createSlice({
                 case 'cucumbers': state.cucumbers += value; break;
                 case 'pickles': state.pickles += value; break;
                 case 'pickleJars': state.pickleJars += value; break;
+                case 'ripeCucumbers': state.ripeCucumbers += value; break;
             default: return state;
             }
         },

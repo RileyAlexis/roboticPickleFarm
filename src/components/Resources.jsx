@@ -4,17 +4,15 @@ function Resources () {
 
     const resources = useSelector(store => store.resources);
     const plants = useSelector(store => store.plants);
+    const ripeCucumbers = useSelector(store => store.resources.ripeCucumbers);
     let totalGrowth = 0;
     let maxYield = 0;
     let averageAge = 0;
-    let ripeCucumbers = 0;
 
     const runStats = plants.forEach((plant) => {
         totalGrowth += plant.growthRate;
         maxYield += plant.maxYield;
-
         averageAge += Math.floor(plant.age / plants.length * 100);
-        ripeCucumbers += plant.ripeCucumbers;
     })
         
     return (

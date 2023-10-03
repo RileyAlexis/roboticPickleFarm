@@ -11,7 +11,6 @@ class Plants {
     this.maxAge = maxAge;
     this.age = 0;
     this.currentYield = 0;
-    this.ripeCucumbers = 0;
     this.seedChance = seedChance;
     this.dead = false;
     this.maxedOut = false;
@@ -29,17 +28,20 @@ export function updateTicker() {
  if (plants.length > 0) {
     plants.forEach((plant) => {
         if (!plant.dead) {
+            //Add 1 seed to resources based on seedChance rate
             const seedRoll = Math.random();
             if (seedRoll <= plant.seedChance) {
                 store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: 1}});
             }
         }
+        //Sets the cyclical growth of each plant
         if (!plant.dead && plant.currentYield < plant.maxYield) {
         plant.maxedOut = false;
         plant.currentYield += (plant.growthRate * plant.modifier * plant.growthModifer) ;
         plant.age += plant.aging;
+        //Once a whole cucumber is grown move it to ripeCucumbers
         if (!plant.dead && plant.currentYield >= 1) {
-            plant.ripeCucumbers++;
+            store.dispatch({type: 'resources/changeResources', payload: {title: 'ripeCucumbers', value: 1}});
             plant.currentYield--;
         }
         if (plant.age > plant.maxAge) { 
@@ -51,9 +53,9 @@ export function updateTicker() {
     }) //End ForEach loop
 
     //Reduce length of log before log dispatches
-    if (log.length >= 20) {
-        log = log.slice(-18);
-        store.dispatch({type: 'log/setAllLog', payload: log });
+    if (log.length > 20) {
+        const newLog = log.slice(-20);
+        store.dispatch({type: 'log/setAllLog', payload: newLog });
     }
         const deadPlants = plants.filter((plant) => plant.dead);
         const maxedOut = plants.filter((plant) => plant.maxedOut);
@@ -65,12 +67,11 @@ export function updateTicker() {
         }
         //Delete dead plants from object
         plants.filter((plant) => !plant.dead);
+        //Update plants state variable
         store.dispatch({type: 'plants/setAllPlants', payload: plants});
  }
  
-
 }
-
 
 export function plantSeed() {
     const state = store.getState();
@@ -89,14 +90,28 @@ export function plantSeed() {
 
 export function pickCucumbers() {
     const state = store.getState();
-    const cucumbers = store.resources.cucumbers;
-    console.log('Pick Cucumbers', cucumbers);
+    const cucumbers = state.resources.cucumbers;
+    const ripeCucumbers = state.resources.ripeCucumbers;
+
+    if (ripeCucumbers > 0) {
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'ripeCucumbers', value: -1}});
+    }
+    
 }
 
 export function makePickles() {
     const state = store.getState();
-    const pickles = store.resources.pickles;
-    console.log('Make Pickles', pickles);
+    const pickles = state.resources.pickles;
+    const cucumbers = state.resources.cucumbers;
+
+    if (cucumbers >= 5) {
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: -5}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: +5}});
+        store.dispatch({type: 'log/addLog', payload: '5 Pickles pickled!'});
+    } else if (cucumbers < 5) {
+        store.dispatch({type: 'log/addLog', payload: 'Not Enough Cucumbers! Need 5'});
+    }
 }
 
 export function buyBot(botType) {
