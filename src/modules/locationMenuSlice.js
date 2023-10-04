@@ -4,7 +4,7 @@ const initialState = [
     {id: 'farm', title: 'Farm', show: true },
     {id: 'robots', title: 'Robots', show: false },
     {id: 'buildings', title: 'Buildings', show: false },
-    {id: 'powerUps', title: 'Power Ups', show:false },
+    {id: 'powerUps', title: 'Powerups', show:false },
 ];
 
     export const locationMenuSlice = createSlice({

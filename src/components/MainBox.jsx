@@ -13,11 +13,11 @@ function MainBox() {
     return (
         <>
            {/* tab nav */}
-        <ul className="main-box-nav">
+        <div className="main-box-nav">
             {locationMenu.map((items) => <TabNavItem title={items.title}
                 id={items.id} activeTab={activeTab} setActiveTab={setActiveTab}/>
             )}            
-        </ul>
+        </div>
         <div className="main-box-outlet">
             <TabContent id="farm" activeTab={activeTab}>
                 <FarmMenu  />
