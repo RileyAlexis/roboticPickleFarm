@@ -7,7 +7,7 @@ body {
     box-shadow: 1px 1px 12px rgba(52, 64, 58, 0.3);
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 0.1fr 0.2ft repeat(4, 1fr);
+    grid-template-rows: 0.1fr 0.2ft repeat(8, 1fr);
     row-gap: 2px;
     column-gap: 10px;
   }
@@ -53,7 +53,7 @@ body {
   
   .resources-box {
     grid-column: 1 / span 1;
-    grid-row: 2 / span 3;
+    grid-row: 2 / span 4;
     border: 1px solid black;
     padding-left: 20px;
     min-height: 50vh;
@@ -62,7 +62,7 @@ body {
   
   .main-box {
     grid-column: 2 / span 1;
-    grid-row: 2 / span 3;
+    grid-row: 2 / span 4;
     display:flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -80,8 +80,6 @@ body {
     height: 20px;
     align-content: center;
     justify-content: center;
-    /* border: 1px solid black;
-    border-radius: 25px; */
     padding-left: 2px;
     padding-top: 2px;
     padding-bottom: 5px;
@@ -185,7 +183,7 @@ body {
   
   .log-box {
     grid-column: 3 / span 1;
-    grid-row: 4 / span 1;
+    grid-row: 2 / span 4;
     transition: 0.5s;
     min-height: 50vh;
     overflow: scroll;

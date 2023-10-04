@@ -1,12 +1,23 @@
 import { useSelector } from "react-redux";
 
+import { List, ListItem, ListItemText } from "@mui/material";
+
 function LogBox() {
     const log = useSelector(store => store.log);
     let revArr = log.toReversed();
 
     return (
         <div className="log-box">
-            {revArr.map((line, index) => <p key={index}>{line}</p>)}
+            <List dense={true}>
+            
+            {revArr.map((line, index) => 
+            <ListItem key={index}>
+                <ListItemText primary={line}
+                 />
+            </ListItem>
+            )}
+
+            </List>
         </div>
     )
 }

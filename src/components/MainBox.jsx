@@ -11,7 +11,7 @@ function MainBox() {
     const locationMenu = useSelector(store => store.locationMenu);
 
     return (
-        <div className="main-box">
+        <>
            {/* tab nav */}
         <ul className="main-box-nav">
             {locationMenu.map((items) => <TabNavItem title={items.title}
@@ -33,7 +33,7 @@ function MainBox() {
                 </TabContent>
         </div>
         
-        </div>
+        </>
 
     );
 };
