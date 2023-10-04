@@ -1,4 +1,3 @@
-import { toHaveTextContent } from '@testing-library/jest-dom/matchers';
 import store from './store';
 
 class Plants {
@@ -40,17 +39,19 @@ export function updateTicker() {
         }
         //Sets the cyclical growth of each plant
         if (!plant.dead && plant.currentYield < plant.maxYield) {
+            plant.maxedOut = false;
         plant.currentYield += (plant.growthRate * (plant.modifier + plant.growthModifer)) ;
         plant.age += plant.aging;
 
         } else if (!plant.dead && plant.currentYield >= plant.maxYield) {
+            plant.maxedOut = true;
             plant.currentYield = plant.maxYield;
         }
         if (plant.age > plant.maxAge) { 
             plant.dead = true;
         }
         //Compile stats from each plant to dispatch after loop exits
-        plant.currentYield >=1 ? ripeCucumbers += 1 : ripeCucumbers += 0;
+        plant.currentYield >=1 ? ripeCucumbers += Math.floor(plant.currentYield) : ripeCucumbers += 0;
         maxYield += plant.maxYield;
         totalGrowthRate += plant.growthRate * (plant.modifier + plant.growthModifer);
 
@@ -108,7 +109,7 @@ export function plantSeed() {
 export function pickCucumbers() {
     const state = store.getState();
     const plants = state.plants;
-    const picked = 0;
+    let picked = 0;
 
     for (let i = 0; i < plants.length; i++) {
         if (plants[i].currentYield >= 1) {

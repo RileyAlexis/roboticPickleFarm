@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     modifier: 1,
-    growthRate: 0.01,
+    growthRate: 0.08,
     growthModifer: 0,
     maxYield: 5,
     deathChance: 0.01,

@@ -4,7 +4,8 @@ export const pickles = createTheme( {
   palette: {
     mode: 'light',
     primary: {
-      main: '#648164',
+      main: '#185205',
+      light: '#8bc34a',
     },
     secondary: {
       main: '#ffee58',
@@ -12,7 +13,7 @@ export const pickles = createTheme( {
     },
     background: {
       default: '#dcedc8',
-      paper: '#7e905e',
+      paper: '#aebf90',
     },
     text: {
       primary: '#000000',
@@ -20,7 +21,7 @@ export const pickles = createTheme( {
       disabled: 'rgba(0,0,0,0.6)',
     },
     error: {
-      main: '#1565c0',
+      main: '#e53935',
       contrastText: '#a80000',
     },
     info: {
@@ -33,6 +34,7 @@ export const pickles = createTheme( {
   typography: {
     fontFamily: 'Open Sans',
     fontSize: 15,
+    fontWeightBold: 800,
   },
   overrides: {
     MuiButton: {
