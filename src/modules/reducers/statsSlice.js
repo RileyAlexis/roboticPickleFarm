@@ -5,6 +5,7 @@ const initialState = {
     ripeCucumbers: 0,
     totalGrowthRate: 0,
     averageAge: 0,
+    cycles: 0
 }
 
 export const statsSlice = createSlice({
@@ -17,15 +18,18 @@ export const statsSlice = createSlice({
         setStats: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
-            switch (action.payload.title) {
+            switch (title) {
                 case 'maxYield': state.maxYield = parseFloat(value.toFixed(2)); break;
                 case 'ripeCucumbers': state.ripeCucumbers = parseFloat(value.toFixed(2)); break;
                 case 'totalGrowthRate': state.totalGrowthRate = parseFloat(value.toFixed(2)); break;
                 case 'averageAge': state.averageAge = parseFloat(value.toFixed(2)); break;
             }
+        },
+        runCycle: (state, action) => {
+            state.cycles += 1;
         }
     }
 })
 
-export const { setAllStats, setStats} = statsSlice.actions;
+export const { setAllStats, setStats, runCycle} = statsSlice.actions;
 export default statsSlice.reducer;

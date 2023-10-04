@@ -185,5 +185,10 @@ body {
     transition: 0.5s;
     min-height: 50vh;
     overflow: scroll;
- 
   }
+
+.log-box-item {
+  color: inherit;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}

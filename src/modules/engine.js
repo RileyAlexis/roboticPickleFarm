@@ -21,6 +21,7 @@ export function updateTicker() {
     const state = store.getState();
     const plants = state.plants;
     const resources = state.resources;
+    const cycles = state.stats.cycles;
     let ripeCucumbers = 0;
     let maxYield = 0;
     let totalGrowthRate = 0;
@@ -61,7 +62,7 @@ export function updateTicker() {
     store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'totalGrowthRate', value: totalGrowthRate}});
-    
+    store.dispatch({type: 'stats/runCycle'});
     //Caclulate average plant age and dispatch to stats reducer
     const sum = plants.reduce((accumulator, obj) => {
         return accumulator + obj.age;
@@ -77,12 +78,10 @@ export function updateTicker() {
     }
         const deadPlants = plants.filter((plant) => plant.dead);
         const maxedOut = plants.filter((plant) => plant.maxedOut);
-        console.log('Maxed Out', maxedOut);
         if (deadPlants.length > 0) {
-            store.dispatch({type: 'log/addLog', payload: `${deadPlants.length} died of natural causes`});
+            store.dispatch({type: 'log/addLog', payload: {line: `${deadPlants.length} died of natural causes`, cycle: cycles}});
         }
         if (maxedOut.length > 0) {
-            store.dispatch({type: 'log/addLog', payload: `${maxedOut.length} plants have cucumbers rotting on the vine!`});
         }
         //Delete dead plants from object
         plants.filter((plant) => !plant.dead);
@@ -94,21 +93,23 @@ export function updateTicker() {
 
 export function plantSeed() {
     const state = store.getState();
+    const cycles = state.stats.cycles;
 
     if (state.resources.seeds > 0) {
         const decon = state.plantSettings;
         const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
         store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
-        store.dispatch({type: 'log/addLog', payload: 'New Seedling Planted!'});
+        store.dispatch({type: 'log/addLog', payload: {line: 'New Seedling Planted!', cycle: cycles}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
     } else if (state.resources.seeds === 0) {
-        store.dispatch({type: 'log/addLog', payload: 'No seeds to plant!'});
+        store.dispatch({type: 'log/addLog', payload: {line: 'No seeds to plant!', cycle: cycles }});
     }
 }
 
 export function pickCucumbers() {
     const state = store.getState();
     const plants = state.plants;
+    const cycles = state.stats.cycles;
     let picked = 0;
 
     for (let i = 0; i < plants.length; i++) {
@@ -126,13 +127,14 @@ export function pickCucumbers() {
 export function makePickles() {
     const state = store.getState();
     const cucumbers = state.resources.cucumbers;
+    const cycles = state.stats.cycles;
 
     if (cucumbers >= 5) {
         store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: -5}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: +5}});
         store.dispatch({type: 'log/addLog', payload: '5 Pickles pickled!'});
     } else if (cucumbers < 5) {
-        store.dispatch({type: 'log/addLog', payload: 'Not Enough Cucumbers! Need 5'});
+        store.dispatch({type: 'log/addLog', payload: {line: 'Not Enough Cucumbers! Need 5', cycle: cycles}});
     }
 }
 
