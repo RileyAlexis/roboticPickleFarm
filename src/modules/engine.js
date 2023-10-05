@@ -143,7 +143,7 @@ export function buyBot(botType) {
     const pickles = state.resources.pickles;
     const botPrice = state.prices.bots;
     const cycles = state.stats.cycles;
-
+    console.log(botType);
     if (botType === 'planter' && pickles >= botPrice[0]) {
         store.dispatch({type: 'robots/addBot', payload: { title: 'planter', value: botPrice[1]}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
@@ -156,7 +156,7 @@ export function buyBot(botType) {
         store.dispatch({type: 'robots/addBot', payload: { title: 'pickler', value: botPrice[1]}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
         store.dispatch({type: 'log/addLog', payload: {line: 'Pickler Bot Purchased!', cycle: cycles}});
-    } else {
+    } else if (pickles < botPrice[0]) {
         store.dispatch({type: 'log/addLog', payload: {line: `Need ${botPrice[0]} pickles to purchase a bot`, cycle: cycles}});
     }
 }
@@ -167,8 +167,8 @@ export const buttonCall = (name) => {
         case 'Plant': plantSeed(); break;
         case 'Pick': pickCucumbers(); break;
         case 'Pickle': makePickles(); break;
-        case 'Buy Planter Bot': buyBot('Planter'); break;
-        case 'Buy Picker Bot': buyBot('Picker'); break;
-        case 'Buy Pickler Bot': buyBot('Pickler'); break;
+        case 'Buy Planter Bot': buyBot('planter'); break;
+        case 'Buy Picker Bot': buyBot('picker'); break;
+        case 'Buy Pickler Bot': buyBot('pickler'); break;
     }
 }

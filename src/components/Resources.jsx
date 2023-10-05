@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 
+import RobotData from "./RobotData";
+
 function Resources () {
 
     const resources = useSelector(store => store.resources);
@@ -24,6 +26,7 @@ function Resources () {
         <p>Max Yield: {maxYield}</p>
         <p>Average Age: {averageAge}</p>
         <p>Ripe Cucumbers: {ripeCucumbers}</p>
+        <RobotData />
         </>
     )
 }

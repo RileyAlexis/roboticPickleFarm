@@ -86,7 +86,9 @@ const userId = (state = '', action) => {
 
   const storeInstance = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(sagaMiddleware, logger),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(
+      { thunk: false, serializableCheck: false })
+      .concat(sagaMiddleware),
   })
 
   export { storeInstance };
