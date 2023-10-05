@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    seeds: [50, 5],
+    seeds: [50, 1],
     bots: [100, 1]
 }
 

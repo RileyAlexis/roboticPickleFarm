@@ -4,8 +4,8 @@ const initialState =
     [
         {name: 'Plant', coolDown: 4000, show: true },
         {name: 'Pick', coolDown: 2000, show: true },
-        {name: 'Buy Seeds', coolDown:2000, show: false },
-        {name: 'Pickle', coolDown: 5000, show: true }
+        {name: 'Pickle', coolDown: 5000, show: true },
+        {name: 'Buy Seed', coolDown:2000, show: true }
     ];
 
     export const farmMenuSlice = createSlice({

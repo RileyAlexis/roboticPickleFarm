@@ -28,15 +28,17 @@ function cycleTheBots() {
     const plants = state.plants;
     const seeds = state.resources.seeds;
     const ripeCucumbers = state.stats.ripeCucumbers;
-console.log(state.robots);
+    const cucumbers = state.resources.cucumbers;
 
 if (planterBots > 0 && planterSpeed > 0) {
     let planterRuns = (planterBots * planterSpeed > seeds) ? seeds : planterBots * planterSpeed;
         for (let i = 0; i < planterRuns; i++) {
     const decon = state.plantSettings;
     const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
+    console.log(newPlant);
     store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
     store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
+
     } //End For Loop
     } //end planterBots
 
@@ -50,21 +52,25 @@ if (pickerBots > 0 && pickerSpeed > 0) {
                 plants[i].currentYield--;
                 picked++;
                 break;
-            
-        } //End plants for loop
-    } //End pickerBot for loop
+        } 
+    } //End plants for loop
         if (picked >= 1) {
             store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
         } 
-} //End pickerBots
+        } //End pickerBot for loop
+}//End pickerBots
 
+if (picklerBots > 0 && picklerSpeed > 0) {
+    let pickled = 0;
+    let picklerRuns = (picklerBots * picklerSpeed > cucumbers) ? cucumbers : picklerBots * picklerSpeed;
 
-}}
-
-
-
-
-
+    for (let i = 0; i < picklerRuns; i++) {
+        pickled++;
+    }
+    store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: -pickled}});
+    store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: pickled}});
+}
+}
 
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
@@ -107,7 +113,7 @@ export function updateTicker() {
         totalGrowthRate += plant.growthRate * (plant.modifier + plant.growthModifer);
 
     }) //End ForEach loop
-    cycleTheBots();
+    
     //Dispatch total current yield, max yield and total Growth Rate to state stats reducer
     store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
@@ -139,6 +145,7 @@ export function updateTicker() {
         //Update plants state variable
         store.dispatch({type: 'plants/setAllPlants', payload: plants});
  }
+ cycleTheBots();
 }
 
 export function plantSeed() {
@@ -193,7 +200,6 @@ export function buyBot(botType) {
     const pickles = state.resources.pickles;
     const botPrice = state.prices.bots;
     const cycles = state.stats.cycles;
-    console.log(botType);
     if (botType === 'planter' && pickles >= botPrice[0]) {
         store.dispatch({type: 'robots/addBot', payload: { title: 'planter', value: botPrice[1]}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
@@ -211,6 +217,18 @@ export function buyBot(botType) {
     }
 }
 
+function buySeeds() {
+    const state = store.getState();
+    const pickles = state.resources.pickles;
+    const seedPrice = state.prices.seeds;
+
+    if (pickles >= seedPrice[0]) {
+        console.log('Buy Seeds running');
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: seedPrice[1]}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -seedPrice[0]}})
+    }
+}
+
 export const buttonCall = (name) => {
     console.log(name);
     switch (name) {
@@ -220,5 +238,6 @@ export const buttonCall = (name) => {
         case 'Buy Planter Bot': buyBot('planter'); break;
         case 'Buy Picker Bot': buyBot('picker'); break;
         case 'Buy Pickler Bot': buyBot('pickler'); break;
+        case 'Buy Seeds': buySeeds(); break;
     }
 }

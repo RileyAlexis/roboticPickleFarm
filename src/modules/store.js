@@ -88,7 +88,9 @@ const userId = (state = '', action) => {
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(
       { thunk: false, serializableCheck: false })
-      .concat(sagaMiddleware),
+      .concat(sagaMiddleware, 
+        // logger
+        ),
   })
 
   export { storeInstance };
