@@ -5,7 +5,18 @@ const initialState = {
     ripeCucumbers: 0,
     totalGrowthRate: 0,
     averageAge: 0,
-    cycles: 0
+    cycles: 0,
+    planterActive: false,
+    pickerActive: false,
+    picklerActive: false,
+    planterDelta: 0,
+    pickerDelta: 0,
+    picklerDelta: 0,
+    totalProduction: 0,
+    pickleProduction: [],
+    cucumberProduction: [],
+    seedProduction:[],
+    timeframe: 60,
 }
 
 export const statsSlice = createSlice({
@@ -23,6 +34,25 @@ export const statsSlice = createSlice({
                 case 'ripeCucumbers': state.ripeCucumbers = parseFloat(value.toFixed(2)); break;
                 case 'totalGrowthRate': state.totalGrowthRate = parseFloat(value.toFixed(2)); break;
                 case 'averageAge': state.averageAge = parseFloat(value.toFixed(2)); break;
+                case 'timeFrame': state.timeFrame = value; break;
+            }
+        },
+        toggleActive: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            switch (title) {
+                case 'planter': state.planterActive = !state.planterActive; state.planterDelta = value; break;
+                case 'picker': state.pickerActive = !state.pickerActive; state.pickerDelta = value; break;
+                case 'pickler': state.picklerActive = !state.picklerActive; state.picklerDelta = value; break;
+            }
+        },
+        trackStats: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            switch (title) {
+                case 'cucumbers': state.cucumberProduction = [...state.cucumberProduction, value]; break;
+                case 'pickles': state.pickleProduction = [...state.pickleProduction, value]; break;
+                case 'seeds': state.seedProduction = [...state.seedProduction, value]; break;
             }
         },
         runCycle: (state, action) => {
@@ -31,5 +61,5 @@ export const statsSlice = createSlice({
     }
 })
 
-export const { setAllStats, setStats, runCycle} = statsSlice.actions;
+export const { setAllStats, setStats, toggleActive, runCycle} = statsSlice.actions;
 export default statsSlice.reducer;

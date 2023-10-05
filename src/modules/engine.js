@@ -29,9 +29,14 @@ function cycleTheBots() {
     const seeds = state.resources.seeds;
     const ripeCucumbers = state.stats.ripeCucumbers;
     const cucumbers = state.resources.cucumbers;
+    const cycles = state.stats.cycles;
+    const stats = state.stats;
 
 if (planterBots > 0 && planterSpeed > 0) {
     let planterRuns = (planterBots * planterSpeed > seeds) ? seeds : planterBots * planterSpeed;
+    if (planterRuns > 0) {
+    store.dispatch({type: 'stats/toggleActive', payload: {title: 'planter', value: cycles}});
+    }
         for (let i = 0; i < planterRuns; i++) {
     const decon = state.plantSettings;
     const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
@@ -45,6 +50,8 @@ if (planterBots > 0 && planterSpeed > 0) {
 if (pickerBots > 0 && pickerSpeed > 0) {
     let picked = 0;
     let pickerRuns = (pickerBots * pickerSpeed > ripeCucumbers) ? ripeCucumbers : pickerBots * pickerSpeed;
+    
+    store.dispatch({type: 'stats/toggleActive', payload: {title: 'picker', value: cycles}});
     
     for (let i = 0; i < pickerRuns; i++) {
         for (let i = 0; i < plants.length; i++) {
@@ -63,13 +70,24 @@ if (pickerBots > 0 && pickerSpeed > 0) {
 if (picklerBots > 0 && picklerSpeed > 0) {
     let pickled = 0;
     let picklerRuns = (picklerBots * picklerSpeed > cucumbers) ? cucumbers : picklerBots * picklerSpeed;
-
+    store.dispatch({type: 'stats/toggleActive', payload: {title: 'pickler', value: cycles}});
     for (let i = 0; i < picklerRuns; i++) {
         pickled++;
-    }
+    } //End for loop
     store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: -pickled}});
     store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: pickled}});
+} //end PicklerBots
+
+if ((stats.planterDelta - stats.cycles) < 3 && stats.planterActive) {
+    store.dispatch({type: 'stats/toggleActive', payload: {title: 'planter', value: cycles}});
 }
+if ((stats.pickerDelta - stats.cycles) > 3 && stats.pickerActive) {
+    store.dispatch({type: 'stats/toggleActive', payload: {title: 'picker', value: cycles}});
+}
+if ((stats.picklerDelta - stats.cycles) > 3 && stats.picklerActive) {
+    store.dispatch({type: 'stats/toggleActive', payload: {title: 'pickler', value: cycles}});
+}
+
 }
 
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
@@ -221,11 +239,15 @@ function buySeeds() {
     const state = store.getState();
     const pickles = state.resources.pickles;
     const seedPrice = state.prices.seeds;
+    const cycles = state.stats.cycles;
 
     if (pickles >= seedPrice[0]) {
         console.log('Buy Seeds running');
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: seedPrice[1]}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -seedPrice[0]}})
+        store.dispatch({type: 'log/addLog', payload: {line: `Seed Purchased for ${seedPrice[0]} pickles`, cycle: cycles}});
+    } else {
+        store.dispatch({type: 'log/addLog', payload: {line: `Need ${seedPrice[0]} pickles to purchase a seed`, cycle: cycles}});
     }
 }
 
@@ -238,6 +260,6 @@ export const buttonCall = (name) => {
         case 'Buy Planter Bot': buyBot('planter'); break;
         case 'Buy Picker Bot': buyBot('picker'); break;
         case 'Buy Pickler Bot': buyBot('pickler'); break;
-        case 'Buy Seeds': buySeeds(); break;
+        case 'Buy Seed': buySeeds(); break;
     }
 }
