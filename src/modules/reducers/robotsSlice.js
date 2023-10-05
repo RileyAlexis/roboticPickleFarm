@@ -30,12 +30,7 @@ export const robotsSlice = createSlice({
 });
 
 export const {setAllBots, 
-            changePickerBot, 
-            changePickerSpeed, 
-            changePlanterBot, 
-            changePlanterSpeed, 
-            changePicklerBot, 
-            changePicklerSpeed
+            addBot,
             } = robotsSlice.actions;
 
 export default robotsSlice.reducer;

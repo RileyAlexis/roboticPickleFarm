@@ -17,6 +17,56 @@ class Plants {
     }
 }
 
+function cycleTheBots() {
+    const state = store.getState();
+    const planterBots = state.robots.planterBots;
+    const planterSpeed = state.robots.planterSpeed;
+    const pickerBots = state.robots.pickerBots;
+    const pickerSpeed = state.robots.pickerSpeed;
+    const picklerBots = state.robots.picklerBots;
+    const picklerSpeed = state.robots.picklerSpeed;
+    const plants = state.plants;
+    const seeds = state.resources.seeds;
+    const ripeCucumbers = state.stats.ripeCucumbers;
+console.log(state.robots);
+
+if (planterBots > 0 && planterSpeed > 0) {
+    let planterRuns = (planterBots * planterSpeed > seeds) ? seeds : planterBots * planterSpeed;
+        for (let i = 0; i < planterRuns; i++) {
+    const decon = state.plantSettings;
+    const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
+    store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
+    store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
+    } //End For Loop
+    } //end planterBots
+
+if (pickerBots > 0 && pickerSpeed > 0) {
+    let picked = 0;
+    let pickerRuns = (pickerBots * pickerSpeed > ripeCucumbers) ? ripeCucumbers : pickerBots * pickerSpeed;
+    
+    for (let i = 0; i < pickerRuns; i++) {
+        for (let i = 0; i < plants.length; i++) {
+            if (plants[i].currentYield >= 1) {
+                plants[i].currentYield--;
+                picked++;
+                break;
+            
+        } //End plants for loop
+    } //End pickerBot for loop
+        if (picked >= 1) {
+            store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
+        } 
+} //End pickerBots
+
+
+}}
+
+
+
+
+
+
+//Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
     const plants = state.plants;
@@ -57,7 +107,7 @@ export function updateTicker() {
         totalGrowthRate += plant.growthRate * (plant.modifier + plant.growthModifer);
 
     }) //End ForEach loop
-
+    cycleTheBots();
     //Dispatch total current yield, max yield and total Growth Rate to state stats reducer
     store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
