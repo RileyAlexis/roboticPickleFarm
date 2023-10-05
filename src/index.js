@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-
 import './index.css';
 import App from './App';
 
@@ -10,7 +9,7 @@ import { ThemeProvider, styled } from '@mui/material/styles';
 import { pickles } from './modules/themes';
 
 //Redux Store
-import storeInstance from './modules/store';
+import { storeInstance } from './modules/store';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,21 +1,26 @@
+import { useSelector } from "react-redux";
 import GameButton from "./GameButton";
+import { buttonCall } from "../modules/engine";
 
-function RobotMenu({robotMenu, engine}) {
+function RobotMenu() {
+    const robotMenu = useSelector(store => store.robotMenu);
+
     return (
-        <>
+        <div className="buttonBox">
         {robotMenu?.map((item) => 
-         {if (item.show) return (
-            <GameButton key={item.id} 
-                name={item.title} 
-                buttonCall={engine.buttonCall} 
-                disable={item.dis} 
-                coolDown={item.coolDown} />
-    )
-    else return (null)
-    }
+            {if (item.show) return (
+                    <GameButton key={item.name} 
+                        name={item.name} 
+                        buttonCall={() => buttonCall(item.name)} 
+                        disable={item.dis}
+                        show={item.show}
+                        coolDown={item.coolDown} />
+            )
+            else return (null)
+            }
         )}
-        
-        </>
+       
+    </div>
     )
 }
 

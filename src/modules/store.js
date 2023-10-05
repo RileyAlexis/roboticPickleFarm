@@ -17,13 +17,10 @@ import farmMenuSlice from './reducers/farmMenuSlice';
 import pricesSlice from './reducers/pricesSlice';
 import plantSettingsSlice from './reducers/plantSettings';
 import statsSlice from './reducers/statsSlice';
-import { buttonCallInit } from './engine';
+
 
 const sagaMiddleware = createSagaMiddleware();
 
-const buttonCall = (state = buttonCallInit, action) => {
-  return state;
-}
 
 const userId = (state = '', action) => {
     if (action.type === 'SET_USERID') {
@@ -68,6 +65,7 @@ const userId = (state = '', action) => {
     return state;
   }
 
+
   const rootReducer = combineReducers({
     resources: resourcesSlice,
     stats: statsSlice,
@@ -82,7 +80,7 @@ const userId = (state = '', action) => {
     robotMenu: robotsMenuSlice,
     prices: pricesSlice,
     plantSettings: plantSettingsSlice,
-    buttonCall: buttonCall,
+    // buttonCall: buttonCall,
     gameSpeed: gameSpeed,
 });
 
@@ -91,4 +89,4 @@ const userId = (state = '', action) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(sagaMiddleware, logger),
   })
 
-  export default storeInstance;
+  export { storeInstance };

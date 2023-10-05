@@ -1,4 +1,4 @@
-import store from './store';
+import { storeInstance as store} from './store';
 
 class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -58,11 +58,12 @@ export function updateTicker() {
 
     }) //End ForEach loop
 
-    //Dispatch total current yield, max yield and total Growth Rate to state
+    //Dispatch total current yield, max yield and total Growth Rate to state stats reducer
     store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'totalGrowthRate', value: totalGrowthRate}});
     store.dispatch({type: 'stats/runCycle'});
+
     //Caclulate average plant age and dispatch to stats reducer
     const sum = plants.reduce((accumulator, obj) => {
         return accumulator + obj.age;
@@ -75,7 +76,7 @@ export function updateTicker() {
     if (log.length > 20) {
         const newLog = log.slice(-20);
         store.dispatch({type: 'log/setAllLog', payload: newLog });
-    }
+    } 
         const deadPlants = plants.filter((plant) => plant.dead);
         const maxedOut = plants.filter((plant) => plant.maxedOut);
         if (deadPlants.length > 0) {
@@ -88,7 +89,6 @@ export function updateTicker() {
         //Update plants state variable
         store.dispatch({type: 'plants/setAllPlants', payload: plants});
  }
- 
 }
 
 export function plantSeed() {
@@ -132,7 +132,7 @@ export function makePickles() {
     if (cucumbers >= 5) {
         store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: -5}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: +5}});
-        store.dispatch({type: 'log/addLog', payload: '5 Pickles pickled!'});
+        store.dispatch({type: 'log/addLog', payload: {line: '5 Pickles pickled!', cycle: cycles}});
     } else if (cucumbers < 5) {
         store.dispatch({type: 'log/addLog', payload: {line: 'Not Enough Cucumbers! Need 5', cycle: cycles}});
     }
@@ -140,15 +140,28 @@ export function makePickles() {
 
 export function buyBot(botType) {
     const state = store.getState();
-    const pickles = store.resources.pickles;
-    const botPrice = store.prices.bots;
+    const pickles = state.resources.pickles;
+    const botPrice = state.prices.bots;
+    const cycles = state.stats.cycles;
 
     if (botType === 'planter' && pickles >= botPrice[0]) {
-
+        store.dispatch({type: 'robots/addBot', payload: { title: 'planter', value: botPrice[1]}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
+        store.dispatch({type: 'log/addLog', payload: {line: 'Planter Bot Purchased!', cycle: cycles}});
+    } else if (botType === 'picker' && pickles >= botPrice[0]) {
+        store.dispatch({type: 'robots/addBot', payload: { title: 'picker', value: botPrice[1]}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
+        store.dispatch({type: 'log/addLog', payload: {line: 'Picker Bot Purchased!', cycle: cycles}});
+    } else if (botType === 'pickler' && pickles >= botPrice[0]) {
+        store.dispatch({type: 'robots/addBot', payload: { title: 'pickler', value: botPrice[1]}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
+        store.dispatch({type: 'log/addLog', payload: {line: 'Pickler Bot Purchased!', cycle: cycles}});
+    } else {
+        store.dispatch({type: 'log/addLog', payload: {line: `Need ${botPrice[0]} pickles to purchase a bot`, cycle: cycles}});
     }
 }
 
-export const buttonCallInit = (name) => {
+export const buttonCall = (name) => {
     console.log(name);
     switch (name) {
         case 'Plant': plantSeed(); break;

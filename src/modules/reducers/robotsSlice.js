@@ -16,25 +16,17 @@ export const robotsSlice = createSlice({
         setAllBots: (state, action) => {
             return action.payload;
         },
-        changePickerBot: (state, action) => {
-            return state.pickerBots += action.payload;
-        },
-        changePlanterBot: (state, action) => {
-            return state.planterBots += action.payload;
-        },
-        changePicklerBot: (state, action) => {
-            return state.picklerBots += action.payload;
-        },
-        changePickerSpeed: (state, action) => {
-            return state.pickerSpeed += action.payload;
-        },
-        changePlanterSpeed: (state, action) => {
-            return state.planterSpeed += action.payload;
-        },
-        changePicklerSpeed: (state, action) => {
-            return state.picklerSpeed += action.payload;
-        }
+        addBot: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            switch (title) {
+                case 'picker': state.pickerBots += value; break;
+                case 'planter': state.planterBots += value; break;
+                case 'pickler': state.picklerBots += value; break;
+                default: return state;
+            }
     }
+}
 });
 
 export const {setAllBots, 

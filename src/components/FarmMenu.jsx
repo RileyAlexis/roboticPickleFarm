@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import GameButton from "./GameButton";
-import store from '../modules/store';
+import { buttonCall } from "../modules/engine";
 
 function FarmMenu() {
     const farmMenu = useSelector(store => store.farmMenu);
-    const buttonCall = useSelector(store => store.buttonCall);
+
     console.log('ButtonCall', buttonCall)
     return (
         <div className="buttonBox">

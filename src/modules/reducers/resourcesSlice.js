@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     seeds: 25,
     cucumbers: 0,
-    pickles: 0,
+    pickles: 300,
     pickleJars: 0,
 }
 
