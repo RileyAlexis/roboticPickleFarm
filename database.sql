@@ -15,7 +15,7 @@ CREATE TABLE "games" (
 CREATE TABLE "users" (
     "id" SERIAL PRIMARY KEY,
     "email" VARCHAR(50) NOT NULL UNIQUE,
-    "hashed_password" VARCHAR(120),
+    "hashed_password" VARCHAR(1000),
     "role" VARCHAR(20)
 );
 

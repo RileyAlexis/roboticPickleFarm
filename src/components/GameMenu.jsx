@@ -43,7 +43,8 @@ function GameMenu () {
                     picklerBots: picklerBots,
                     upgrades: upgrades
                 }
-                axios.post('/game/savegame', dataObj)
+                axios.post('/game/savegame', { headers: { 'Authorization': `Bearer ${cookies.AuthToken}`},
+                    dataObj})
                     .then((response) => {
                         dispatch({type: 'ADD_LOG', payload: `Game Saved at Cycle ${cycles}`});
                     }).catch((error) => {
@@ -53,8 +54,22 @@ function GameMenu () {
         }
     }
 
+    const testRoute = () => {
+        const dataObj = {
+            userEmail: userEmail
+        }
+
+        axios.post('/game/testingRoute', {headers: { 'Authorization': `${cookies.AuthToken}`}, dataObj})
+            .then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                console.error(error);
+            })
+    }
+
     return (
         <>
+        <Button onClick={testRoute} color="primary">Testing Route</Button>
         <Button onClick={saveGame} color="primary">Save</Button>
         <Button color="primary">Settings</Button>
         <Button onClick={handleSignOut} color="primary">Sign Out</Button>

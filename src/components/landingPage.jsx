@@ -9,6 +9,8 @@ import axios from 'axios';
 import { Button, Typography } from '@mui/material';
 import { TextField } from '@mui/material';
 
+import GameMenu from './GameMenu';
+
 function LandingPage() {
 
     const [login, setLogin] = useState(true);
@@ -28,18 +30,11 @@ function LandingPage() {
         if (!authorized) {
             dispatch({ type: 'SET_AUTH', payload: true });
             dispatch({ type: 'SET_USERID', payload: genId });
-
         } 
-        const initialValues = {
-            Seeds: 5,
-            Cucumbers: 0,
-            Pickles: 0,
-            PickleJars: 0
-        }
 
-    dispatch({ type: 'SET_RESOURCES', payload: initialValues});
-
-
+        const config = {
+            headers: {Authorization: `Bearer ${cookies.AuthToken}`}
+        };
 
     axios.post('/game/savenewgame', )
         .then((response) => {
@@ -86,7 +81,6 @@ function LandingPage() {
                     if (response.data.detail) {
                         setError(response.data.detail)
                     } else {
-                        console.log(response.data.email);
                         setCookie('Email', response.data.email);
                         setCookie('AuthToken', response.data.token);
                         dispatch({ type: 'SET_EMAIL', payload: response.data.email });
@@ -99,6 +93,7 @@ function LandingPage() {
 
     return (
         <div className="landingPage">
+            <GameMenu />
         {login && 
         <div className="loginBox">
             <Typography variant="body">

@@ -5,20 +5,20 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 
+const verifyToken = require('../modules/jwtMiddleware');
+
 const jwtkey = process.env.SECRET_KEY;
 
 router.post('/login', (req, res) => {
     console.log('login route call');
     const email = req.body.email;
     const password = req.body.password;
-    console.log(req);
     let userRole = '';
     let userId = '';
 
-    const queryString = `SELECT * FROM users WHERE email ILIKE $1`; 
+    const queryString = `SELECT * FROM "users" WHERE "email" ILIKE $1`; 
     //Searches for existing email. Since usernames must be unique the database 
     //will only return 1 or 0 users
-    
 
     pool.query(queryString, [email])
         .then((response) => {
@@ -37,12 +37,15 @@ router.post('/login', (req, res) => {
             }
         })
         .then((passwordsMatch) => {
-            console.log('Password matches', passwordsMatch);
             if (!passwordsMatch) {
                 res.json({ detail: 'Invalid Credentials' });
             } else if (passwordsMatch) {
-                const token = jwt.sign({ email }, jwtkey, { expiresIn: '1hr' });
-                res.json({ 'userId': userId, 'email': email, 'token': token, 'role': userRole });
+                const user = {
+                    id: userId,
+                    email: email
+                }
+                const token = jwt.sign(user, jwtkey, {expiresIn: '3hr' }); 
+                res.json({ userId: userId, email: email, token: token });
             }
         })
         .catch((error) => {
@@ -56,15 +59,21 @@ router.post('/newUser', (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    let queryString = `INSERT INTO "users" ("email", "hashed_password", "role") VALUES($1, $2, $3);`;
+    let queryString = `INSERT INTO "users" ("email", "hashed_password", "role") VALUES($1, $2, $3)
+                        RETURNING "id";`;
 
     pool.query(queryString, [email, hashedPassword, 'user'])
         .then((result) => {
+            // console.log('New User Id:', result.rows[0].id); //ID IS HERE!
             //provess.env.secret created in node terminal : 
             //node -> require('crypto').randomBytes(64).toString('hex');
             //require(‘dotenv’).config();
-            const token = jwt.sign({ email }, jwtkey, { expiresIn: '1hr' });
-            res.json({ 'email': email, 'token': token });
+            const user = {
+                id: result.rows[0].id,
+                email: req.body.email
+            }
+            const token = jwt.sign(user, jwtkey, {expiresIn: '3hr' }); 
+            res.json({ email: email, token: token });
         })
         .catch((error) => {
             res.json({ detail: 'Signup Failed' });
@@ -72,10 +81,25 @@ router.post('/newUser', (req, res) => {
         })
 })
 
-router.post('/savenewgame', (req, res) => {
+router.post('/testingRoute', verifyToken, (req, res) => {
+    console.log('Headers',req.headers);
+    console.log('Req.body', req.body);
+    const token = req.body.headers.Authorization;
+    console.log('Req.user', req.user);
+    console.log('Token', token);
+    res.send('Testing Route Response');
+    // const isVerified = verifyToken(req.body);
+    // console.log('Is Verified', isVerified);
+
+})
+
+
+
+router.post('/savenewgame', verifyToken, (req, res) => {
     let queryString = `INSERT INTO "games" ("game_id", "resources", "prices", "pickerBots", 
     "planterBots", "picklerBots", "upgrades", "cycle", "gameSpeed", "log")
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
+
 
     const userEmail = req.body.userEmail;
     const userId = req.body.userId;
@@ -99,7 +123,7 @@ router.post('/savenewgame', (req, res) => {
         })
 })
 
-router.post('/savegame', (req, res) => {
+router.post('/savegame', verifyToken, (req, res) => {
     const userEmail = req.body.userEmail;
     const userId = req.body.userId;
     const cycles = req.body.cycles;
