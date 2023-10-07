@@ -50,22 +50,6 @@ const userId = (state = '', action) => {
     return state;
   }
 
-  const gameSpeed = (state = 1000, action) => {
-    return state;
-  }
-  
-  const cycles = (state = 0, action) => {
-    if (action.type === 'UPDATE_CYCLE') {
-      return state++;
-    }
-    return state;
-  }
-
-  const upgrades = (state = {}, action) => {
-    return state;
-  }
-
-
   const rootReducer = combineReducers({
     resources: resourcesSlice,
     stats: statsSlice,
@@ -80,8 +64,6 @@ const userId = (state = '', action) => {
     robotMenu: robotsMenuSlice,
     prices: pricesSlice,
     plantSettings: plantSettingsSlice,
-    // buttonCall: buttonCall,
-    gameSpeed: gameSpeed,
 });
 
   const storeInstance = configureStore({

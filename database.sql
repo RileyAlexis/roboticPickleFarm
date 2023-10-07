@@ -1,16 +1,54 @@
 CREATE TABLE "games" (
     "id" SERIAL PRIMARY KEY,
-    "game_id" INT REFERENCES "users",
+    "user_id" INT REFERENCES "users",
+    "plants" JSONB,
     "resources" JSONB,
+    "stats" JSONB,
+    "robots" JSONB,
+    "plantSettings" JSONB,
     "prices" JSONB,
-    "pickerBots" JSONB,
-    "planterBots" JSONB,
-    "picklerBots" JSONB,
+    "buildings" JSONB,
     "upgrades" JSONB,
-    "cycle" INT,
-    "gameSpeed" INT,
-    "log" TEXT
+    "log" VARCHAR(120) ARRAY
 );
+
+CREATE TABLE "resources" (
+    "id" SERIAL PRIMARY KEY,
+    "seeds" INT,
+    "cucumbers" INT,
+    "pickles" INT,
+    "pickleJars" INT,
+    "placeHolder01" INT,
+    "placeHolder02" INT,
+    "placeHolder03" INT,
+    "placeHolder04" INT,
+    "placeHolder05" INT
+);
+
+CREATE TABLE "stats" (
+    "id" SERIAL PRIMARY KEY,
+    "totalProduction" BIGINT,
+    "pickleProduction" INTEGER ARRAY,
+    "cucumberProduction" INTEGER ARRAY,
+    "seedProduction" INTEGER ARRAY,
+    "timeframe" INT,
+    "cycles" BIGINT
+);
+
+CREATE TABLE "robots" (
+    "id" SERIAL PRIMARY KEY,
+    "pickerBots" INT,
+    "planterBots" INT,
+    "picklerBots" INT,
+    "pickerSpeed" INT,
+    "planterSpeed" INT,
+    "picklerSpeed" INT
+);
+
+CREATE TABLE "plants" (
+    "id" SERIAL PRIMARY KEY,
+    "plants" JSONB
+)
 
 CREATE TABLE "users" (
     "id" SERIAL PRIMARY KEY,

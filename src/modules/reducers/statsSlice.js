@@ -17,6 +17,8 @@ const initialState = {
     cucumberProduction: [],
     seedProduction:[],
     timeframe: 60,
+    gameSpeed: 1000,
+    
 }
 
 export const statsSlice = createSlice({

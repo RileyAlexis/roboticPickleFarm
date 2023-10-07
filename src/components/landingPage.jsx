@@ -24,7 +24,7 @@ function LandingPage() {
     const dispatch = useDispatch();
     const genId = v4();
     const authorized = useSelector(store => store.authorized);
-    
+    const store = useSelector(store => store);
     
     const initializeGame = () => {
         if (!authorized) {
@@ -93,7 +93,7 @@ function LandingPage() {
 
     return (
         <div className="landingPage">
-            <GameMenu />
+            {console.log(store)}
         {login && 
         <div className="loginBox">
             <Typography variant="body">

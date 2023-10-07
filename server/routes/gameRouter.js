@@ -124,39 +124,66 @@ router.post('/savenewgame', verifyToken, (req, res) => {
 })
 
 router.post('/savegame', verifyToken, (req, res) => {
-    const userEmail = req.body.userEmail;
-    const userId = req.body.userId;
-    const cycles = req.body.cycles;
-    const resources = req.body.resources;
-    const prices = req.body.prices;
-    const log = req.body.log;
-    const plants = req.body.plants;
-    const pickerBots = req.body.pickerBots;
-    const planterBots = req.body.planterBots;
-    const picklerBots = req.body.picklerBots;
-    const upgrades = req.body.upgrades;
-    const gameSpeed = 1000;
 
-    let queryString = `UPDATE "games"
-                SET "resources" = $2,
-                    "prices" = $3,
-                    "pickerBots" = $4,
-                    "planterBots" = $5,
-                    "picklerBots" = $6,
-                    "upgrades" = $7,
-                    "cycle" = $8,
-                    "gameSpeed" = $9,
+let dataArr = [
+    req.body.dataObj.userId,
+    JSON.stringify(req.body.dataObj.plants),
+    req.body.dataObj.resources,
+    req.body.dataObj.stats,
+    req.body.dataObj.robots,
+    req.body.dataObj.plantSettings,
+    req.body.dataObj.prices,
+    {Placeholder: 'buildings'},
+    req.body.dataObj.upgrades,
+    req.body.dataObj.log
+];
+
+let queryString = 'SELECT 1 FROM "games" WHERE "user_id" = $1'
+pool.query(queryString, [req.body.dataObj.userId])
+    .then((result) => {
+        if (result.rows.length > 0) {
+            //ID Exists write update SQL stuff here
+            queryString = `
+                UPDATE "games"
+                SET "plants" = $2,
+                    "resources" = $3,
+                    "stats" = $4,
+                    "robots" = $5,
+                    "plantSettings" = $6,
+                    "prices" = $7,
+                    "buildings" = $8,
+                    "upgrades" = $9,
                     "log" = $10
-                WHERE "id" = $1
-    `
+                WHERE "user_id" = $1;`
+        } else {
+            //ID does not exist - write INSERT sql code here
+            queryString = `
+                INSERT INTO "games" 
+                    ("user_id", 
+                    "plants", 
+                    "resources", 
+                    "stats", 
+                    "robots", 
+                    "plantSettings", 
+                    "prices", 
+                    "buildings", 
+                    "upgrades", 
+                    "log")
+                VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
 
-    pool.query(queryString, [userId, resources, prices, pickerBots, planterBots, picklerBots, upgrades, cycles, gameSpeed, log])
-        .then((response) => {
-            res.sendStatus(200);
-        }).catch((error) => {
-            console.error(`Error making query ${queryString}`, error);
-            res.sendStatus(500);
-        })
+        } //End userId if exists statement
+        pool.query(queryString, dataArr)
+            .then((response) => {
+                res.sendStatus(200);
+            }).catch((error) => {
+                console.log(error);
+                res.sendStatus(500);
+            })
+
+    }).catch((error) => {
+        console.error(error);
+    })
+
 
 })
 

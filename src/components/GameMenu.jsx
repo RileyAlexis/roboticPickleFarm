@@ -17,10 +17,10 @@ function GameMenu () {
     const prices = useSelector(store => store.prices);
     const log = useSelector(store => store.log);
     const plants = useSelector(store => store.plants);
-    const pickerBots = useSelector(store => store.pickerBots);
-    const planterBots = useSelector(store => store.planterBots);
-    const picklerBots = useSelector(store => store.picklerBots);
+    const plantSettings = useSelector(store => store.plantSettings);
+    const robots = useSelector(store => store.robots);
     const upgrades = useSelector(store => store.upgrades);
+    const stats = useSelector(store => store.stats);
 
     const handleSignOut = () => {
         removeCookie('Email');
@@ -29,29 +29,26 @@ function GameMenu () {
     }
 
     const saveGame = () => {
-        if (cookies.AuthToken) {
-                const dataObj = {
-                    userEmail: userEmail,
-                    userId: userId,
-                    cycles: cycles,
-                    resources: resources,
-                    prices: prices,
-                    log: log,
-                    plants: plants,
-                    pickerBots: pickerBots,
-                    planterBots: planterBots,
-                    picklerBots: picklerBots,
-                    upgrades: upgrades
-                }
-                axios.post('/game/savegame', { headers: { 'Authorization': `Bearer ${cookies.AuthToken}`},
-                    dataObj})
-                    .then((response) => {
-                        dispatch({type: 'ADD_LOG', payload: `Game Saved at Cycle ${cycles}`});
-                    }).catch((error) => {
-                        console.error(error);
-                    })
- 
-        }
+            const dataObj = {
+                userId: userId,
+                resources: resources,
+                prices: prices,
+                log: log,
+                plants: plants,
+                robots: robots,
+                upgrades: upgrades,
+                stats: stats,
+                plantSettings: plantSettings
+            }
+            console.log('Data Object', dataObj);
+
+    axios.post('/game/savegame', {headers: { 'Authorization': `${cookies.AuthToken}`},
+        dataObj})
+        .then((response) => {
+            dispatch({type: 'log/addLog', payload: {line: `Game Saved Successfully`, cycle: cycles}});
+        }).catch((error) => {
+            console.error(error);
+        })
     }
 
     const testRoute = () => {

@@ -23,7 +23,7 @@ function App() {
 
   //Redux Store variables
   const authorized = useSelector(store => store.authorized);
-  const gameSpeed = useSelector(store => store.gameSpeed);
+  const gameSpeed = useSelector(store => store.stats.gameSpeed);
 
   //Updates all stats each game interval(default 1/sec);
   function runUpdate() {
