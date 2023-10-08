@@ -1,8 +1,7 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
+import { takeEvery, put, all} from 'redux-saga/effects';
 import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
-import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 
@@ -50,6 +49,8 @@ const userId = (state = '', action) => {
     return state;
   }
 
+  // sagaMiddleware.run(rootSaga);
+
   const rootReducer = combineReducers({
     resources: resourcesSlice,
     stats: statsSlice,
@@ -71,7 +72,7 @@ const userId = (state = '', action) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(
       { thunk: false, serializableCheck: false })
       .concat(sagaMiddleware, 
-        // logger
+        logger
         ),
   })
 

@@ -19,18 +19,18 @@ class Plants {
 
 function cycleTheBots() {
     const state = store.getState();
-    const planterBots = state.robots.planterBots;
-    const planterSpeed = state.robots.planterSpeed;
-    const pickerBots = state.robots.pickerBots;
-    const pickerSpeed = state.robots.pickerSpeed;
-    const picklerBots = state.robots.picklerBots;
-    const picklerSpeed = state.robots.picklerSpeed;
-    const plants = state.plants;
-    const seeds = state.resources.seeds;
-    const ripeCucumbers = state.stats.ripeCucumbers;
-    const cucumbers = state.resources.cucumbers;
-    const cycles = state.stats.cycles;
-    const stats = state.stats;
+    let planterBots = state.robots.planterBots;
+    let planterSpeed = state.robots.planterSpeed;
+    let pickerBots = state.robots.pickerBots;
+    let pickerSpeed = state.robots.pickerSpeed;
+    let picklerBots = state.robots.picklerBots;
+    let picklerSpeed = state.robots.picklerSpeed;
+    let plants = state.plants;
+    let seeds = state.resources.seeds;
+    let ripeCucumbers = state.stats.ripeCucumbers;
+    let cucumbers = state.resources.cucumbers;
+    let cycles = state.stats.cycles;
+    let stats = state.stats;
 
 if (planterBots > 0 && planterSpeed > 0) {
     let planterRuns = (planterBots * planterSpeed > seeds) ? seeds : planterBots * planterSpeed;
@@ -40,7 +40,6 @@ if (planterBots > 0 && planterSpeed > 0) {
         for (let i = 0; i < planterRuns; i++) {
     const decon = state.plantSettings;
     const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
-    console.log(newPlant);
     store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
     store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
 
@@ -93,14 +92,14 @@ if ((stats.picklerDelta - stats.cycles) > 3 && stats.picklerActive) {
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
-    const plants = state.plants;
-    const resources = state.resources;
-    const cycles = state.stats.cycles;
+    let plants = state.plants;
+    let resources = state.resources;
+    let cycles = state.stats.cycles;
     let ripeCucumbers = 0;
     let maxYield = 0;
     let totalGrowthRate = 0;
-    const robots = state.robots;
-    const log = state.log;
+    let robots = state.robots;
+    let log = state.log;
 
     //Plant production Calculations
  if (plants.length > 0) {

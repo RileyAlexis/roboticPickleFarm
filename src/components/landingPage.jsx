@@ -24,25 +24,13 @@ function LandingPage() {
     const dispatch = useDispatch();
     const genId = v4();
     const authorized = useSelector(store => store.authorized);
-    const store = useSelector(store => store);
+    // const store = useSelector(store => store);
     
     const initializeGame = () => {
         if (!authorized) {
             dispatch({ type: 'SET_AUTH', payload: true });
             dispatch({ type: 'SET_USERID', payload: genId });
         } 
-
-        const config = {
-            headers: {Authorization: `Bearer ${cookies.AuthToken}`}
-        };
-
-    axios.post('/game/savenewgame', )
-        .then((response) => {
-            dispatch({type: 'ADD_LOG', payload: `Created New Game`});
-            console.log('Created new Game');
-        }).catch((error) => {
-            console.error(error);
-        })
     }
 
     const processLogin = () => {
@@ -63,6 +51,29 @@ function LandingPage() {
                     dispatch({ type: 'SET_EMAIL', payload: response.data.email });
                     dispatch({ type: 'SET_USERID', payload: response.data.userId })
                     dispatch({ type: 'SET_AUTH', payload: true });
+                    
+                    const data = {
+                        userId: response.data.userId
+                    }
+
+                    axios.post('/game/loadgame', {headers: { 'Authorization': `${response.data.token}`},
+                    data})
+                    .then((response) => {
+                        //Set game data Here
+                        console.log('LoadGame server response received');
+                        console.log('Response.data', response.data);
+                       dispatch({ type: 'log/setAllLog', payload: response.data.log });
+                       dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
+                       dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
+                       dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
+                       dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
+                       dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
+                       dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
+                    
+
+                    }).catch((error) => {
+                        console.log(error);
+                    })
                 }
             })
     }
@@ -84,8 +95,10 @@ function LandingPage() {
                         setCookie('Email', response.data.email);
                         setCookie('AuthToken', response.data.token);
                         dispatch({ type: 'SET_EMAIL', payload: response.data.email });
+                        console.log('New User Data', response.data.userId)
+                        dispatch({ type: 'SET_USERID', payload: response.data.userId });
                         dispatch({ type: 'SET_AUTH', payload: true });
-                        initializeGame();
+                        
                     }
                 })
         }
@@ -93,7 +106,6 @@ function LandingPage() {
 
     return (
         <div className="landingPage">
-            {console.log(store)}
         {login && 
         <div className="loginBox">
             <Typography variant="body">

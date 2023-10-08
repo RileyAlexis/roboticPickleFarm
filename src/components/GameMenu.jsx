@@ -40,7 +40,6 @@ function GameMenu () {
                 stats: stats,
                 plantSettings: plantSettings
             }
-            console.log('Data Object', dataObj);
 
     axios.post('/game/savegame', {headers: { 'Authorization': `${cookies.AuthToken}`},
         dataObj})
@@ -51,22 +50,8 @@ function GameMenu () {
         })
     }
 
-    const testRoute = () => {
-        const dataObj = {
-            userEmail: userEmail
-        }
-
-        axios.post('/game/testingRoute', {headers: { 'Authorization': `${cookies.AuthToken}`}, dataObj})
-            .then((response) => {
-                console.log(response);
-            }).catch((error) => {
-                console.error(error);
-            })
-    }
-
     return (
         <>
-        <Button onClick={testRoute} color="primary">Testing Route</Button>
         <Button onClick={saveGame} color="primary">Save</Button>
         <Button color="primary">Settings</Button>
         <Button onClick={handleSignOut} color="primary">Sign Out</Button>

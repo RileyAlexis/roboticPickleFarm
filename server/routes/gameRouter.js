@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 
 const verifyToken = require('../modules/jwtMiddleware');
+const { parse } = require('dotenv');
 
 const jwtkey = process.env.SECRET_KEY;
 
@@ -51,7 +52,7 @@ router.post('/login', (req, res) => {
         .catch((error) => {
             console.error(error);
         })
-})
+}) //End Login
 
 router.post('/newUser', (req, res) => {
     const email = req.body.email;
@@ -72,56 +73,14 @@ router.post('/newUser', (req, res) => {
                 id: result.rows[0].id,
                 email: req.body.email
             }
-            const token = jwt.sign(user, jwtkey, {expiresIn: '3hr' }); 
-            res.json({ email: email, token: token });
+            const token = jwt.sign(user, jwtkey, {expiresIn: '3hr' });
+            res.json({ userId: result.rows[0].id, email: email, token: token });
         })
         .catch((error) => {
             res.json({ detail: 'Signup Failed' });
             console.log(error);
         })
-})
-
-router.post('/testingRoute', verifyToken, (req, res) => {
-    console.log('Headers',req.headers);
-    console.log('Req.body', req.body);
-    const token = req.body.headers.Authorization;
-    console.log('Req.user', req.user);
-    console.log('Token', token);
-    res.send('Testing Route Response');
-    // const isVerified = verifyToken(req.body);
-    // console.log('Is Verified', isVerified);
-
-})
-
-
-
-router.post('/savenewgame', verifyToken, (req, res) => {
-    let queryString = `INSERT INTO "games" ("game_id", "resources", "prices", "pickerBots", 
-    "planterBots", "picklerBots", "upgrades", "cycle", "gameSpeed", "log")
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
-
-
-    const userEmail = req.body.userEmail;
-    const userId = req.body.userId;
-    const cycles = req.body.cycles;
-    const resources = req.body.resources;
-    const prices = req.body.prices;
-    const log = req.body.log;
-    const plants = req.body.plants;
-    const pickerBots = req.body.pickerBots;
-    const planterBots = req.body.planterBots;
-    const picklerBots = req.body.picklerBots;
-    const upgrades = req.body.upgrades;
-    const gameSpeed = 1000;
-
-    pool.query(queryString, [userId, resources, prices, pickerBots, planterBots, picklerBots, upgrades, cycles, gameSpeed, log])
-        .then((response) => {
-            res.sendStatus(200);
-        }).catch((error) => {
-            console.error(`Error making query ${queryString}`, error);
-            res.sendStatus(500);
-        })
-})
+}) //End create new user
 
 router.post('/savegame', verifyToken, (req, res) => {
 
@@ -183,8 +142,26 @@ pool.query(queryString, [req.body.dataObj.userId])
     }).catch((error) => {
         console.error(error);
     })
+}) //End Save Game
+
+router.post('/loadgame', verifyToken, (req, res) => {
+    console.log('Load Game Route');
+    let userId = req.body.data.userId;
+    console.log('User ID', userId);
+    let queryString = `SELECT * FROM "games" WHERE "user_id" = $1`
+    pool.query(queryString, [userId])
+        .then((result) => {
+            // const parsedData = JSON.parse(result.rows[0].plants);
+            res.send(result.rows[0]);
+            
+            
+        }).catch((error) => {
+            console.log(error);
+            res.sendStatus(500);
+        })
+
+    })
 
 
-})
 
 module.exports = router;
