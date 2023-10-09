@@ -40,10 +40,10 @@ if (planterBots > 0 && planterSpeed > 0) {
     store.dispatch({type: 'stats/toggleActive', payload: {title: 'planter', value: cycles}});
     }
         for (let i = 0; i < planterRuns; i++) {
-    const decon = state.plantSettings;
-    const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
-    store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
-    store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
+            const decon = state.plantSettings;
+            const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
+        store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
 
     } //End For Loop
     } //end planterBots
@@ -64,9 +64,11 @@ if (pickerBots > 0 && pickerSpeed > 0) {
     } //End plants for loop
         if (picked >= 1) {
             store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
+            
         } 
         } //End pickerBot for loop
 }//End pickerBots
+store.dispatch({type: 'plants/setAllPlants', payload: plants});
 
 if (picklerBots > 0 && picklerSpeed > 0) {
     let pickled = 0;
@@ -135,9 +137,9 @@ export function updateTicker() {
         }
         //Sets the cyclical growth of each plant
         if (!plant.dead && plant.currentYield < plant.maxYield) {
-            console.log(plant);
-            console.log('Is Frozen', Object.isFrozen(plant));
-            console.log('Is Sealed', Object.isSealed(plant));
+            // console.log(plant);
+            // console.log('Is Frozen', Object.isFrozen(plant));
+            // console.log('Is Sealed', Object.isSealed(plant));
             plant.maxedOut = false;
            
         plant.currentYield += (plant.growthRate * (plant.modifier + plant.growthModifer)) ;
@@ -156,7 +158,7 @@ export function updateTicker() {
         totalGrowthRate += plant.growthRate * (plant.modifier + plant.growthModifer);
 
     }) //End ForEach loop
-    
+    console.log('Plants', plants.length);
     //Dispatch total current yield, max yield and total Growth Rate to state stats reducer
     store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
     store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
@@ -209,7 +211,7 @@ export function plantSeed() {
 
 export function pickCucumbers() {
     const state = store.getState();
-    const plants = state.plants;
+    const plants = deepUnfreeze([...state.plants]);
     const cycles = state.stats.cycles;
     let picked = 0;
 

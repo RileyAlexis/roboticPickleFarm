@@ -23,6 +23,7 @@ function GameMenu () {
     const stats = useSelector(store => store.stats);
 
     const handleSignOut = () => {
+        saveGame();
         removeCookie('Email');
         removeCookie('AuthToken');
         window.location.reload();
