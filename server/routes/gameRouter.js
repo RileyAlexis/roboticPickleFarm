@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 
 const verifyToken = require('../modules/jwtMiddleware');
-const { parse } = require('dotenv');
+
 
 const jwtkey = process.env.SECRET_KEY;
 
@@ -86,7 +86,8 @@ router.post('/savegame', verifyToken, (req, res) => {
 
 let dataArr = [
     req.body.dataObj.userId,
-    JSON.stringify(req.body.dataObj.plants),
+    // req.body.dataObj.plants,
+    JSON.stringify(req.body.dataObj.plants).replace(/\s/g, ''),
     req.body.dataObj.resources,
     req.body.dataObj.stats,
     req.body.dataObj.robots,
@@ -144,6 +145,7 @@ pool.query(queryString, [req.body.dataObj.userId])
     })
 }) //End Save Game
 
+
 router.post('/loadgame', verifyToken, (req, res) => {
     console.log('Load Game Route');
     let userId = req.body.data.userId;
@@ -151,10 +153,21 @@ router.post('/loadgame', verifyToken, (req, res) => {
     let queryString = `SELECT * FROM "games" WHERE "user_id" = $1`
     pool.query(queryString, [userId])
         .then((result) => {
-            // const parsedData = JSON.parse(result.rows[0].plants);
-            res.send(result.rows[0]);
-            
-            
+
+            let data = {
+                plants: result.rows[0].plants,
+                resources: result.rows[0].resources,
+                stats: result.rows[0].stats,
+                robots: result.rows[0].robots,
+                plantSettings: result.rows[0].plantSettings,
+                prices: result.rows[0].prices,
+                buildings: result.rows[0].buildings,
+                upgrades: result.rows[0].upgrades,
+                log: result.rows[0].log,
+            }
+                
+            res.json(data);
+ 
         }).catch((error) => {
             console.log(error);
             res.sendStatus(500);

@@ -17,6 +17,8 @@ class Plants {
     }
 }
 
+
+
 function cycleTheBots() {
     const state = store.getState();
     let planterBots = state.robots.planterBots;
@@ -25,7 +27,7 @@ function cycleTheBots() {
     let pickerSpeed = state.robots.pickerSpeed;
     let picklerBots = state.robots.picklerBots;
     let picklerSpeed = state.robots.picklerSpeed;
-    let plants = state.plants;
+    const plants = deepUnfreeze([...state.plants]);
     let seeds = state.resources.seeds;
     let ripeCucumbers = state.stats.ripeCucumbers;
     let cucumbers = state.resources.cucumbers;
@@ -86,14 +88,32 @@ if ((stats.pickerDelta - stats.cycles) > 3 && stats.pickerActive) {
 if ((stats.picklerDelta - stats.cycles) > 3 && stats.picklerActive) {
     store.dispatch({type: 'stats/toggleActive', payload: {title: 'pickler', value: cycles}});
 }
-
 }
+
+function deepUnfreeze(item) {
+
+    if (Array.isArray(item)) {
+        // If it's an array, create a new array and recursively deep unfreeze its elements
+        return item.map(deepUnfreeze);
+    } else if (typeof item === 'object' && item !== null && Object.isFrozen(item)) {
+        // If it's a frozen object, create a shallow copy and recursively deep unfreeze its properties
+        const unfrozenObject = Object.assign({}, item);
+        Object.keys(unfrozenObject).forEach(function (key) {
+            unfrozenObject[key] = deepUnfreeze(unfrozenObject[key]);
+        });
+        return unfrozenObject;
+    }
+    // If it's not an array or a frozen object, return it directly
+    return item;
+}
+
 
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
-    let plants = state.plants;
+    const plants = deepUnfreeze([...state.plants]);
     let resources = state.resources;
+    let runEngine = state.runEngine;
     let cycles = state.stats.cycles;
     let ripeCucumbers = 0;
     let maxYield = 0;
@@ -102,7 +122,9 @@ export function updateTicker() {
     let log = state.log;
 
     //Plant production Calculations
- if (plants.length > 0) {
+    // console.log('Is Frozen', Object.isFrozen(plants));
+    // console.log('Is Sealed', Object.isSealed(plants));
+ if (plants.length > 0 && runEngine) {
     plants.forEach((plant) => {
         if (!plant.dead) {
             //Add 1 seed to resources based on seedChance rate
@@ -113,7 +135,11 @@ export function updateTicker() {
         }
         //Sets the cyclical growth of each plant
         if (!plant.dead && plant.currentYield < plant.maxYield) {
+            console.log(plant);
+            console.log('Is Frozen', Object.isFrozen(plant));
+            console.log('Is Sealed', Object.isSealed(plant));
             plant.maxedOut = false;
+           
         plant.currentYield += (plant.growthRate * (plant.modifier + plant.growthModifer)) ;
         plant.age += plant.aging;
 
@@ -161,8 +187,9 @@ export function updateTicker() {
         plants.filter((plant) => !plant.dead);
         //Update plants state variable
         store.dispatch({type: 'plants/setAllPlants', payload: plants});
- }
- cycleTheBots();
+        cycleTheBots();
+    } //End initial if statement
+ 
 }
 
 export function plantSeed() {

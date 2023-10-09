@@ -11,6 +11,7 @@ import { TextField } from '@mui/material';
 
 import GameMenu from './GameMenu';
 
+
 function LandingPage() {
 
     const [login, setLogin] = useState(true);
@@ -19,18 +20,19 @@ function LandingPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
 
-    const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
-    
+    const [cookies, setCookie, removeCookie] = useCookies(['Email', 'AuthToken']);
+
     const dispatch = useDispatch();
     const genId = v4();
     const authorized = useSelector(store => store.authorized);
     // const store = useSelector(store => store);
-    
+
     const initializeGame = () => {
         if (!authorized) {
             dispatch({ type: 'SET_AUTH', payload: true });
             dispatch({ type: 'SET_USERID', payload: genId });
-        } 
+            dispatch({ type: 'RUN_ENGINE'});
+        }
     }
 
     const processLogin = () => {
@@ -51,29 +53,32 @@ function LandingPage() {
                     dispatch({ type: 'SET_EMAIL', payload: response.data.email });
                     dispatch({ type: 'SET_USERID', payload: response.data.userId })
                     dispatch({ type: 'SET_AUTH', payload: true });
-                    
+
                     const data = {
                         userId: response.data.userId
                     }
 
-                    axios.post('/game/loadgame', {headers: { 'Authorization': `${response.data.token}`},
-                    data})
-                    .then((response) => {
-                        //Set game data Here
-                        console.log('LoadGame server response received');
-                        console.log('Response.data', response.data);
-                       dispatch({ type: 'log/setAllLog', payload: response.data.log });
-                       dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
-                       dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
-                       dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
-                       dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
-                       dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
-                       dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
-                    
-
-                    }).catch((error) => {
-                        console.log(error);
+                    axios.post('/game/loadgame', {
+                        headers: { 'Authorization': `${response.data.token}` },
+                        data
                     })
+                        .then((response) => {
+                            //Set game data Here
+                            console.log('LoadGame server response received');
+                            console.log('Response.data', response.data.plants);
+                            const loadedPlants = [...response.data.plants];
+                            dispatch({ type: 'log/setAllLog', payload: response.data.log });
+                            dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
+                            dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
+                            dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
+                            dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
+                            dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
+                            dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
+                            dispatch({ type: 'RUN_ENGINE'});
+
+                        }).catch((error) => {
+                            console.log(error);
+                        })
                 }
             })
     }
@@ -98,7 +103,8 @@ function LandingPage() {
                         console.log('New User Data', response.data.userId)
                         dispatch({ type: 'SET_USERID', payload: response.data.userId });
                         dispatch({ type: 'SET_AUTH', payload: true });
-                        
+                        dispatch({ type: 'RUN_ENGINE'});
+
                     }
                 })
         }
@@ -106,65 +112,65 @@ function LandingPage() {
 
     return (
         <div className="landingPage">
-        {login && 
-        <div className="loginBox">
-            <Typography variant="body">
-                Login, sign up or click "New Game" without logging in.
-            </Typography>
-            <br /> <br /><br />
-            <TextField variant="filled" label="Email" required 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-            <TextField variant='filled' label="Password" required
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} 
-                />
-                <br /> <br /><br />
-                <div className="buttonBox" >
-                <Button variant='outlined' onClick={processLogin}>Log In</Button>
-                <Button variant='outlined' onClick={(e) => setLogin(!login)}>New User</Button>
-                <Button variant='outlined' onClick={initializeGame}>New Game</Button>
+            {login &&
+                <div className="loginBox">
+                    <Typography variant="body">
+                        Login, sign up or click "New Game" without logging in.
+                    </Typography>
+                    <br /> <br /><br />
+                    <TextField variant="filled" label="Email" required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField variant='filled' label="Password" required
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <br /> <br /><br />
+                    <div className="buttonBox" >
+                        <Button variant='outlined' onClick={processLogin}>Log In</Button>
+                        <Button variant='outlined' onClick={(e) => setLogin(!login)}>New User</Button>
+                        <Button variant='outlined' onClick={initializeGame}>New Game</Button>
+                    </div>
+                    {error && <Typography m={2} color="red" variant='body'>{error}</Typography>}
+                    <br />
+                    <Typography variant='caption'>
+                        If no login is provided game data will only be stored locally
+                    </Typography>
                 </div>
-                {error && <Typography m={2} color="red" variant='body'>{error}</Typography>}
-                <br />
-                <Typography variant='caption'>
-                   If no login is provided game data will only be stored locally
-                </Typography>
-            </div>
-        }
+            }
 
-        {!login && 
-        <div className="loginBox">
-             <Typography variant="body">
-                Enter email address and create a password: 
-            </Typography>
-            <br /> <br /><br />
-         <TextField variant="filled" label="Email" required 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-            <TextField variant='filled' label="Password" required
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} 
-                />
-                <TextField variant='filled' label="Confirm Password" required
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)} 
-                />
-                <br /> <br /><br />
-                <div className="buttonBox" >
-                <Button variant='outlined' onClick={createNewUser}>Create New User</Button>
-                <Button variant='outlined' onClick={(e) => setLogin(!login)}>Back</Button>
+            {!login &&
+                <div className="loginBox">
+                    <Typography variant="body">
+                        Enter email address and create a password:
+                    </Typography>
+                    <br /> <br /><br />
+                    <TextField variant="filled" label="Email" required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField variant='filled' label="Password" required
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <TextField variant='filled' label="Confirm Password" required
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    <br /> <br /><br />
+                    <div className="buttonBox" >
+                        <Button variant='outlined' onClick={createNewUser}>Create New User</Button>
+                        <Button variant='outlined' onClick={(e) => setLogin(!login)}>Back</Button>
+                    </div>
+                    {error && <Typography m={2} color="red" variant='body'>{error}</Typography>}
                 </div>
-                {error && <Typography m={2} color="red" variant='body'>{error}</Typography>}
-        </div>
-        }
-         
-         
+            }
+
+
         </div>
     )
 }

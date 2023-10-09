@@ -52,6 +52,7 @@ function GameMenu () {
 
     return (
         <>
+
         <Button onClick={saveGame} color="primary">Save</Button>
         <Button color="primary">Settings</Button>
         <Button onClick={handleSignOut} color="primary">Sign Out</Button>

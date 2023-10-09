@@ -49,6 +49,13 @@ const userId = (state = '', action) => {
     return state;
   }
 
+const runEngine = (state = false, action) => {
+  if (action.type === 'RUN_ENGINE') {
+    return true;
+  }
+  return state;
+}
+
   // sagaMiddleware.run(rootSaga);
 
   const rootReducer = combineReducers({
@@ -65,6 +72,7 @@ const userId = (state = '', action) => {
     robotMenu: robotsMenuSlice,
     prices: pricesSlice,
     plantSettings: plantSettingsSlice,
+    runEngine: runEngine
 });
 
   const storeInstance = configureStore({
@@ -72,7 +80,7 @@ const userId = (state = '', action) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(
       { thunk: false, serializableCheck: false })
       .concat(sagaMiddleware, 
-        logger
+        // logger
         ),
   })
 
