@@ -149,6 +149,27 @@ function updateStats(plants, stats) {
     return [stats];
 }
 
+function runPickerBots(plants, robots, stats) {
+    let picked = 0;
+    let pickerRuns = (robots.pickerBots * robots.pickerSpeed > stats.ripeCucumbers) 
+    ? stats.ripeCucumbers 
+    : robots.pickerBots * robots.pickerSpeed;
+    
+    stats.pickerActive = true;
+    for (let i = 0; i < pickerRuns; i++) {
+        for (let i = 0; i < plants.length; i++) {
+            if (plants[i].currentYield >= 1) {
+                plants[i].currentYield--;
+                picked++;
+                break;
+        }  //End If
+    } //End plants for loop
+    } //End pickerRuns for loop
+
+    return [...plants], picked;
+
+} //Ene runPickerBots()
+
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
@@ -162,8 +183,9 @@ export function updateTicker() {
     // console.log('Is Sealed', Object.isSealed(plants));
  if (plants.length > 0) {
     growPlants(plants);
+    let picked = runPickerBots(plants, robots, stats);
     updateStats(plants, stats);
-
+    
     
     
     
@@ -172,6 +194,7 @@ export function updateTicker() {
     store.dispatch({ type: 'stats/setStats', payload: { title: 'totalGrowthRate', value: stats.totalGrowthRate }});
     store.dispatch({ type: 'stats/setStats', payload: { title: 'averageAge', value: stats.averageAge }});
     store.dispatch({ type: 'stats/setStats', payload: { title: 'ripeCucumbers', value: stats.ripeCucumbers }});
+    store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked }})
 } //End initial if statement
 
 }//End updateTicker()
@@ -206,6 +229,7 @@ export function pickCucumbers() {
     }
     if (picked >= 1) {
         store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
+        store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     }
     }
 
