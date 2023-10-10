@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import GameButton from "./GameButton";
-import { buttonCall } from "../modules/engine";
+import { buttonCall } from '../modules/buttons';
 
 function FarmMenu() {
     const farmMenu = useSelector(store => store.farmMenu);
