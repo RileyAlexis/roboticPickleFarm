@@ -110,6 +110,13 @@ function runPlanterBots(plants, resources, robots, plantSettings) {
     return [...plants], seeds;
 }
 
+function cycleLog(log) {
+    if (log.length > 20) {
+        log = log.splice(0, 20);
+        console.log(log);
+    }
+    return log;
+}
 
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
@@ -119,7 +126,7 @@ export function updateTicker() {
     const robots = state.robots;
     const resources = state.resources;
     const plantSettings = state.plantSettings;
-
+    const log = deepUnfreeze(state.log);
     //Plant production Calculations
     // console.log('Is Frozen', Object.isFrozen(plants));
     // console.log('Is Sealed', Object.isSealed(plants));
@@ -128,6 +135,7 @@ export function updateTicker() {
     let picked = runPickerBots(plants, robots, stats);
     let pickled = runPicklerBots(resources, robots);
     let seeds = runPlanterBots(plants, resources, robots, plantSettings);
+    let newLog = cycleLog(log);
     updateStats(plants, stats);
     
     
@@ -139,6 +147,7 @@ export function updateTicker() {
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: pickled }});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds }});
+    store.dispatch( { type: 'log/setAllLog', payload: newLog });
 } //End initial if statement
 
 }//End updateTicker()
