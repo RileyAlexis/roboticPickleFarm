@@ -17,9 +17,7 @@ class Plants {
     }
 }
 
-
-
-function cycleTheBots() {
+function cycleTheBots(plants) {
     const state = store.getState();
     let planterBots = state.robots.planterBots;
     let planterSpeed = state.robots.planterSpeed;
@@ -27,12 +25,13 @@ function cycleTheBots() {
     let pickerSpeed = state.robots.pickerSpeed;
     let picklerBots = state.robots.picklerBots;
     let picklerSpeed = state.robots.picklerSpeed;
-    const plants = deepUnfreeze([...state.plants]);
+    // let plants = deepUnfreeze([...state.plants]);
     let seeds = state.resources.seeds;
     let ripeCucumbers = state.stats.ripeCucumbers;
     let cucumbers = state.resources.cucumbers;
     let cycles = state.stats.cycles;
     let stats = state.stats;
+    let newPlantsArr = [];
 
 if (planterBots > 0 && planterSpeed > 0) {
     let planterRuns = (planterBots * planterSpeed > seeds) ? seeds : planterBots * planterSpeed;
@@ -42,7 +41,8 @@ if (planterBots > 0 && planterSpeed > 0) {
         for (let i = 0; i < planterRuns; i++) {
             const decon = state.plantSettings;
             const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
-        store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
+            
+            newPlantsArr.push(newPlant);
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
 
     } //End For Loop
@@ -68,7 +68,7 @@ if (pickerBots > 0 && pickerSpeed > 0) {
         } 
         } //End pickerBot for loop
 }//End pickerBots
-store.dispatch({type: 'plants/setAllPlants', payload: plants});
+// store.dispatch({type: 'plants/setAllPlants', payload: plants});
 
 if (picklerBots > 0 && picklerSpeed > 0) {
     let pickled = 0;
@@ -90,8 +90,12 @@ if ((stats.pickerDelta - stats.cycles) > 3 && stats.pickerActive) {
 if ((stats.picklerDelta - stats.cycles) > 3 && stats.picklerActive) {
     store.dispatch({type: 'stats/toggleActive', payload: {title: 'pickler', value: cycles}});
 }
-}
 
+return [...plants, newPlantsArr];
+
+} //End CycleBots
+
+//Plants array-object must be deeep unfrozen prior to calculations
 function deepUnfreeze(item) {
 
     if (Array.isArray(item)) {
@@ -109,11 +113,18 @@ function deepUnfreeze(item) {
     return item;
 }
 
+function newCycleBots(plants) {
+    const state = store.getState();
+    const decon = state.plantSettings;
+        const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
+
+    return [...plants, newPlant];
+}
 
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
-    const plants = deepUnfreeze([...state.plants]);
+    let plants = deepUnfreeze([...state.plants]);
     let resources = state.resources;
     let runEngine = state.runEngine;
     let cycles = state.stats.cycles;
@@ -126,7 +137,7 @@ export function updateTicker() {
     //Plant production Calculations
     // console.log('Is Frozen', Object.isFrozen(plants));
     // console.log('Is Sealed', Object.isSealed(plants));
- if (plants.length > 0 && runEngine) {
+ if (plants.length > 0) {
     plants.forEach((plant) => {
         if (!plant.dead) {
             //Add 1 seed to resources based on seedChance rate
@@ -172,7 +183,6 @@ export function updateTicker() {
       const average = sum / plants.length;
       store.dispatch({type: 'stats/setStats', payload: {title: 'averageAge', value: average}});
 
-
     //Reduce length of log before log dispatches
     if (log.length > 20) {
         const newLog = log.slice(-20);
@@ -188,10 +198,17 @@ export function updateTicker() {
         //Delete dead plants from object
         plants.filter((plant) => !plant.dead);
         //Update plants state variable
-        store.dispatch({type: 'plants/setAllPlants', payload: plants});
-        cycleTheBots();
+        // plants = deleteAllPlants(plants);
+        // console.log('After Clear', plants);
+        store.dispatch({type: 'plants/setAllPlants', payload: newCycleBots(plants)});
+        cycleTheBots(plants);
+        
     } //End initial if statement
- 
+} //End updateTicker()
+
+function events() {
+    const state = store.getState();
+
 }
 
 export function plantSeed() {
