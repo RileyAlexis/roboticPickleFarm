@@ -170,13 +170,41 @@ function runPickerBots(plants, robots, stats) {
 
 } //Ene runPickerBots()
 
+function runPicklerBots(resources, robots) {
+    let pickled = 0;
+    let picklerRuns = (robots.picklerBots * robots.picklerSpeed > resources.cucumbers)
+    ? resources.cucumbers
+    : robots.picklerBots * robots.picklerSpeed;
+
+    for (let i = 0; i < picklerRuns; i++) {
+        pickled++;
+    } //End picklerRuns for loop
+    return pickled;
+} //End picklerBots();
+
+function runPlanterBots(plants, resources, robots, plantSettings) {
+    let seeds = 0;
+    let planterRuns = (robots.planterBots * robots.planterSpeed > resources.seeds)
+    ? resources.seeds
+    : robots.planterBots * robots.planterSpeed;
+
+    for (let i = 0; i < planterRuns; i++) {
+        const newPlant = new Plants(plantSettings.modifier, plantSettings.growthRate, plantSettings.growthModifer, plantSettings.maxYield, plantSettings.deathChance, plantSettings.aging, plantSettings.maxAge, plantSettings.seedChance);
+        plants.push(newPlant);
+        seeds--;
+    }
+    return [...plants], seeds;
+}
+
+
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
     let plants = deepUnfreeze([...state.plants]);
     let stats = deepUnfreeze(state.stats);
     const robots = state.robots;
-    
+    const resources = state.resources;
+    const plantSettings = state.plantSettings;
 
     //Plant production Calculations
     // console.log('Is Frozen', Object.isFrozen(plants));
@@ -184,6 +212,8 @@ export function updateTicker() {
  if (plants.length > 0) {
     growPlants(plants);
     let picked = runPickerBots(plants, robots, stats);
+    let pickled = runPicklerBots(resources, robots);
+    let seeds = runPlanterBots(plants, resources, robots, plantSettings);
     updateStats(plants, stats);
     
     
@@ -194,7 +224,9 @@ export function updateTicker() {
     store.dispatch({ type: 'stats/setStats', payload: { title: 'totalGrowthRate', value: stats.totalGrowthRate }});
     store.dispatch({ type: 'stats/setStats', payload: { title: 'averageAge', value: stats.averageAge }});
     store.dispatch({ type: 'stats/setStats', payload: { title: 'ripeCucumbers', value: stats.ripeCucumbers }});
-    store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked }})
+    store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
+    store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: pickled }});
+    store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds }});
 } //End initial if statement
 
 }//End updateTicker()
