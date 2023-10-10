@@ -80,7 +80,7 @@ const runEngine = (state = false, action) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(
       { thunk: false, serializableCheck: false })
       .concat(sagaMiddleware, 
-        // logger
+        logger
         ),
   })
 

@@ -121,95 +121,60 @@ function newCycleBots(plants) {
     return [...plants, newPlant];
 }
 
+function growPlants(plants) {
+    plants.forEach((plant) => {
+        plant.currentYield += ((plant.growthRate + plant.growthModifer) * plant.modifier);
+        if (plant.currentYield >= plant.maxYield) plant.currentYield = plant.maxYield;
+    });
+    return [...plants];
+}
+
+function updateStats(plants, stats) {
+    let totalGrowthRate = 0;
+    let averageAge = 0;
+    let maxYield = 0;
+    let ripeCucumbers = 0;
+
+    plants.forEach((plant) => {
+        ripeCucumbers += Math.floor(plant.currentYield);
+        totalGrowthRate += (plant.growthRate + plant.growthModifer) * plant.modifier;
+        averageAge += plant.age;
+        maxYield += plant.maxYield;
+    });
+
+    stats.averageAge = averageAge / plants.length;
+    stats.totalGrowthRate = totalGrowthRate;
+    stats.maxYield = maxYield;
+    stats.ripeCucumbers = ripeCucumbers;
+    return [stats];
+}
+
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
     let plants = deepUnfreeze([...state.plants]);
-    let resources = state.resources;
-    let runEngine = state.runEngine;
-    let cycles = state.stats.cycles;
-    let ripeCucumbers = 0;
-    let maxYield = 0;
-    let totalGrowthRate = 0;
-    let robots = state.robots;
-    let log = state.log;
+    let stats = deepUnfreeze(state.stats);
+    const robots = state.robots;
+    
 
     //Plant production Calculations
     // console.log('Is Frozen', Object.isFrozen(plants));
     // console.log('Is Sealed', Object.isSealed(plants));
  if (plants.length > 0) {
-    plants.forEach((plant) => {
-        if (!plant.dead) {
-            //Add 1 seed to resources based on seedChance rate
-            const seedRoll = Math.random();
-            if (seedRoll <= plant.seedChance) {
-                store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: 1}});
-            }
-        }
-        //Sets the cyclical growth of each plant
-        if (!plant.dead && plant.currentYield < plant.maxYield) {
-            // console.log(plant);
-            // console.log('Is Frozen', Object.isFrozen(plant));
-            // console.log('Is Sealed', Object.isSealed(plant));
-            plant.maxedOut = false;
-           
-        plant.currentYield += (plant.growthRate * (plant.modifier + plant.growthModifer)) ;
-        plant.age += plant.aging;
+    growPlants(plants);
+    updateStats(plants, stats);
 
-        } else if (!plant.dead && plant.currentYield >= plant.maxYield) {
-            plant.maxedOut = true;
-            plant.currentYield = plant.maxYield;
-        }
-        if (plant.age > plant.maxAge) { 
-            plant.dead = true;
-        }
-        //Compile stats from each plant to dispatch after loop exits
-        plant.currentYield >=1 ? ripeCucumbers += Math.floor(plant.currentYield) : ripeCucumbers += 0;
-        maxYield += plant.maxYield;
-        totalGrowthRate += plant.growthRate * (plant.modifier + plant.growthModifer);
+    
+    
+    
+    store.dispatch({ type: 'plants/setAllPlants', payload: plants })
+    store.dispatch({ type: 'stats/setStats', payload: { title: 'maxYield', value: stats.maxYield }});
+    store.dispatch({ type: 'stats/setStats', payload: { title: 'totalGrowthRate', value: stats.totalGrowthRate }});
+    store.dispatch({ type: 'stats/setStats', payload: { title: 'averageAge', value: stats.averageAge }});
+    store.dispatch({ type: 'stats/setStats', payload: { title: 'ripeCucumbers', value: stats.ripeCucumbers }});
+} //End initial if statement
 
-    }) //End ForEach loop
-    console.log('Plants', plants.length);
-    //Dispatch total current yield, max yield and total Growth Rate to state stats reducer
-    store.dispatch({type: 'stats/setStats', payload: {title: 'ripeCucumbers', value: ripeCucumbers}});
-    store.dispatch({type: 'stats/setStats', payload: {title: 'maxYield', value: maxYield}});
-    store.dispatch({type: 'stats/setStats', payload: {title: 'totalGrowthRate', value: totalGrowthRate}});
-    store.dispatch({type: 'stats/runCycle'});
-
-    //Caclulate average plant age and dispatch to stats reducer
-    const sum = plants.reduce((accumulator, obj) => {
-        return accumulator + obj.age;
-      }, 0);
-      const average = sum / plants.length;
-      store.dispatch({type: 'stats/setStats', payload: {title: 'averageAge', value: average}});
-
-    //Reduce length of log before log dispatches
-    if (log.length > 20) {
-        const newLog = log.slice(-20);
-        store.dispatch({type: 'log/setAllLog', payload: newLog });
-    } 
-        const deadPlants = plants.filter((plant) => plant.dead);
-        const maxedOut = plants.filter((plant) => plant.maxedOut);
-        if (deadPlants.length > 0) {
-            store.dispatch({type: 'log/addLog', payload: {line: `${deadPlants.length} died of natural causes`, cycle: cycles}});
-        }
-        if (maxedOut.length > 0) {
-        }
-        //Delete dead plants from object
-        plants.filter((plant) => !plant.dead);
-        //Update plants state variable
-        // plants = deleteAllPlants(plants);
-        // console.log('After Clear', plants);
-        store.dispatch({type: 'plants/setAllPlants', payload: newCycleBots(plants)});
-        cycleTheBots(plants);
-        
-    } //End initial if statement
-} //End updateTicker()
-
-function events() {
-    const state = store.getState();
-
-}
+}//End updateTicker()
 
 export function plantSeed() {
     const state = store.getState();
