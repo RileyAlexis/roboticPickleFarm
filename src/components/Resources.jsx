@@ -10,9 +10,11 @@ function Resources () {
     const maxYield = useSelector(store => store.stats.maxYield);
     const totalGrowthRate = useSelector(store => store.stats.totalGrowthRate)
     const averageAge = useSelector(store => store.stats.averageAge);
-        
+    const stats = useSelector(store => store.stats);
+
     return (
         <>
+        <h4>Total Production: {stats.totalProduction}</h4>
         <h3>Resources:</h3>
         {Object.keys(resources).map(key => {
             if (resources[key] > 0)

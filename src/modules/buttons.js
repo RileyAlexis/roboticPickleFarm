@@ -45,6 +45,7 @@ export function makePickles() {
     if (cucumbers >= 5) {
         store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: -5}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: +5}});
+        store.dispatch({ type: 'stats/setStats', payload: { title: 'totalProduction', value: +5}})
         store.dispatch({type: 'log/addLog', payload: {line: '5 Pickles pickled!', cycle: cycles}});
     } else if (cucumbers < 5) {
         store.dispatch({type: 'log/addLog', payload: {line: 'Not Enough Cucumbers! Need 5', cycle: cycles}});

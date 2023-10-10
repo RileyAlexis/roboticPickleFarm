@@ -37,6 +37,7 @@ export const statsSlice = createSlice({
                 case 'totalGrowthRate': state.totalGrowthRate = parseFloat(value.toFixed(2)); break;
                 case 'averageAge': state.averageAge = parseFloat(value.toFixed(2)); break;
                 case 'timeFrame': state.timeFrame = value; break;
+                case 'totalProduction': state.totalProduction += value; break;
             }
         },
         toggleActive: (state, action) => {

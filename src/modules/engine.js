@@ -60,6 +60,8 @@ function updateStats(plants, stats) {
     stats.totalGrowthRate = totalGrowthRate;
     stats.maxYield = maxYield;
     stats.ripeCucumbers = ripeCucumbers;
+    stats.averageAge = parseFloat(averageAge.toFixed(2));
+    stats.totalGrowthRate = parseFloat(totalGrowthRate.toFixed(2));
     return [stats];
 }
 
@@ -112,8 +114,7 @@ function runPlanterBots(plants, resources, robots, plantSettings) {
 
 function cycleLog(log) {
     if (log.length > 20) {
-        log = log.splice(0, 20);
-        console.log(log);
+        log = log.splice(0, -20);
     }
     return log;
 }
@@ -136,14 +137,12 @@ export function updateTicker() {
     let pickled = runPicklerBots(resources, robots);
     let seeds = runPlanterBots(plants, resources, robots, plantSettings);
     let newLog = cycleLog(log);
+    stats.totalProduction += pickled;
     updateStats(plants, stats);
     
     
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
-    store.dispatch({ type: 'stats/setStats', payload: { title: 'maxYield', value: stats.maxYield }});
-    store.dispatch({ type: 'stats/setStats', payload: { title: 'totalGrowthRate', value: stats.totalGrowthRate }});
-    store.dispatch({ type: 'stats/setStats', payload: { title: 'averageAge', value: stats.averageAge }});
-    store.dispatch({ type: 'stats/setStats', payload: { title: 'ripeCucumbers', value: stats.ripeCucumbers }});
+    store.dispatch({ type: 'stats/setAllStats', payload: stats });
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: pickled }});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds }});
