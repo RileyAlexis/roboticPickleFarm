@@ -26,11 +26,12 @@ function growPlants(plants) {
     return [...plants];
 }
 
-function updateStats(plants, stats) {
+function updateStats(plants, stats, picked, pickled) {
     let totalGrowthRate = 0;
     let averageAge = 0;
     let maxYield = 0;
     let ripeCucumbers = 0;
+    
 
     plants.forEach((plant) => {
         ripeCucumbers += Math.floor(plant.currentYield);
@@ -45,7 +46,11 @@ function updateStats(plants, stats) {
     stats.ripeCucumbers = ripeCucumbers;
     stats.averageAge = parseFloat(averageAge.toFixed(2));
     stats.totalGrowthRate = parseFloat(totalGrowthRate.toFixed(2));
-    stats.cucumberProduction.push(ripeCucumbers);
+    stats.cucumberProduction.push(picked);
+    stats.pickleProduction.push(pickled);
+    stats.cucumberProduction = stats.cucumberProduction.slice(-1000);
+    stats.pickleProduction = stats.pickleProduction.slice(-1000);
+
     return [stats];
 }
 
@@ -118,11 +123,11 @@ export function updateTicker() {
  if (plants.length > 0) {
     growPlants(plants);
     let picked = runPickerBots(plants, robots, stats);
-    let pickled = runPicklerBots(resources, robots);
+    let pickled = runPicklerBots(resources, robots, stats);
     let seeds = runPlanterBots(plants, resources, robots, plantSettings);
     let newLog = cycleLog(log);
     stats.totalProduction += pickled;
-    updateStats(plants, stats);
+    updateStats(plants, stats, picked, pickled);
     
     
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })

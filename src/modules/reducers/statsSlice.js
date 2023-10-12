@@ -53,9 +53,9 @@ export const statsSlice = createSlice({
             const title = action.payload.title;
             const value = action.payload.value;
             switch (title) {
-                case 'cucumbers': state.cucumberProduction = [...state.cucumberProduction, value]; break;
-                case 'pickles': state.pickleProduction = [...state.pickleProduction, value]; break;
-                case 'seeds': state.seedProduction = [...state.seedProduction, value]; break;
+                case 'cucumbers': state.cucumberProduction = [...state.cucumberProduction.slice(-1000), value]; break;
+                case 'pickles': state.pickleProduction = [...state.pickleProduction.slice(-1000), value]; break;
+                case 'seeds': state.seedProduction = [...state.seedProduction.slice(-1000), value]; break;
             }
         },
         runCycle: (state, action) => {
