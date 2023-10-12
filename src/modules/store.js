@@ -20,7 +20,6 @@ import statsSlice from './reducers/statsSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
-
 const userId = (state = '', action) => {
     if (action.type === 'SET_USERID') {
       return action.payload;

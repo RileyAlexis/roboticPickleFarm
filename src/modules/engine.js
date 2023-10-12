@@ -1,4 +1,5 @@
 import { storeInstance as store} from './store';
+import { deepUnfreeze } from './deepUnfreeze';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -15,24 +16,6 @@ export class Plants {
     this.dead = false;
     this.maxedOut = false;
     }
-}
-
-//Plants array-object must be deeep unfrozen prior to calculations
-export function deepUnfreeze(item) {
-
-    if (Array.isArray(item)) {
-        // If it's an array, create a new array and recursively deep unfreeze its elements
-        return item.map(deepUnfreeze);
-    } else if (typeof item === 'object' && item !== null && Object.isFrozen(item)) {
-        // If it's a frozen object, create a shallow copy and recursively deep unfreeze its properties
-        const unfrozenObject = Object.assign({}, item);
-        Object.keys(unfrozenObject).forEach(function (key) {
-            unfrozenObject[key] = deepUnfreeze(unfrozenObject[key]);
-        });
-        return unfrozenObject;
-    }
-    // If it's not an array or a frozen object, return it directly
-    return item;
 }
 
 function growPlants(plants) {
@@ -62,6 +45,7 @@ function updateStats(plants, stats) {
     stats.ripeCucumbers = ripeCucumbers;
     stats.averageAge = parseFloat(averageAge.toFixed(2));
     stats.totalGrowthRate = parseFloat(totalGrowthRate.toFixed(2));
+    stats.cucumberProduction.push(ripeCucumbers);
     return [stats];
 }
 
@@ -84,7 +68,7 @@ function runPickerBots(plants, robots, stats) {
 
     return [...plants], picked;
 
-} //Ene runPickerBots()
+} //End runPickerBots()
 
 function runPicklerBots(resources, robots) {
     let pickled = 0;

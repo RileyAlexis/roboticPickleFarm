@@ -1,9 +1,9 @@
 import { storeInstance as store} from './store';
 import { Plants } from './engine';
-import { deepUnfreeze } from './engine';
+import { deepUnfreeze } from './deepUnfreeze';
 
 
-export function plantSeed() {
+function plantSeed() {
     const state = store.getState();
     const cycles = state.stats.cycles;
 
@@ -18,7 +18,7 @@ export function plantSeed() {
     }
 }
 
-export function pickCucumbers() {
+function pickCucumbers() {
     const state = store.getState();
     const plants = deepUnfreeze([...state.plants]);
     const cycles = state.stats.cycles;
@@ -37,7 +37,7 @@ export function pickCucumbers() {
     }
     }
 
-export function makePickles() {
+function makePickles() {
     const state = store.getState();
     const cucumbers = state.resources.cucumbers;
     const cycles = state.stats.cycles;
@@ -52,7 +52,7 @@ export function makePickles() {
     }
 }
 
-export function buyBot(botType) {
+function buyBot(botType) {
     const state = store.getState();
     const pickles = state.resources.pickles;
     const botPrice = state.prices.bots;

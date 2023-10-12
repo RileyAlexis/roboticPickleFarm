@@ -25,7 +25,17 @@ export const robotsSlice = createSlice({
                 case 'pickler': state.picklerBots += value; break;
                 default: return state;
             }
-    }
+        },
+        changeSpeed: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            switch (title) {
+                case 'picker': state.pickerSpeed += value; break;
+                case 'planter': state.planterSpeed += value; break;
+                case 'pickler': state.picklerSpeed += value; break;
+                default: return state;
+            }
+        }
 }
 });
 

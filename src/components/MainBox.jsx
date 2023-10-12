@@ -5,6 +5,7 @@ import FarmMenu from './FarmMenu';
 import RobotMenu from './RobotMenu';
 import TabNavItem from './TabNavItem';
 import TabContent from './TabContent';
+import CheatsForTesting from './cheatsForTesting';
 
 function MainBox() {
     const [activeTab, setActiveTab] = useState('farm');
@@ -32,6 +33,7 @@ function MainBox() {
                 <p>power Ups tab</p>
                 </TabContent>
         </div>
+        <CheatsForTesting />
         
         </>
 

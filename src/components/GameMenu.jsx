@@ -23,10 +23,15 @@ function GameMenu () {
     const stats = useSelector(store => store.stats);
 
     const handleSignOut = () => {
+        try {
         saveGame();
+        } catch (error) {
+            console.log('Error saving game', error);
+        } finally {
         removeCookie('Email');
         removeCookie('AuthToken');
         window.location.reload();
+        }
     }
 
     const saveGame = () => {

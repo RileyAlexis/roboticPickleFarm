@@ -12,15 +12,9 @@ const PORT = process.env.PORT || 5001;
 // const sessionMiddleware = require('./modules/sessionMiddleware');
 // const passport = require('./strategies/user.strategy');
 
-app.use(express.json()); // needed for axios requests
+app.use(express.json({limit: '50mb' })); // needed for axios requests
+app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 app.use(express.static('build'));
-
-// Passport Session Configuration //
-// app.use(sessionMiddleware);
-
-// start up passport sessions
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 /** ---------- EXPRESS ROUTES ---------- **/
 app.use('/resources/', resourceRouter);
