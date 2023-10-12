@@ -7,13 +7,13 @@ function plantSeed() {
     const state = store.getState();
     const cycles = state.stats.cycles;
 
-    if (state.resources.seeds > 0) {
+    if (state.resources.seeds[state.resources.seeds.length-1] > 0) {
         const decon = state.plantSettings;
         const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
         store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
         store.dispatch({type: 'log/addLog', payload: {line: 'New Seedling Planted!', cycle: cycles}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
-    } else if (state.resources.seeds === 0) {
+    } else if (state.resources.seeds[state.resources.seeds.length-1] === 0) {
         store.dispatch({type: 'log/addLog', payload: {line: 'No seeds to plant!', cycle: cycles }});
     }
 }
@@ -54,7 +54,7 @@ function makePickles() {
 
 function buyBot(botType) {
     const state = store.getState();
-    const pickles = state.resources.pickles;
+    const pickles = state.resources.pickles[state.resources.pickles.length-1];
     const botPrice = state.prices.bots;
     const cycles = state.stats.cycles;
     if (botType === 'planter' && pickles >= botPrice[0]) {
@@ -76,7 +76,7 @@ function buyBot(botType) {
 
 function buySeeds() {
     const state = store.getState();
-    const pickles = state.resources.pickles;
+    const pickles = state.resources.pickles[state.resources.pickles.length-1];
     const seedPrice = state.prices.seeds;
     const cycles = state.stats.cycles;
 

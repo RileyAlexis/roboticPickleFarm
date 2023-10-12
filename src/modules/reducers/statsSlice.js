@@ -13,9 +13,6 @@ const initialState = {
     pickerDelta: 0,
     picklerDelta: 0,
     totalProduction: 0,
-    pickleProduction: [],
-    cucumberProduction: [],
-    seedProduction:[],
     timeframe: 60,
     gameSpeed: 1000,
     
@@ -47,15 +44,6 @@ export const statsSlice = createSlice({
                 case 'planter': state.planterActive = !state.planterActive; state.planterDelta = value; break;
                 case 'picker': state.pickerActive = !state.pickerActive; state.pickerDelta = value; break;
                 case 'pickler': state.picklerActive = !state.picklerActive; state.picklerDelta = value; break;
-            }
-        },
-        trackStats: (state, action) => {
-            const title = action.payload.title;
-            const value = action.payload.value;
-            switch (title) {
-                case 'cucumbers': state.cucumberProduction = [...state.cucumberProduction.slice(-1000), value]; break;
-                case 'pickles': state.pickleProduction = [...state.pickleProduction.slice(-1000), value]; break;
-                case 'seeds': state.seedProduction = [...state.seedProduction.slice(-1000), value]; break;
             }
         },
         runCycle: (state, action) => {

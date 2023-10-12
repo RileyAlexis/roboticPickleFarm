@@ -47,11 +47,7 @@ function updateStats(plants, stats, picked, pickled) {
     stats.ripeCucumbers = ripeCucumbers;
     stats.averageAge = parseFloat(averageAge.toFixed(2));
     stats.totalGrowthRate = parseFloat(totalGrowthRate.toFixed(2));
-    stats.cucumberProduction.push(picked);
-    stats.pickleProduction.push(pickled);
-    stats.cucumberProduction = stats.cucumberProduction.slice(-1000);
-    stats.pickleProduction = stats.pickleProduction.slice(-1000);
-
+    stats.cycles += 1;
     return [stats];
 }
 
@@ -78,8 +74,8 @@ function runPickerBots(plants, robots, stats) {
 
 function runPicklerBots(resources, robots) {
     let pickled = 0;
-    let picklerRuns = (robots.picklerBots * robots.picklerSpeed > resources.cucumbers)
-    ? resources.cucumbers
+    let picklerRuns = (robots.picklerBots * robots.picklerSpeed > resources.cucumbers[resources.cucumbers.length-1])
+    ? resources.cucumbers[resources.cucumbers.length-1]
     : robots.picklerBots * robots.picklerSpeed;
 
     for (let i = 0; i < picklerRuns; i++) {
@@ -90,8 +86,8 @@ function runPicklerBots(resources, robots) {
 
 function runPlanterBots(plants, resources, robots, plantSettings) {
     let seeds = 0;
-    let planterRuns = (robots.planterBots * robots.planterSpeed > resources.seeds)
-    ? resources.seeds
+    let planterRuns = (robots.planterBots * robots.planterSpeed > resources.seeds[resources.seeds.length-1])
+    ? resources.seeds[resources.seeds.length-1]
     : robots.planterBots * robots.planterSpeed;
 
     for (let i = 0; i < planterRuns; i++) {
@@ -118,12 +114,11 @@ export function updateTicker() {
     const resources = state.resources;
     const plantSettings = state.plantSettings;
     const log = deepUnfreeze(state.log);
-    //Plant production Calculations
-    // console.log('Is Frozen', Object.isFrozen(plants));
-    // console.log('Is Sealed', Object.isSealed(plants));
+    //Prevents more than 10,000 objects being created - uses plants.modifier to maintain numbers
     if (plants.length >= 10000) {
         plants = condensor(plants);
     }
+
  if (plants.length > 0) {
     growPlants(plants);
     let picked = runPickerBots(plants, robots, stats);

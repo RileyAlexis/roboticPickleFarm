@@ -13,15 +13,26 @@ function Resources () {
     const stats = useSelector(store => store.stats);
 
     const calculateTrend = (array) => {
-        const limitedArray = array.slice(-1000);
-        let totals = 0;
-        for (let i = 0; i < limitedArray.length; i++) {
-            totals += limitedArray[i];
+        const limitedArray = array.slice(-200);
+        const trends = [];
+      
+        for (let i = 1; i < limitedArray.length; i++) {
+          const difference = limitedArray[i] - limitedArray[i - 1];
+          if (difference > 0) {
+            trends.push('+'); // Positive trend
+          } else if (difference < 0) {
+            trends.push('-'); // Negative trend
+          } else {
+            trends.push('0'); // No change
+          }
         }
-        let average = totals / limitedArray.length;
-        if (average > 0) return `+${parseFloat(average.toFixed(2))}`;
-        else return parseFloat(average.toFixed(2));
-        
+      
+        const totalTrends = trends.length;
+        const positiveTrends = trends.filter(trend => trend === '+').length;
+        const negativeTrends = trends.filter(trend => trend === '-').length;
+        const averageTrend = totalTrends > 0 ? ((positiveTrends - negativeTrends) / totalTrends).toFixed(2) : 0;
+      
+        return averageTrend;
       };
 
 
@@ -29,9 +40,9 @@ function Resources () {
         <>
         <h4>Total Production: {stats.totalProduction}</h4>
         <h3>Resources:</h3>
-        <p>Seeds: {resources.seeds}</p>
-        <p>Cucumbers: {resources.cucumbers} ( {calculateTrend(stats.cucumberProduction)}/s )</p>
-        <p>Pickles: {resources.pickles}  ( {calculateTrend(stats.pickleProduction)}/s )</p>
+        <p>Seeds: {resources.seeds[resources.seeds.length-1]}</p>
+        <p>Cucumbers: {resources.cucumbers[resources.cucumbers.length-1]} ( {calculateTrend(resources.cucumbers)}/s )</p>
+        <p>Pickles: {resources.pickles[resources.pickles.length-1]}  ( {calculateTrend(resources.pickles)}/s )</p>
         <h3>Plants: {plants.length * plants[0]?.modifier }</h3>
         <p>Growth Rate: {totalGrowthRate} / s</p>
         <p>Max Yield: {maxYield}</p>
