@@ -64,8 +64,6 @@ function LandingPage() {
                     })
                         .then((response) => {
                             //Set game data Here
-                            console.log('LoadGame server response received');
-                            console.log('Response.data', response.data.plants);
                             const loadedPlants = [...response.data.plants];
                             dispatch({ type: 'log/setAllLog', payload: response.data.log });
                             dispatch({ type: 'stats/setAllStats', payload: response.data.stats });

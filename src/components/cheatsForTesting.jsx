@@ -9,6 +9,9 @@ function CheatsForTesting() {
     const addSeeds = () => {
         dispatch({type: 'resources/changeResources', payload: { title: 'seeds', value: 100 }});
     }
+    const addMoreSeeds = () => {
+        dispatch({type: 'resources/changeResources', payload: { title: 'seeds', value: 1000 }});
+    }
     const increaseBotSpeed = () => {
         dispatch({ type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }});
         dispatch({ type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }});
@@ -27,6 +30,7 @@ function CheatsForTesting() {
     return (
         <div className="cheatBox">
         <button onClick={addSeeds}>Add 100 Seeds</button>
+        <button onClick={addMoreSeeds}>Add 1000 Seeds</button>
         <button onClick={increaseBotSpeed}>Bot Speed +1</button>
         <button onClick={addBots}>+5 Bots</button>
         <button onClick={addPickles}>+50000 Pickles</button>

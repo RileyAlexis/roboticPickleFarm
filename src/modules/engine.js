@@ -1,5 +1,6 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
+import { condensor } from './condensor';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -120,6 +121,9 @@ export function updateTicker() {
     //Plant production Calculations
     // console.log('Is Frozen', Object.isFrozen(plants));
     // console.log('Is Sealed', Object.isSealed(plants));
+    if (plants.length >= 10000) {
+        plants = condensor(plants);
+    }
  if (plants.length > 0) {
     growPlants(plants);
     let picked = runPickerBots(plants, robots, stats);

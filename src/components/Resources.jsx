@@ -32,7 +32,7 @@ function Resources () {
         <p>Seeds: {resources.seeds}</p>
         <p>Cucumbers: {resources.cucumbers} ( {calculateTrend(stats.cucumberProduction)}/s )</p>
         <p>Pickles: {resources.pickles}  ( {calculateTrend(stats.pickleProduction)}/s )</p>
-        <h3>Plants: {plants.length}</h3>
+        <h3>Plants: {plants.length * plants[0]?.modifier }</h3>
         <p>Growth Rate: {totalGrowthRate} / s</p>
         <p>Max Yield: {maxYield}</p>
         <p>Average Age: {averageAge}</p>
