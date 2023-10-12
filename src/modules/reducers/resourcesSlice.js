@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    seeds: 25,
-    cucumbers: 0,
-    pickles: 300,
-    pickleJars: 0,
+    seeds: [5],
+    cucumbers: [0],
+    pickles: [0],
+    pickleJars: [0],
 }
 
 export const resourcesSlice = createSlice({
@@ -16,15 +16,16 @@ export const resourcesSlice = createSlice({
         },
         changeResources: (state, action) => {
             const value = action.payload.value;
+            
             const title = action.payload.title;
-            switch (title) {
-                case 'seeds': state.seeds += value; break;
-                case 'cucumbers': state.cucumbers += value; break;
-                case 'pickles': state.pickles += value; break;
-                case 'pickleJars': state.pickleJars += value; break;
-            default: return state;
-            }
-        },
+            const currentArr = state[title].slice(-1000);
+            
+            if (currentArr.length > 0) { 
+                const lastEntry = currentArr[currentArr.length-1];
+            
+            const updatedArr = [...currentArr, lastEntry + value];
+            return { ...state, [title]: updatedArr }
+        }},
         setResources: (state, action) => {
             const value = action.payload.value;
             const title = action.payload.title;
