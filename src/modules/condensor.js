@@ -1,6 +1,7 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 
+//Condenses the number of objects to half and maintains correct numbers by increasing the modifier value
 export function condensor(plants) {
     let setDead = true;
     plants.forEach((plant) => {
