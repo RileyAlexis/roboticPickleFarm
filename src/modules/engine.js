@@ -48,6 +48,9 @@ function updateStats(plants, stats, picked, pickled) {
     stats.totalGrowthRate = parseFloat(totalGrowthRate.toFixed(2));
     stats.cucumberProduction.push(picked);
     stats.pickleProduction.push(pickled);
+    stats.cucumberProduction = stats.cucumberProduction.slice(-1000);
+    stats.pickleProduction = stats.pickleProduction.slice(-1000);
+
     return [stats];
 }
 
