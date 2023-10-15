@@ -39,7 +39,7 @@ function pickCucumbers() {
 
 function makePickles() {
     const state = store.getState();
-    const cucumbers = state.resources.cucumbers;
+    const cucumbers = state.resources.cucumbers[state.resources.cucumbers.length-1];
     const cycles = state.stats.cycles;
 
     if (cucumbers >= 5) {
