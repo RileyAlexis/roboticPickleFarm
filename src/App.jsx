@@ -55,7 +55,8 @@ useEffect(() => {
           <Resources /> 
           </div>
       <div className="main-menu-box">
-      <GameMenu />
+      <p></p><br />
+      
       </div>
       <div className="main-box">
         <MainBox />
