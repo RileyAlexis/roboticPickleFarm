@@ -16,7 +16,6 @@ export function condensor(plants) {
         if (discarded[i].modifier) {
         condensed[i].modifier += discarded[i].modifier;
     }}
-    console.log(condensed.length, discarded.length);
     return condensed;
 
 }

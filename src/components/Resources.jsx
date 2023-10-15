@@ -14,15 +14,16 @@ function Resources() {
   const stats = useSelector(store => store.stats);
 
   const calculateTrend = (array) => {
-    let duration = 15;
+    let duration = 150;
+
     if (array.length < duration) {
       return 0;
     }
 
-    // Calculate differences between consecutive entries within the first 60 seconds
+    const shortArray = array.slice(-duration);
     const differences = [];
     for (let i = 1; i <= duration; i++) {
-      differences.push(array[i] - array[i - 1]);
+      differences.push(array[i] - array[i - i]);
     }
 
     // Calculate the average change per second
@@ -33,7 +34,6 @@ function Resources() {
   };
 
   function countPlants() {
-    console.log(plants);
     return plants.reduce((sum, obj) => {
       if (obj.hasOwnProperty('modifier') && typeof obj['modifier'] === 'number') {
         return sum + obj['modifier'];

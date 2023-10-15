@@ -22,12 +22,29 @@ export class Plants {
 function growPlants(plants) {
     plants.forEach((plant) => {
         plant.currentYield += ((plant.growthRate + plant.growthModifer) * plant.modifier);
+        plant.age += plant.aging;
+        if (plant.age > plant.maxAge) {
+            plant.dead = true;
+        }
         if (plant.currentYield >= plant.maxYield) plant.currentYield = plant.maxYield;
     });
+    plants.filter((plant) => !plant.dead);
     return [...plants];
 }
 
-function updateStats(plants, stats, picked, pickled) {
+function generateSeeds(plants) {
+    let newSeeds = 0;
+    for (let i = 0; i < plants.length; i++) {
+        const seed = Math.random();
+        console.log(seed, plants[i].seedChance * plants[i].modifier);
+        if (plants[i].seedChance * plants[i].modifier >= seed) {
+            newSeeds += 1;
+        }
+    }
+    return newSeeds;
+}
+
+function updateStats(plants, stats) {
     let totalGrowthRate = 0;
     let averageAge = 0;
     let maxYield = 0;
@@ -121,19 +138,21 @@ export function updateTicker() {
 
  if (plants.length > 0) {
     growPlants(plants);
+    let newSeeds = generateSeeds(plants);
     let picked = runPickerBots(plants, robots, stats);
     let pickled = runPicklerBots(resources, robots, stats);
     let seeds = runPlanterBots(plants, resources, robots, plantSettings);
+    
     let newLog = cycleLog(log);
     stats.totalProduction += pickled;
-    updateStats(plants, stats, picked, pickled);
+    updateStats(plants, stats);
     
     
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     store.dispatch({ type: 'stats/setAllStats', payload: stats });
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: pickled }});
-    store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds }});
+    store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds + newSeeds }});
     store.dispatch( { type: 'log/setAllLog', payload: newLog });
 } //End initial if statement
 
