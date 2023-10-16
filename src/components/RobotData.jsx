@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Typography } from "@mui/material";
 
 function RobotData () {
 
@@ -8,31 +9,25 @@ function RobotData () {
     const picklerActive = useSelector(store => store.stats.picklerActive);
   return (
             <>
-            <h3>Robots:</h3>
-            <li>Planter Bots: 
-              {robots.planterBots} 
-              at 
-              {robots.planterSpeed} /s
+            <br />
+            <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Robots:</Typography>
+            <br />
+            <Typography variant="body">
+              Planter Bots: {robots.planterBots} at {robots.planterSpeed} /s
               {planterActive &&
                <span>- Planting</span>
               }
-              </li>
-            <li>Picker Bots: 
-              {robots.pickerBots} 
-              at 
-              {robots.pickerSpeed} /s
+              <br />
+              Picker Bots: {robots.pickerBots} at {robots.pickerSpeed} /s
               {pickerActive &&
                <span>- Picking</span>
               }
-              </li>
-            <li>Pickling Bots: 
-              {robots.picklerBots} 
-              at 
-              {robots.picklerSpeed} /s
+              <br />
+              Pickling Bots: {robots.picklerBots} at {robots.picklerSpeed} /s
               {picklerActive &&
                <span>- Pickling</span>
               }
-              </li>
+              </Typography>
             </>
             )
             

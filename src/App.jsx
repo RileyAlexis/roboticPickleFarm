@@ -1,13 +1,12 @@
 //React
 import react from 'react';
 import { useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 //CSS
 import './app.css';
 
 //Components
-import Resources from './components/Resources';
 import GameMenu from './components/GameMenu';
 import MainBox from './components/MainBox';
 import LogBox from './components/LogBox';
@@ -18,6 +17,7 @@ import { updateTicker } from './modules/engine';
 
 //Material UI
 import { Typography } from '@mui/material';
+import MainBoxLeft from './components/MainBoxLeft';
 
 function App() {
 
@@ -46,19 +46,20 @@ useEffect(() => {
       {authorized &&
       <>
       <div className="title-box">
-        <Typography variant="h6">Robotic Pickle Farm</Typography>
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Robotic Pickle Farm</Typography>
       </div>
       <div className="game-Menu-Box">
         <GameMenu />
         </div>
         <div className="resources-box">
-          <Resources /> 
+          <MainBoxLeft />
           </div>
       <div className="main-menu-box">
       <p></p><br />
       
       </div>
       <div className="main-box">
+        
         <MainBox />
       </div>
         <LogBox />
