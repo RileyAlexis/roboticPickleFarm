@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
     {id: 'farm', title: 'Farm', show: true },
-    {id: 'robots', title: 'Robots', show: false },
+    {id: 'robots', title: 'Robots', show: true },
     {id: 'buildings', title: 'Buildings', show: false },
     {id: 'powerUps', title: 'Powerups', show:false },
 ];
