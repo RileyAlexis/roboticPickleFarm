@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
-import { Typography } from "@mui/material/styles/createTypography";
 
 import RobotData from "./RobotData";
-import { duration } from "@mui/material";
+import { Typography, duration } from "@mui/material";
 import { countPlants, formatNumber } from "../modules/utilFunction";
 
 function Resources() {
@@ -37,7 +36,7 @@ function Resources() {
 
   return (
     <>
-      Total Production: {formatNumber(stats.totalProduction)}
+      <Typography variant="h6">Total Production: {formatNumber(stats.totalProduction)}</Typography>
       <h3>Resources:</h3>
       <p>Seeds: {resources.seeds[resources.seeds.length - 1]}</p>
       <p>Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])} ( {calculateTrend(resources.cucumbers)}/s )</p>
