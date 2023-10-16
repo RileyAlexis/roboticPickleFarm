@@ -6,7 +6,7 @@ const initialState = {
     growthModifer: 0,
     maxYield: 5,
     deathChance: 0.01,
-    aging: 0.001,
+    aging: 0.01,
     maxAge: 270,
     seedChance: 0.0001
 }

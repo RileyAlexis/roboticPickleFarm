@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import RobotData from "./RobotData";
 import { duration } from "@mui/material";
 
+import { countPlants, formatNumber } from "../modules/utilFunction";
+
 function Resources() {
 
   const resources = useSelector(store => store.resources);
@@ -33,22 +35,6 @@ function Resources() {
     return parseFloat(averageChangePerSecond).toFixed(2);
   };
 
-  function countPlants() {
-    return plants.reduce((sum, obj) => {
-      if (obj.hasOwnProperty('modifier') && typeof obj['modifier'] === 'number') {
-        return sum + obj['modifier'];
-      } else {
-        return sum;
-      }
-    }, 0);
-  }
-
-  function formatNumber(number) {
-    // Convert the number to a string and use regex to add commas
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-
   return (
     <>
       <h4>Total Production: {formatNumber(stats.totalProduction)}</h4>
@@ -56,7 +42,7 @@ function Resources() {
       <p>Seeds: {resources.seeds[resources.seeds.length - 1]}</p>
       <p>Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])} ( {calculateTrend(resources.cucumbers)}/s )</p>
       <p>Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])} ( {calculateTrend(resources.pickles)}/s )</p>
-      <h3>Plants: {formatNumber(countPlants())}</h3>
+      <h3>Plants: {formatNumber(countPlants(plants))}</h3>
       <p>Growth Rate: {totalGrowthRate} / s</p>
       <p>Max Yield: {maxYield}</p>
       <p>Average Age: {averageAge}</p>

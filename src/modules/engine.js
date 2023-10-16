@@ -1,6 +1,7 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 import { condensor } from './condensor';
+import { countPlants } from './utilFunction';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -21,8 +22,10 @@ export class Plants {
 
 function growPlants(plants) {
     plants.forEach((plant) => {
+        if (!plant.isDead) {
         plant.currentYield += ((plant.growthRate + plant.growthModifer) * plant.modifier);
-        plant.age += plant.aging;
+        plant.age += plant.aging * plant.modifier;
+        }
         if (plant.age > plant.maxAge) {
             plant.dead = true;
         }
@@ -36,7 +39,6 @@ function generateSeeds(plants) {
     let newSeeds = 0;
     for (let i = 0; i < plants.length; i++) {
         const seed = Math.random();
-        console.log(seed, plants[i].seedChance * plants[i].modifier);
         if (plants[i].seedChance * plants[i].modifier >= seed) {
             newSeeds += 1;
         }
@@ -49,7 +51,7 @@ function updateStats(plants, stats) {
     let averageAge = 0;
     let maxYield = 0;
     let ripeCucumbers = 0;
-    
+    let plantsQty = countPlants(plants);
 
     plants.forEach((plant) => {
         ripeCucumbers += Math.floor(plant.currentYield);
@@ -58,7 +60,7 @@ function updateStats(plants, stats) {
         maxYield += plant.maxYield;
     });
 
-    stats.averageAge = averageAge / plants.length;
+    stats.averageAge = averageAge / plantsQty;
     stats.totalGrowthRate = totalGrowthRate;
     stats.maxYield = maxYield;
     stats.ripeCucumbers = ripeCucumbers;
