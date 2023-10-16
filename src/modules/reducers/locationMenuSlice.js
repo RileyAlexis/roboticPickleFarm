@@ -5,6 +5,7 @@ const initialState = [
     {id: 'robots', title: 'Robots', show: true },
     {id: 'buildings', title: 'Buildings', show: false },
     {id: 'powerUps', title: 'Powerups', show:false },
+    {id: 'cheatOptopns', title: 'Cheats', show: true }
 ];
 
     export const locationMenuSlice = createSlice({

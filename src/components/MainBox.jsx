@@ -44,6 +44,7 @@ function MainBox() {
     </Tabs>
     {value === 0 && <FarmMenu />}
     {value === 1 && <RobotMenu />}
+    {value === 4 && <CheatsForTesting />}
     
 
 

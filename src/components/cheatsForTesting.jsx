@@ -29,11 +29,12 @@ function CheatsForTesting() {
     }
     return (
         <div className="cheatBox">
-        <button onClick={addSeeds}>Add 100 Seeds</button>
-        <button onClick={addMoreSeeds}>Add 1000 Seeds</button>
-        <button onClick={increaseBotSpeed}>Bot Speed +1</button>
-        <button onClick={addBots}>+5 Bots</button>
-        <button onClick={addPickles}>+50000 Pickles</button>
+            <br />
+        <button onClick={addSeeds}>Add 100 Seeds</button><br />
+        <button onClick={addMoreSeeds}>Add 1000 Seeds</button><br />
+        <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
+        <button onClick={addBots}>+5 Bots</button><br />
+        <button onClick={addPickles}>+50000 Pickles</button><br />
             
 
         
