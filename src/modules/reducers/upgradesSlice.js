@@ -25,6 +25,9 @@ export const updgradesSlice = createSlice({
     name: 'upgrades',
     initialState: initialState,
     reducers: {
+        setAllUpgrades: (state, action) => {
+            return action.payload;
+        },
         toggleItem: (state, action) => {
             for (let i in state) {
                 if (state[i].name === action.payload) {
@@ -52,5 +55,5 @@ export const updgradesSlice = createSlice({
     }
 })
 
-export const { toggleItem, showItem, disableItem } = updgradesSlice.actions;
+export const { setAllUpgrades, toggleItem, showItem, disableItem } = updgradesSlice.actions;
 export default updgradesSlice.reducer;

@@ -69,6 +69,7 @@ function LandingPage() {
                             dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
                             dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
                             dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
+                            dispatch({ type: 'upgrades/setAllUpgrades', payload: response.data.upgrades })
                             dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
                             dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
                             checkButtons();

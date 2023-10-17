@@ -94,9 +94,10 @@ let dataArr = [
     req.body.dataObj.plantSettings,
     req.body.dataObj.prices,
     {Placeholder: 'buildings'},
-    {Placeholder: 'upgrades'},
+    JSON.stringify(req.body.dataObj.upgrades),
     req.body.dataObj.log
 ];
+console.log('Upgrades------------', req.body.dataObj.upgrades);
 
 let queryString = 'SELECT 1 FROM "games" WHERE "user_id" = $1'
 pool.query(queryString, [req.body.dataObj.userId])
@@ -162,7 +163,7 @@ router.post('/loadgame', verifyToken, (req, res) => {
                 plantSettings: result.rows[0].plantSettings,
                 prices: result.rows[0].prices,
                 buildings: result.rows[0].buildings,
-                // upgrades: result.rows[0].upgrades,
+                upgrades: result.rows[0].upgrades,
                 log: result.rows[0].log,
             }
                 

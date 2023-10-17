@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 
 import SettingsWindow from './SettingsWindow';
 import AboutWindow from './AboutWindow';
+
 function GameMenu () {
 
     const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
