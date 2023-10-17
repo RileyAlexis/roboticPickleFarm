@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 
-import RobotData from "./RobotData";
 import { Typography } from "@mui/material";
-import { countPlants, formatNumber, calculateTrend } from "../modules/utilFunction";
+import { formatNumber, calculateTrend } from "../modules/utilFunction";
 
 function Resources() {
 

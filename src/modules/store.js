@@ -15,6 +15,7 @@ import farmMenuSlice from './reducers/farmMenuSlice';
 import pricesSlice from './reducers/pricesSlice';
 import plantSettingsSlice from './reducers/plantSettings';
 import statsSlice from './reducers/statsSlice';
+import deltaSlice from './reducers/deltas';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -70,6 +71,7 @@ const runEngine = (state = false, action) => {
     robotMenu: robotsMenuSlice,
     prices: pricesSlice,
     plantSettings: plantSettingsSlice,
+    deltas: deltaSlice,
     runEngine: runEngine
 });
 

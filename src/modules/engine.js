@@ -2,6 +2,7 @@ import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 import { condensor } from './condensor';
 import { countPlants } from './utilFunction';
+import { checkButtons } from './events';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -133,6 +134,7 @@ export function updateTicker() {
     const resources = state.resources;
     const plantSettings = state.plantSettings;
     const log = deepUnfreeze(state.log);
+    
     //Prevents more than 10,000 objects being created - uses plants.modifier to maintain numbers
     if (plants.length >= 10000) {
         plants = condensor(plants);
@@ -149,13 +151,18 @@ export function updateTicker() {
     stats.totalProduction += pickled;
     updateStats(plants, stats);
     
-    
+    if (state.deltas.buttonDelta >= 5) {
+        checkButtons();
+        store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
+    }
+
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     store.dispatch({ type: 'stats/setAllStats', payload: stats });
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: pickled }});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds + newSeeds }});
-    store.dispatch( { type: 'log/setAllLog', payload: newLog });
+    store.dispatch({ type: 'log/setAllLog', payload: newLog });
+    store.dispatch({ type: 'deltas/cycleDeltas' });
 } //End initial if statement
 
 }//End updateTicker()
