@@ -6,6 +6,8 @@ import { formatNumber, calculateTrend } from "../modules/utilFunction";
 function Resources() {
 
   const resources = useSelector(store => store.resources);
+  let cucumberTrend = calculateTrend(resources.cucumbers);
+  let picklesTrend = calculateTrend(resources.pickles);
 
   return (
     <>
@@ -13,9 +15,9 @@ function Resources() {
       <br />
       <Typography variant="body">Seeds: {resources.seeds[resources.seeds.length - 1]}</Typography>
       <br />
-      <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])} ( {calculateTrend(resources.cucumbers)}/s )</Typography>
+      <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])} ( {cucumberTrend.sign}{cucumberTrend.trend} /s )</Typography>
       <br />
-      <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])} ( {calculateTrend(resources.pickles)}/s )</Typography>
+      <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])} ( {picklesTrend.sign}{cucumberTrend.trend} )</Typography>
     </>
   )
 }

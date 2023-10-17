@@ -15,24 +15,15 @@ export function formatNumber(number) {
 
   
   export const calculateTrend = (array) => {
-    let duration = 150;
-
-    if (array.length < duration) {
-      return 0;
-    }
-
-    const shortArray = array.slice(-duration);
-    const differences = [];
-    for (let i = 1; i <= duration; i++) {
-      differences.push(array[i] - array[i - i]);
-    }
-
-    // Calculate the average change per second
-    const totalChange = differences.reduce((acc, diff) => acc + diff, 0);
-    const averageChangePerSecond = totalChange / duration;
-
-    return parseFloat(averageChangePerSecond).toFixed(2);
-  };
+    let newArr = array.slice(-240);
+    let diff = newArr[newArr.length-1] - newArr[0];
+    let sign = '';
+    if (diff > 0) sign = '+';
+    else if (diff < 0) sign ='-';
+    else sign = '';
+    return {sign: sign, trend: (parseFloat(diff / newArr.length)).toFixed(2) };
+}
+  
 
   export function averageProperty(objectsArray, propertyName) {
     if (!Array.isArray(objectsArray) || objectsArray.length === 0) {
