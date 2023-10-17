@@ -23,7 +23,7 @@ function PlantsList () {
         <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Plants: {formatNumber(countPlants(plants))}</Typography>
       <br />
     <TipBox title="Average Growth Rate" data="Average growth rate for all plants">
-        <Typography variant="body">Growth Rate: {totalGrowthRate} /s </Typography><br />
+        <Typography variant="body">Growth Rate: {formatNumber(totalGrowthRate)} /s </Typography><br />
         </TipBox>
         <br />
       
@@ -36,7 +36,7 @@ function PlantsList () {
       </TipBox>
       <br />
       <TipBox data="Ripe cucumbers can be picked / maximum # of cucumbers that can stay on the vine">
-      <Typography variant="body">Ripe Cucumbers: {ripeCucumbers} / {maxYield}</Typography>
+      <Typography variant="body">Ripe Cucumbers: {formatNumber(ripeCucumbers)} / {formatNumber(maxYield)}</Typography>
       </TipBox>
       <br />
       </>
