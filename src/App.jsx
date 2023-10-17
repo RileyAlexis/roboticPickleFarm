@@ -54,10 +54,10 @@ useEffect(() => {
         <div className="resources-box">
           <MainBoxLeft />
           </div>
-      <div className="main-menu-box">
+      {/* <div className="main-menu-box">
       <p></p><br />
       
-      </div>
+      </div> */}
       <div className="main-box">
         
         <MainBox />

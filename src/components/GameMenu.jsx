@@ -1,14 +1,20 @@
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 
 import axios from 'axios';
 
 import Button from '@mui/material/Button';
 
+import SettingsWindow from './SettingsWindow';
+import AboutWindow from './AboutWindow';
 function GameMenu () {
 
     const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
     const dispatch = useDispatch();
+
+    const [settings, setSettings] = useState(false);
+    const [about, setAbout] = useState(false);
 
     const userEmail = useSelector(store => store.userEmail);
     const userId = useSelector(store => store.userId);
@@ -56,12 +62,23 @@ function GameMenu () {
         })
     }
 
+    const handleSettings = () => {
+        setSettings(!settings);
+    }
+
+    const handleAbout = () => {
+        setAbout(!about);
+    }
+
     return (
         <>
-
         <Button onClick={saveGame} color="primary">Save</Button>
-        <Button color="primary">Settings</Button>
+        <Button onClick={handleSettings} color="primary">Settings</Button>
+        <Button onClick={handleAbout} color="primary">About</Button>
         <Button onClick={handleSignOut} color="primary">Sign Out</Button>
+
+        {settings && <SettingsWindow onClose={handleSettings} />}
+        {about && <AboutWindow onClose={handleAbout} />}
         </>
     )
 }

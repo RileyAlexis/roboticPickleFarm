@@ -26,17 +26,13 @@ function PlantsList () {
         <Typography variant="body">Growth Rate: {totalGrowthRate} /s </Typography><br />
         </TipBox>
         <br />
-      <TipBox data="Once a plant reaches its maximum age it will be retired">
-      <Typography variant="body">Max Age: {maxAge}</Typography>
-      </TipBox>
-      <br />
       
       <TipBox data="Each plant has a chance of creating a plantable seed on each cycle">
       <Typography variant="body">Seed Chance /s: {parseFloat(averageProperty(plants, 'seedChance')).toFixed(4)}%</Typography>
       </TipBox>
       <br />
-      <TipBox data="Average Age of all plants">
-      <Typography variant="body">Average Age: {parseFloat(averageProperty(plants, 'age')).toFixed(2)}</Typography>
+      <TipBox data="Average Age of all plants / Once a plant reaches its maximum age it will be retired">
+      <Typography variant="body">Average Age: {parseFloat(averageProperty(plants, 'age')).toFixed(2)} / {maxAge} </Typography>
       </TipBox>
       <br />
       <TipBox data="Ripe cucumbers can be picked / maximum # of cucumbers that can stay on the vine">
