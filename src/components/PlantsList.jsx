@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
-import { formatNumber, countPlants } from "../modules/utilFunction";
+import { formatNumber, countPlants, averageProperty } from "../modules/utilFunction";
 
 function PlantsList () {
     const plants = useSelector(store => store.plants);
@@ -16,7 +16,7 @@ function PlantsList () {
       <br />
       <Typography variant="body">Growth Rate: {totalGrowthRate} /s </Typography><br />
       <Typography variant="body">Max Yield: {maxYield}</Typography><br />
-      <Typography variant="body">Average Age: {averageAge}</Typography><br />
+      <Typography variant="body">Average Age: {parseFloat(averageProperty(plants, 'age')).toFixed(2)}</Typography><br />
       <Typography variant="body">Ripe Cucumbers: {ripeCucumbers}</Typography><br />
       </>
     )

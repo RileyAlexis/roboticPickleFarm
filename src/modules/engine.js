@@ -1,7 +1,7 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 import { condensor } from './condensor';
-import { countPlants } from './utilFunction';
+import { countPlants, averageProperty } from './utilFunction';
 import { checkButtons } from './events';
 
 export class Plants {
@@ -32,7 +32,8 @@ function growPlants(plants) {
         }
         if (plant.currentYield >= plant.maxYield) plant.currentYield = plant.maxYield;
     });
-    plants.filter((plant) => !plant.dead);
+    let deadPlants = plants.filter((plant) => !plant.dead);
+    store.dispatch({ type: 'log/addLog', payload: `${deadPlants.length} plants have been retired`});
     return [...plants];
 }
 
@@ -151,6 +152,10 @@ export function updateTicker() {
     stats.totalProduction += pickled;
     updateStats(plants, stats);
     
+    console.log(plants[1].age, averageProperty(plants, 'age'))
+        
+
+
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });

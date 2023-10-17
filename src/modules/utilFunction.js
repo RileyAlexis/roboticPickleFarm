@@ -33,3 +33,23 @@ export function formatNumber(number) {
 
     return parseFloat(averageChangePerSecond).toFixed(2);
   };
+
+  export function averageProperty(objectsArray, propertyName) {
+    if (!Array.isArray(objectsArray) || objectsArray.length === 0) {
+        return 0;
+    }
+
+    if (typeof propertyName !== 'string') {
+        throw new Error('Property name should be a string');
+    }
+
+    const validObjects = objectsArray.filter(obj => obj.hasOwnProperty(propertyName) && typeof obj[propertyName] === 'number');
+
+    if (validObjects.length === 0) {
+        return 0;
+    }
+
+    const sum = validObjects.reduce((acc, obj) => acc + obj[propertyName], 0);
+    const average = sum / validObjects.length;
+    return average;
+}
