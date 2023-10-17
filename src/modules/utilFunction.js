@@ -15,13 +15,13 @@ export function formatNumber(number) {
 
   
   export const calculateTrend = (array) => {
-    let newArr = array.slice(-240);
+    let newArr = array.slice(-120);
     let diff = newArr[newArr.length-1] - newArr[0];
     let sign = '';
     if (diff > 0) sign = '+';
     else if (diff < 0) sign ='-';
     else sign = '';
-    return {sign: sign, trend: (parseFloat(diff / newArr.length)).toFixed(2) };
+    return {sign: sign, trend: (Math.abs(parseFloat(diff / newArr.length)).toFixed(2)) };
 }
   
 
