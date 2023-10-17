@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
     {id: 'farm', title: 'Farm', show: true },
-    {id: 'robots', title: 'Robots', show: true },
+    {id: 'robots', title: 'Robots', show: false },
     {id: 'buildings', title: 'Buildings', show: false },
-    {id: 'powerUps', title: 'Powerups', show:false },
+    {id: 'upgrades', title: 'Upgrades', show:false },
     {id: 'cheatOptopns', title: 'Cheats', show: true }
 ];
 
@@ -19,10 +19,18 @@ const initialState = [
                     }
                     return [...state];
                 }
-            }
+            },
+            showItem: (state, action) => {
+                const title = action.payload;
+                for (let i = 0; i < state.length; i++) {
+                    if (state[i].title === title) {
+                        state[i].show = true;
+                        }
+                    }
+                }
         }
     })
 
-    export const { toggleItem } = locationMenuSlice.actions;
+    export const { toggleItem, showItem } = locationMenuSlice.actions;
 
     export default locationMenuSlice.reducer;

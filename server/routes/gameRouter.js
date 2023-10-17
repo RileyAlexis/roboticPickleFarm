@@ -94,7 +94,7 @@ let dataArr = [
     req.body.dataObj.plantSettings,
     req.body.dataObj.prices,
     {Placeholder: 'buildings'},
-    req.body.dataObj.upgrades,
+    {Placeholder: 'upgrades'},
     req.body.dataObj.log
 ];
 
@@ -162,7 +162,7 @@ router.post('/loadgame', verifyToken, (req, res) => {
                 plantSettings: result.rows[0].plantSettings,
                 prices: result.rows[0].prices,
                 buildings: result.rows[0].buildings,
-                upgrades: result.rows[0].upgrades,
+                // upgrades: result.rows[0].upgrades,
                 log: result.rows[0].log,
             }
                 

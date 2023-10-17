@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Button, Typography } from '@mui/material';
 import { TextField } from '@mui/material';
 
-import GameMenu from './GameMenu';
+import { checkButtons, checkTabs } from '../modules/events';
 
 
 function LandingPage() {
@@ -64,7 +64,6 @@ function LandingPage() {
                     })
                         .then((response) => {
                             //Set game data Here
-                            const loadedPlants = [...response.data.plants];
                             dispatch({ type: 'log/setAllLog', payload: response.data.log });
                             dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
                             dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
@@ -72,8 +71,8 @@ function LandingPage() {
                             dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
                             dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
                             dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
-                            dispatch({ type: 'RUN_ENGINE'});
-
+                            checkButtons();
+                            checkTabs();
                         }).catch((error) => {
                             console.log(error);
                         })

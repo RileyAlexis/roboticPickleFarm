@@ -1,17 +1,18 @@
 import { useSelector } from "react-redux";
-import GameButton from "./GameButton";
+import UpgradeButton from "./UpgradeButton";
 import { buttonCall } from '../modules/buttons';
 
-function FarmMenu() {
-    const farmMenu = useSelector(store => store.farmMenu);
+function UpgradeMenu() {
+    const upgradeMenu = useSelector(store => store.upgrades);
+
     return (
         <div className="buttonBox">
-        {farmMenu?.map((item) => 
+        {upgradeMenu?.map((item) => 
             {if (item.show) return (
-                    <GameButton key={item.name} 
+                    <UpgradeButton key={item.name} 
                         name={item.name} 
-                        buttonCall={() => buttonCall(item.name)} 
-                        disable={item.dis}
+                        buttonCall={() => buttonCall('upgrade', item.name, item.dispatch)} 
+                        disable={item.disabled}
                         show={item.show}
                         data={item.data}
                         coolDown={item.coolDown} />
@@ -24,4 +25,4 @@ function FarmMenu() {
     )
 }
 
-export default FarmMenu;
+export default UpgradeMenu;

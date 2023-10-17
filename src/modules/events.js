@@ -14,3 +14,14 @@ export function checkButtons() {
         store.dispatch({ type: 'farmMenu/showItem', payload: 'Buy Seed' });
     }
 }
+
+export function checkTabs() {
+    const state = store.getState();
+    console.log('Check Tabs running');
+    if (state.resources.pickles[state.resources.pickles.length-1] >= 100 && !state.locationMenu[1].show) {
+        store.dispatch({ type: 'locationMenu/showItem', payload: 'Robots'});
+    }
+    if (state.resources.pickles[state.resources.pickles.length-1] >= 500 && !state.locationMenu[3].show) {
+        store.dispatch({ type: 'locationMenu/showItem', payload: 'Upgrades'});
+    }
+}

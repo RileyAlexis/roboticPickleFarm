@@ -2,7 +2,7 @@ import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 import { condensor } from './condensor';
 import { countPlants, averageProperty } from './utilFunction';
-import { checkButtons } from './events';
+import { checkButtons, checkTabs } from './events';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -151,13 +151,10 @@ export function updateTicker() {
     let newLog = cycleLog(log);
     stats.totalProduction += pickled;
     updateStats(plants, stats);
-    
-    console.log(plants[1].age, averageProperty(plants, 'age'))
-        
-
 
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
+        checkTabs();
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
     }
 

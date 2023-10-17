@@ -14,6 +14,7 @@ function RobotMenu() {
                         buttonCall={() => buttonCall(item.name)} 
                         disable={item.dis}
                         show={item.show}
+                        data={item.data}
                         coolDown={item.coolDown} />
             )
             else return (null)

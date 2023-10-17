@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = 
     [
-        {name: 'Plant', coolDown: 4000, show: true },
-        {name: 'Pick', coolDown: 2000, show: false },
-        {name: 'Pickle', coolDown: 5000, show: false },
-        {name: 'Buy Seed', coolDown:2000, show: false }
+        {name: 'Plant', coolDown: 4000, show: true, data: "" },
+        {name: 'Pick', coolDown: 2000, show: false, data: "" },
+        {name: 'Pickle', coolDown: 5000, show: false, data: "" },
+        {name: 'Buy Seed', coolDown:2000, show: false, data: "" }
     ];
 
     export const farmMenuSlice = createSlice({
@@ -27,7 +27,6 @@ const initialState =
             },
             showItem: (state, action) => {
                 const title = action.payload;
-                console.log(title);
                 for (let i = 0; i < state.length; i++) {
                     if (state[i].name === title) {
                         state[i].show = true;

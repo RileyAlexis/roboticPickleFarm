@@ -16,6 +16,7 @@ import pricesSlice from './reducers/pricesSlice';
 import plantSettingsSlice from './reducers/plantSettings';
 import statsSlice from './reducers/statsSlice';
 import deltaSlice from './reducers/deltas';
+import upgradesSlice from './reducers/upgradesSlice';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -72,6 +73,7 @@ const runEngine = (state = false, action) => {
     prices: pricesSlice,
     plantSettings: plantSettingsSlice,
     deltas: deltaSlice,
+    upgrades: upgradesSlice,
     runEngine: runEngine
 });
 

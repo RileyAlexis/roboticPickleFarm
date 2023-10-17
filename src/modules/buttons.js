@@ -1,6 +1,7 @@
 import { storeInstance as store} from './store';
 import { Plants } from './engine';
 import { deepUnfreeze } from './deepUnfreeze';
+import { sendUpgrade } from './sendUpgrade';
 
 
 function plantSeed() {
@@ -90,8 +91,8 @@ function buySeeds() {
     }
 }
 
-export const buttonCall = (name) => {
-    console.log(name);
+export const buttonCall = (name, upgrade, dispatch) => {
+    console.log(name, dispatch, upgrade);
     switch (name) {
         case 'Plant': plantSeed(); break;
         case 'Pick': pickCucumbers(); break;
@@ -100,5 +101,6 @@ export const buttonCall = (name) => {
         case 'Buy Picker Bot': buyBot('picker'); break;
         case 'Buy Pickler Bot': buyBot('pickler'); break;
         case 'Buy Seed': buySeeds(); break;
+        case 'upgrade': sendUpgrade(upgrade, dispatch); break;
     }
 }

@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import TipBox from './TipBox';
 
-function GameButton ({name, buttonCall, disable, show, data, coolDown}) {
+function UpgradeButton ({name, buttonCall, disable, show, data, upgrade, dispatch}) {
     const showButton = () => show ? 'unHidden' : 'hidden';
     const handleClick = () => {
-        buttonCall(name);
+        buttonCall(name, upgrade, dispatch);
     }
 
     return (
@@ -28,4 +28,4 @@ function GameButton ({name, buttonCall, disable, show, data, coolDown}) {
     )
 }
 
-export default GameButton;
+export default UpgradeButton;

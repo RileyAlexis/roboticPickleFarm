@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
-{name: 'Buy Planter Bot', coolDown: 4000, show: true },
-{name: 'Buy Picker Bot', coolDown: 2000, show: true},
-{name: 'Buy Pickler Bot', coolDown:2000, show: true},
+{name: 'Buy Planter Bot', coolDown: 4000, show: true, data: "" },
+{name: 'Buy Picker Bot', coolDown: 2000, show: true, data: "" },
+{name: 'Buy Pickler Bot', coolDown:2000, show: true, data: "" },
 ];
 
 export const robotsMenuSlice = createSlice({
@@ -17,10 +17,18 @@ export const robotsMenuSlice = createSlice({
                 }
                 return [...state];
             }
-        }
+        },
+        showItem: (state, action) => {
+            const title = action.payload;
+            for (let i = 0; i < state.length; i++) {
+                if (state[i].name === title) {
+                    state[i].show = true;
+                    }
+                }
+            }
     }
 })
 
-export const { toggleItem } = robotsMenuSlice.actions;
+export const { toggleItem, showItem } = robotsMenuSlice.actions;
 
 export default robotsMenuSlice.reducer;

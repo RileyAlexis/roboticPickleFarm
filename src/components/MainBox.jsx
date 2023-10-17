@@ -5,9 +5,8 @@ import { Tab, Tabs } from '@mui/material';
 
 import FarmMenu from './FarmMenu';
 import RobotMenu from './RobotMenu';
-import TabNavItem from './TabNavItem';
-import TabContent from './TabContent';
 import CheatsForTesting from './cheatsForTesting';
+import UpgradeMenu from './UpgradesMenu';
 
 function MainBox() {
 
@@ -44,51 +43,9 @@ function MainBox() {
     </Tabs>
     {value === 0 && <FarmMenu />}
     {value === 1 && <RobotMenu />}
+    {value === 3 && <UpgradeMenu />}
     {value === 4 && <CheatsForTesting />}
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-           {/* tab nav */}
-        {/* <div className="main-box-nav">
-            {locationMenu.map((items) => <TabNavItem title={items.title}
-                id={items.id} activeTab={activeTab} setActiveTab={setActiveTab}/>
-            )}            
-        </div>
-        <div className="main-box-outlet">
-            <TabContent id="farm" activeTab={activeTab}>
-                <FarmMenu  />
-            </TabContent>
-            <TabContent id="robots" activeTab={activeTab}>
-                <RobotMenu />
-            </TabContent>
-            <TabContent id="buildings" activeTab={activeTab}>
-                <p>buildings tab</p>
-            </TabContent>
-            <TabContent id="powerUps" activeTab={activeTab}>
-                <p>power Ups tab</p>
-                </TabContent>
-        </div>
-        <CheatsForTesting /> */}
-        
         </>
 
     );
