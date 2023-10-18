@@ -167,4 +167,9 @@ export function updateTicker() {
     store.dispatch({ type: 'deltas/cycleDeltas' });
 } //End initial if statement
 
+if (state.deltas.autoSaveDelta >= 120) {
+    store.dispatch({ type: 'SAVE_GAME' });
+    store.dispatch({ type: 'deltas/resetDelta', payload: 'resetAutoSaveDelta'});
+}
+
 }//End updateTicker()
