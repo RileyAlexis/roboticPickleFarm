@@ -33,7 +33,7 @@ function growPlants(plants) {
         if (plant.currentYield >= plant.maxYield) plant.currentYield = plant.maxYield;
     });
     let deadPlants = plants.filter((plant) => !plant.dead);
-    store.dispatch({ type: 'log/addLog', payload: `${deadPlants.length} plants have been retired`});
+    // store.dispatch({ type: 'log/addLog', payload: `${deadPlants.length} plants have been retired`});
     return [...plants];
 }
 

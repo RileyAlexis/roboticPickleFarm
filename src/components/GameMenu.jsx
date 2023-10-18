@@ -42,25 +42,7 @@ function GameMenu () {
     }
 
     const saveGame = () => {
-            const dataObj = {
-                userId: userId,
-                resources: resources,
-                prices: prices,
-                log: log,
-                plants: plants,
-                robots: robots,
-                upgrades: upgrades,
-                stats: stats,
-                plantSettings: plantSettings
-            }
-
-    axios.post('/game/savegame', {headers: { 'Authorization': `${cookies.AuthToken}`},
-        dataObj})
-        .then((response) => {
-            dispatch({type: 'log/addLog', payload: {line: `Game Saved Successfully`, cycle: cycles}});
-        }).catch((error) => {
-            console.error(error);
-        })
+            dispatch({ type: 'SAVE_GAME'});
     }
 
     const handleSettings = () => {
@@ -71,8 +53,13 @@ function GameMenu () {
         setAbout(!about);
     }
 
+    // const sagaTest = () => {
+    //     dispatch({ type: 'SAVE_GAME', payload: 'ooga booga' });
+    // }
+
     return (
         <>
+        {/* <Button onClick={sagaTest} color="primary">Testy Button</Button> */}
         <Button onClick={saveGame} color="primary">Save</Button>
         <Button onClick={handleSettings} color="primary">Settings</Button>
         <Button onClick={handleAbout} color="primary">About</Button>

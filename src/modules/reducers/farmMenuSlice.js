@@ -2,10 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = 
     [
-        {name: 'Plant', coolDown: 4000, show: true, data: "" },
-        {name: 'Pick', coolDown: 2000, show: false, data: "" },
-        {name: 'Pickle', coolDown: 5000, show: false, data: "" },
-        {name: 'Buy Seed', coolDown:2000, show: false, data: "" }
+        {name: 'Plant', 
+            coolDown: 4000, 
+            show: true, 
+            data: "" 
+        },
+        {name: 'Pick', 
+            coolDown: 2000, 
+            show: false, 
+            data: "" 
+        },
+        {name: 'Pickle', 
+            coolDown: 5000, 
+            show: false, 
+            data: "" 
+        },
+        {name: 'Buy Seed', 
+            coolDown:2000, 
+            show: false, 
+            data: "" 
+        }
     ];
 
     export const farmMenuSlice = createSlice({

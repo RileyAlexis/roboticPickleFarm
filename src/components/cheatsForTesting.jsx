@@ -27,6 +27,12 @@ function CheatsForTesting() {
         dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: 50000 }});
         dispatch({ type: 'stats/setStats', payload: {title: 'totalProduction', value: 50000 }});
     }
+    const increaseSeed = () => {
+        let value = (plantSettings.seedChance * 0.1) + plantSettings.seedChance;
+        console.log(value);
+        dispatch({ type: 'plantSettings/changePlantSettings', payload: {title: 'seedChance', value: value}});
+        // dispatch({ type: 'plants/changeAllSeedChance', payload: value })
+    }
     return (
         <div className="cheatBox">
             <br />
@@ -35,6 +41,7 @@ function CheatsForTesting() {
         <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
         <button onClick={addBots}>+5 Bots</button><br />
         <button onClick={addPickles}>+50000 Pickles</button><br />
+        <button onClick={increaseSeed}>+10% Seedchance</button>
             
 
         

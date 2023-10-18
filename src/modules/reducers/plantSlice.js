@@ -15,6 +15,11 @@ const plantSlice = createSlice({
                 plant.growthRate += action.payload;
             });
         },
+        changeAllSeedChance: (state, action) => {
+            state.plants.forEach(plant => {
+                plant.seedChance +=  action.payload;
+            })
+        }
     }
 })
 

@@ -1,8 +1,7 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, getDefaultMiddleware, applyMiddleware } from '@reduxjs/toolkit';
 import { takeEvery, put, all} from 'redux-saga/effects';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-
 
 //Slices
 import resourcesSlice from './reducers/resourcesSlice';
@@ -18,6 +17,8 @@ import statsSlice from './reducers/statsSlice';
 import deltaSlice from './reducers/deltas';
 import upgradesSlice from './reducers/upgradesSlice';
 
+//Saga
+import rootSaga from './sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -56,8 +57,6 @@ const runEngine = (state = false, action) => {
   return state;
 }
 
-  // sagaMiddleware.run(rootSaga);
-
   const rootReducer = combineReducers({
     resources: resourcesSlice,
     stats: statsSlice,
@@ -85,5 +84,7 @@ const runEngine = (state = false, action) => {
         // logger
         ),
   })
+
+  sagaMiddleware.run(rootSaga);
 
   export { storeInstance };
