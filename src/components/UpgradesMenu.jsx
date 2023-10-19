@@ -11,10 +11,11 @@ function UpgradeMenu() {
             {if (item.show) return (
                     <UpgradeButton key={item.name} 
                         name={item.name} 
-                        buttonCall={() => buttonCall('upgrade', item.name, item.dispatch)} 
+                        buttonCall={() => buttonCall('upgrade', item)} 
                         disable={item.disabled}
                         show={item.show}
                         data={item.data}
+                        item={item}
                         coolDown={item.coolDown} />
             )
             else return (null)

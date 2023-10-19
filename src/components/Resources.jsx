@@ -9,7 +9,7 @@ function Resources() {
   let cucumberTrend = calculateTrend(resources.cucumbers);
   let picklesTrend = calculateTrend(resources.pickles);
   let seedTrend = calculateTrend(resources.seeds);
-
+  
   return (
     <>
       <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Resources:</Typography>
@@ -21,7 +21,7 @@ function Resources() {
       <Typography variant="caption"> ( {cucumberTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
       <br />
       <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
-      <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(cucumberTrend.trend)} )</Typography>
+      <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
     </>
   )
 }

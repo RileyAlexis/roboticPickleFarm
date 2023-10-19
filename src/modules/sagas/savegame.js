@@ -13,7 +13,6 @@ function* saveGame() {
     const AuthToken = getAllCookieNames();
     const store = yield ( select( state => state));
 
-    console.log(AuthToken);
     const dataObj = {
         userId: store.userId,
         resources: store.resources,

@@ -15,7 +15,7 @@ export function formatNumber(number) {
 
   
   export const calculateTrend = (array) => {
-    let newArr = array.slice(-120);
+    let newArr = array.slice(-60);
     let diff = newArr[newArr.length-1] - newArr[0];
     let sign = '';
     if (diff > 0) sign = '+';
@@ -24,7 +24,6 @@ export function formatNumber(number) {
     return {sign: sign, trend: (Math.abs(parseFloat(diff / newArr.length)).toFixed(2)) };
 }
   
-
   export function averageProperty(objectsArray, propertyName) {
     if (!Array.isArray(objectsArray) || objectsArray.length === 0) {
         return 0;

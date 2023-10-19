@@ -1,10 +1,11 @@
 import {useState} from 'react';
 import TipBox from './TipBox';
 
-function UpgradeButton ({name, buttonCall, disable, show, data, upgrade, dispatch}) {
+function UpgradeButton ({name, buttonCall, disable, show, data, item}) {
     const showButton = () => show ? 'unHidden' : 'hidden';
     const handleClick = () => {
-        buttonCall(name, upgrade, dispatch);
+        console.log(item);
+        buttonCall(name, item);
     }
 
     return (

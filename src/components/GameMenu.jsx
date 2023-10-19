@@ -2,8 +2,6 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 
-import axios from 'axios';
-
 import Button from '@mui/material/Button';
 
 import SettingsWindow from './SettingsWindow';
@@ -30,16 +28,11 @@ function GameMenu () {
     const stats = useSelector(store => store.stats);
 
     const handleSignOut = () => {
-        try {
-        saveGame();
-        } catch (error) {
-            console.log('Error saving game', error);
-        } finally {
+        dispatch({ type: 'SAVE_GAME' });
         removeCookie('Email');
         removeCookie('AuthToken');
         window.location.reload();
         }
-    }
 
     const saveGame = () => {
             dispatch({ type: 'SAVE_GAME'});
