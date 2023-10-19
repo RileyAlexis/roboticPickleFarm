@@ -17,7 +17,6 @@ export function checkButtons() {
 
 export function checkTabs() {
     const state = store.getState();
-    console.log('Check Tabs running');
     if (state.resources.pickles[state.resources.pickles.length-1] >= 100 && !state.locationMenu[1].show) {
         store.dispatch({ type: 'locationMenu/showItem', payload: 'Robots'});
     }
@@ -27,10 +26,8 @@ export function checkTabs() {
 }
 
 export function checkUpgrades(totalProduction, upgrades) {
-    console.log('Check Upgrades Running', upgrades);
     for (let i = 0; i < upgrades.length; i++) {
         if(upgrades[i].showAt >= totalProduction && !upgrades[i].show) {
-            console.log(upgrades[i]);
             store.dispatch({ type: 'upgrades/showItem', payload: upgrades[i].name });
         }
     }

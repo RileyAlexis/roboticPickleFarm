@@ -21,7 +21,7 @@ function Resources() {
       <Typography variant="caption"> ( {cucumberTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
       <br />
       <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
-      <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
+      <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
     </>
   )
 }
