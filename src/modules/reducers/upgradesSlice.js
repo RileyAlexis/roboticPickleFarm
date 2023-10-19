@@ -6,19 +6,19 @@ const initialState = [
         price: 500, 
         disabled: false, 
         dispatch: { type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }},
-        data: 'Refit all Picker Bots with ruggedized wheels - speed +1'},
+        data: 'Refit all Picker Bots with ruggedized wheels - speed +1 / Cost: 500'},
     {name: 'Grabber Claw', 
         show: true, 
         price: 500, 
         disabled: false, 
         dispatch: { type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }},
-        data: 'Refit all Pickling Bots with a grabber claw - speed +1'},
+        data: 'Refit all Pickling Bots with a grabber claw - speed +1 / Cost: 500'},
     {name: 'Shovel Arm', 
         show: true, 
         price: 500, 
         disabled: false, 
         dispatch: { type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }},
-        data: 'Refit all Planter Bots with a shovel arm - speed +1'},
+        data: 'Refit all Planter Bots with a shovel arm - speed +1 / Cost: 500'},
 ];
 
 export const updgradesSlice = createSlice({
