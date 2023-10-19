@@ -25,6 +25,12 @@ export const statsSlice = createSlice({
         setAllStats: (state, action) => {
             return action.payload;
         },
+        changeStat: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            let newState = state;
+            state[title] = value;
+        },
         setStats: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
@@ -52,5 +58,5 @@ export const statsSlice = createSlice({
     }
 })
 
-export const { setAllStats, setStats, toggleActive, runCycle} = statsSlice.actions;
+export const { setAllStats, changeStat, setStats, toggleActive, runCycle} = statsSlice.actions;
 export default statsSlice.reducer;

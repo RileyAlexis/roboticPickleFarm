@@ -20,14 +20,13 @@ function AboutWindow({onClose}) {
             <br /><br /><br />
             <Typography variant="body">
                 Robotic Pickle Farm is created using React, Redux, Redux-Saga, 
-                Node, Express and PostGres. User sessions handled by JSON Web 
+                Node, Express and Postgres. User sessions handled by JSON Web 
                 Token and Bcrypt.
             </Typography>
             <br /><br /><br /><br />
             <Typography variant="caption">
-                Source Code: 
-                <a href="https://github.com/RileyAlexis/roboticPickleFarm">
-                    GitHub: Robotic Pickle Farm</a>
+                Source Code:  <a href="https://github.com/RileyAlexis/roboticPickleFarm">
+                     GitHub: Robotic Pickle Farm</a>
                     </Typography>
 
             </div>
