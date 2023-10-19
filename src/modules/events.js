@@ -25,3 +25,13 @@ export function checkTabs() {
         store.dispatch({ type: 'locationMenu/showItem', payload: 'Upgrades'});
     }
 }
+
+export function checkUpgrades(totalProduction, upgrades) {
+    console.log('Check Upgrades Running', upgrades);
+    for (let i = 0; i < upgrades.length; i++) {
+        if(upgrades[i].showAt >= totalProduction && !upgrades[i].show) {
+            console.log(upgrades[i]);
+            store.dispatch({ type: 'upgrades/showItem', payload: upgrades[i].name });
+        }
+    }
+}

@@ -2,7 +2,7 @@ import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 import { condensor } from './condensor';
 import { countPlants, averageProperty } from './utilFunction';
-import { checkButtons, checkTabs } from './events';
+import { checkButtons, checkTabs, checkUpgrades } from './events';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -155,6 +155,7 @@ export function updateTicker() {
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
         checkTabs();
+        checkUpgrades(stats.totalProduction, state.upgrades);
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
     }
 

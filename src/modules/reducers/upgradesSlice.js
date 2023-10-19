@@ -5,20 +5,39 @@ const initialState = [
         show: true, 
         price: 500, 
         disabled: false, 
+        showAt: 500,
         dispatch: { type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }},
-        data: 'Refit all Picker Bots with ruggedized wheels - speed +1 / Cost: 500'},
+        data: 'Refit all Picker Bots with ruggedized wheels - speed +1 / Cost: 500',
+        log: 'All Picker Bots refitted with ruggedized wheels'
+    },
     {name: 'Grabber Claw', 
         show: true, 
         price: 500, 
         disabled: false, 
+        showAt: 500,
         dispatch: { type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }},
-        data: 'Refit all Pickling Bots with a grabber claw - speed +1 / Cost: 500'},
+        data: 'Refit all Pickling Bots with a grabber claw - speed +1 / Cost: 500',
+        log: 'All Pickling Bots refitted with grabber claws'
+    },
     {name: 'Shovel Arm', 
         show: true, 
         price: 500, 
         disabled: false, 
+        showAt: 500,
         dispatch: { type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }},
-        data: 'Refit all Planter Bots with a shovel arm - speed +1 / Cost: 500'},
+        data: 'Refit all Planter Bots with a shovel arm - speed +1 / Cost: 500',
+        log: 'All Planter Bots refitted with shovel arms'
+    },
+    {name: 'Germination',
+        show: false,
+        price: 1500,
+        disabled: false,
+        showAt: 1500,
+        dispatch: { type: 'plantsSettings/changePlantSettings', payload: {title: 'seedChance', value: 0.0001}},
+        data: 'Increase the chance new plants generate a seed by 0.0001% / Cost 1500',
+        log: 'Seed Chances increased by 0.0001%'
+},
+
 ];
 
 export const updgradesSlice = createSlice({
