@@ -3,10 +3,11 @@ import { useState } from 'react';
 
 import { Tab, Tabs } from '@mui/material';
 
-import FarmMenu from './FarmMenu';
-import RobotMenu from './RobotMenu';
-import CheatsForTesting from './cheatsForTesting';
-import UpgradeMenu from './UpgradesMenu';
+import FarmMenu from '../FarmMenu';
+import RobotMenu from '../RobotMenu';
+import CheatsForTesting from '../cheatsForTesting';
+import UpgradeMenu from '../UpgradesMenu';
+import './MainBox.css';
 
 function MainBox() {
 
@@ -22,7 +23,7 @@ function MainBox() {
     };
   
     return (
-        <>
+        <div className="roll-outTabs">
     <Tabs value={value} onChange={handleChange}>
       {locationMenu.map((tab, index) => {
         if (tab.show) {
@@ -43,7 +44,7 @@ function MainBox() {
     {value === 3 && <UpgradeMenu />}
     {value === 4 && <CheatsForTesting />}
     
-        </>
+        </div>
 
     );
 };

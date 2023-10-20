@@ -1,0 +1,11 @@
+.roll-outTabs {
+    animation: roll-out 1.0s;
+  }
+  
+  @keyframes roll-outTabs {
+    0% { 
+        opacity: 0;}
+    100% { 
+      opacity: 1;
+    }
+  }

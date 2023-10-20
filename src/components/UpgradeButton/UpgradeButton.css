@@ -10,24 +10,3 @@
       opacity: 1;
     }
   }
-  
-  .gameButton-btn {
-  
-      background:transparent;
-      border: 1px solid black;
-      margin: 2px;
-      width: max-content;
-      height: min-content;
-  }
-  
-  .gameButton-btn:hover {
-      background: rgba(52, 64, 58, 0.3);
-    }
-    
-    .bameButton-btn:active {
-      background: rgba(52, 64, 58, 0.8);
-    }
-    .gameButton-btn .grayOut {
-      background:rgba(0,0,0,0.3);
-      text-decoration: line-through;
-    }
