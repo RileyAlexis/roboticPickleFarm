@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import GameButton from "./GameButton";
+import GameButton from "./GameButton/GameButton";
 import { buttonCall } from "../modules/buttons";
 
 function RobotMenu() {

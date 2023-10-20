@@ -1,8 +1,7 @@
-import {useState} from 'react';
-import TipBox from './TipBox';
+import TipBox from '../TipBox';
+import './GameButton.css';
 
 function GameButton ({name, buttonCall, disable, show, data, coolDown}) {
-    const showButton = () => show ? 'unHidden' : 'hidden';
     const handleClick = () => {
         buttonCall(name);
     }
@@ -10,18 +9,18 @@ function GameButton ({name, buttonCall, disable, show, data, coolDown}) {
     return (
         <>
         {(data !== '') ? (
-            <>
+            <div key={name} className='roll-out'>
         <TipBox data={data}>
-        <button className={`main-box-btn ${showButton}`} 
+        <button className={`gameButton-btn` } 
                 onClick={handleClick} disabled={disable}>{name}</button>
         </TipBox>
-        </>
+        </div>
         ) : 
         (
-            <>
-            <button className={`main-box-btn ${showButton}`} 
+            <div key={name} className='roll-out'>
+            <button className={`gameButton-btn`} 
                 onClick={handleClick} disabled={disable}>{name}</button>
-                </>
+                </div>
         )
     }
     </>

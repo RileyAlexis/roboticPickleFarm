@@ -14,16 +14,13 @@ function MainBox() {
         transition: 'background-color 0.1s', 
       };
 
-    const [activeTab, setActiveTab] = useState('farm');
     const locationMenu = useSelector(store => store.locationMenu);
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
-
-
-
+  
     return (
         <>
     <Tabs value={value} onChange={handleChange}>

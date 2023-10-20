@@ -12,14 +12,6 @@ body {
     column-gap: 10px;
   }
   
-  .hidden {
-    display:none;
-  }
-
-  .unHidden {
-    display:flex;
-  }
-
   .overlay {
     position: absolute;
     top: 0;
@@ -173,14 +165,7 @@ body {
     margin: 2px;
     width: max-content;
     height: min-content;
-  }
 
-  progress {
-    background: linear-gradient(rgba(0,0,0,0.3) 0%, rgba(100,100,100, 0.3) 50%, rgb(200,200,200, 0.3) 100%);
-    border: none;
-    width:min-content;
-    margin: 0px auto;
-    transition: 0.02s;
   }
 
   .main-box-btn:hover {
