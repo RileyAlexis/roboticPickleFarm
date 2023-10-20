@@ -4,7 +4,7 @@ import { useEffect} from 'react';
 import { useSelector } from 'react-redux';
 
 //CSS
-import './app.css';
+import './App.css';
 
 //Components
 import GameMenu from './components/GameMenu';

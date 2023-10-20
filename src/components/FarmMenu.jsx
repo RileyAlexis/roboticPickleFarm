@@ -4,7 +4,6 @@ import { buttonCall } from '../modules/buttons';
 
 function FarmMenu() {
     const farmMenu = useSelector(store => store.farmMenu);
-    console.log(farmMenu);
     return (
         <div className="buttonBox">
         {farmMenu?.map((item) => 

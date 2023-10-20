@@ -9,7 +9,7 @@ CREATE TABLE "games" (
     "prices" JSONB,
     "buildings" JSONB,
     "upgrades" JSONB,
-    "log" VARCHAR(120) ARRAY
+    "log" JSONB
 );
 
 CREATE TABLE "users" (

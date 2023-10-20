@@ -120,8 +120,8 @@ function runPlanterBots(plants, resources, robots, plantSettings) {
 }
 
 function cycleLog(log) {
-    if (log.length > 50) {
-        log = log.splice(0, -50);
+    if (log.length > 25) {
+        log = log.splice(0, -25);
     }
     return log;
 }
@@ -135,7 +135,7 @@ export function updateTicker() {
     const resources = state.resources;
     const plantSettings = state.plantSettings;
     const log = deepUnfreeze(state.log);
-    
+    console.log(log);
     //Prevents more than 10,000 objects being created - uses plants.modifier to maintain numbers
     if (plants.length >= 10000) {
         plants = condensor(plants);
@@ -149,6 +149,7 @@ export function updateTicker() {
     let seeds = runPlanterBots(plants, resources, robots, plantSettings);
     
     let newLog = cycleLog(log);
+
     stats.totalProduction += pickled;
     updateStats(plants, stats);
 

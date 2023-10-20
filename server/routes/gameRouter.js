@@ -95,9 +95,8 @@ let dataArr = [
     req.body.dataObj.prices,
     {Placeholder: 'buildings'},
     JSON.stringify(req.body.dataObj.upgrades),
-    req.body.dataObj.log
+    JSON.stringify(req.body.dataObj.log)
 ];
-console.log('Upgrades------------', req.body.dataObj.upgrades);
 
 let queryString = 'SELECT 1 FROM "games" WHERE "user_id" = $1'
 pool.query(queryString, [req.body.dataObj.userId])
