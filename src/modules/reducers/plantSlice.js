@@ -11,9 +11,10 @@ const plantSlice = createSlice({
             return [...state, action.payload]
         },
         changeAllGrowthRate: (state, action) => {
-            state.plants.forEach(plant => {
-                plant.growthRate += action.payload;
-            });
+            const percentage = action.payload;
+            return state.map((plant) => ({
+                ...plant, growthRate: plant.growthRate + (plant.growthRate * percentage) / 100,
+            }))
         },
         changeAllSeedChance: (state, action) => {
             state.plants.forEach(plant => {

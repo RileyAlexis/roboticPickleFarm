@@ -5,23 +5,28 @@ const initialState =
         {name: 'Plant', 
             coolDown: 4000, 
             show: true, 
-            data: "" 
+            data: "Start a new cucumber plant" 
         },
         {name: 'Pick', 
             coolDown: 2000, 
             show: false, 
-            data: "" 
+            data: "Pick 1 ripe cucumber" 
         },
         {name: 'Pickle', 
             coolDown: 5000, 
             show: false, 
-            data: "" 
+            data: "Make 5 pickles" 
         },
         {name: 'Buy Seed', 
             coolDown:2000, 
             show: false, 
-            data: "" 
-        }
+            data: "Buy 1 Seed to plant" 
+        },
+        {name: 'Buy 10 Seeds',
+            coolDown:2000,
+            show: false,
+            data: "Buy 10 Seeds to plant"
+    }
     ];
 
     export const farmMenuSlice = createSlice({

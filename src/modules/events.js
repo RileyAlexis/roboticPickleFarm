@@ -27,7 +27,7 @@ export function checkTabs() {
 
 export function checkUpgrades(totalProduction, upgrades) {
     for (let i = 0; i < upgrades.length; i++) {
-        if(upgrades[i].showAt >= totalProduction && !upgrades[i].show) {
+        if(totalProduction >= upgrades[i].showAt && !upgrades[i].show) {
             store.dispatch({ type: 'upgrades/showItem', payload: upgrades[i].name });
         }
     }

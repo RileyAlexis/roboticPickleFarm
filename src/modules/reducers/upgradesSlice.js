@@ -36,6 +36,15 @@ const initialState = [
         dispatch: { type: 'plantsSettings/changePlantSettings', payload: {title: 'seedChance', value: 0.0001}},
         data: 'Increase the chance new plants generate a seed by 0.0001% / Cost 1500',
         log: 'Seed Chances increased by 0.0001%'
+    },
+    {name: 'Pickle Juice',
+    show: false,
+    price: 2500,
+    disabled: false,
+    showAt: 2500,
+    dispatch: { type: 'plants/changeAllGrowthRate', payload: 10 },
+    data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10%',
+    log: 'Seed Chances increased by 0.0001%'
 },
 
 ];
