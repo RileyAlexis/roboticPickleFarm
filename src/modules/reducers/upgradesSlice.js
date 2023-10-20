@@ -38,13 +38,13 @@ const initialState = [
         log: 'Seed Chances increased by 0.0001%'
     },
     {name: 'Pickle Juice',
-    show: false,
-    price: 2500,
-    disabled: false,
-    showAt: 2500,
-    dispatch: { type: 'plants/changeAllGrowthRate', payload: 10 },
-    data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10%',
-    log: 'Seed Chances increased by 0.0001%'
+        show: false,
+        price: 2500,
+        disabled: false,
+        showAt: 2500,
+        dispatch: { type: 'plants/changeAllGrowthRate', payload: 10 },
+        data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10%',
+        log: 'Pickle juice hack unlocked!'
 },
 
 ];
