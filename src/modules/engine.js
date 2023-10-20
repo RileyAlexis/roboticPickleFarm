@@ -135,7 +135,6 @@ export function updateTicker() {
     const resources = state.resources;
     const plantSettings = state.plantSettings;
     const log = deepUnfreeze(state.log);
-    console.log(log);
     //Prevents more than 10,000 objects being created - uses plants.modifier to maintain numbers
     if (plants.length >= 10000) {
         plants = condensor(plants);

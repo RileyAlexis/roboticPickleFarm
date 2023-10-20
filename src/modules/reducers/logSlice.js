@@ -2,9 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const logSlice = createSlice({
     name: 'log',
-    initialState: [{
-        line: '', cycle: 0
-    }],
+    initialState: [],
     reducers: {
         setAllLog: (state, action) => {
             return action.payload;
