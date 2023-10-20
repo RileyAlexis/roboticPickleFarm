@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import UpgradeButton from "./UpgradeButton";
+import UpgradeButton from "./UpgradeButton/UpgradeButton";
 import { buttonCall } from '../modules/buttons';
 
 function UpgradeMenu() {

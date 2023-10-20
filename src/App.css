@@ -12,14 +12,6 @@ body {
     column-gap: 10px;
   }
   
-  .hidden {
-    display:none;
-  }
-
-  .unHidden {
-    display:flex;
-  }
-
   .overlay {
     position: absolute;
     top: 0;
@@ -141,8 +133,6 @@ body {
     /* box-shadow: 1px -1px 4px rgba(0,0,0,0.1); */
   }
 
-
-
   .main-box-outlet {
     border-top: 1px solid black;
     display:flex;
@@ -167,34 +157,6 @@ body {
     width: 100%;
   }
 
-  .main-box-btn {
-    background:transparent;
-    border: 1px solid black;
-    margin: 2px;
-    width: max-content;
-    height: min-content;
-  }
-
-  progress {
-    background: linear-gradient(rgba(0,0,0,0.3) 0%, rgba(100,100,100, 0.3) 50%, rgb(200,200,200, 0.3) 100%);
-    border: none;
-    width:min-content;
-    margin: 0px auto;
-    transition: 0.02s;
-  }
-
-  .main-box-btn:hover {
-    background: rgba(52, 64, 58, 0.3);
-  }
-  
-  .main-box-btn:active {
-    background: rgba(52, 64, 58, 0.8);
-  }
-  .main-box-btn .grayOut {
-    background:rgba(0,0,0,0.3);
-    text-decoration: line-through;
-  }
-  
   .stats-box {
     grid-column: 3 / span 1;
     grid-row: 3 / span 2;
@@ -204,13 +166,9 @@ body {
   .log-box {
     grid-column: 3 / span 1;
     grid-row: 2 / span 4;
-    transition: 0.5s;
     min-height: 50vh;
-    overflow: scroll;
+    max-height: 50vh;
+    overflow-y: scroll;
+    display: flex;
+    /* flex-direction:column-reverse; */
   }
-
-.log-box-item {
-  color: inherit;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}

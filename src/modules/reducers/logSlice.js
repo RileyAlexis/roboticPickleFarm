@@ -10,7 +10,7 @@ export const logSlice = createSlice({
             return action.payload;
         },
         addLog: (state, action) => {
-            return [...state, action.payload];
+            return [action.payload, ...state];
         },
     }
 })
