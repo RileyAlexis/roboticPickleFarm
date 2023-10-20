@@ -120,8 +120,8 @@ function runPlanterBots(plants, resources, robots, plantSettings) {
 }
 
 function cycleLog(log) {
-    if (log.length > 20) {
-        log = log.splice(0, -20);
+    if (log.length > 50) {
+        log = log.splice(0, -50);
     }
     return log;
 }

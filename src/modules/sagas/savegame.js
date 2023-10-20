@@ -26,7 +26,7 @@ function* saveGame() {
     }
  try {
     yield axios.post('/game/savegame', {headers: { 'Authorization': `${AuthToken}`}, dataObj})
-    yield put({type: 'log/addLog', payload: {line: `Game Saved Successfully`, cycle: store.cycles}});
+    yield put({type: 'log/addLog', payload: {line: `Game Saved Successfully`, cycle: store.stats.cycles}});
  }
 catch (error) {
     console.error(error);
