@@ -12,11 +12,10 @@
 }
 
 .gameButton-btn {
-
     background:transparent;
     border: 1px solid black;
     margin: 2px;
-    width: max-content%;
+    width: 120px;
     height: min-content;
 }
 

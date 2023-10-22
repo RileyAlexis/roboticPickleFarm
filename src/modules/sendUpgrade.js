@@ -4,7 +4,7 @@ export function sendUpgrade(upgrade) {
     const state = store.getState();
     
     if (state.resources.pickles[state.resources.pickles.length -1] >= upgrade.price) {
-    store.dispatch(upgrade.dispatch);   
+    store.dispatch(upgrade.dispatch);
 
     store.dispatch({ type: 'upgrades/disableItem', payload: upgrade.name })
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value:  -upgrade.price}})

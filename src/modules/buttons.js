@@ -75,19 +75,22 @@ function buyBot(botType) {
     }
 }
 
-function buySeeds() {
+function buySeeds(count) {
     const state = store.getState();
     const pickles = state.resources.pickles[state.resources.pickles.length-1];
     const seedPrice = state.prices.seeds;
     const cycles = state.stats.cycles;
 
-    if (pickles >= seedPrice[0]) {
-        console.log('Buy Seeds running');
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: seedPrice[1]}});
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -seedPrice[0]}})
+    if ((pickles * count) >= ( seedPrice[0] * count)) {
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: (seedPrice[1] * count)}});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -(seedPrice[0] * count)}})
+        if (count ===1 ) {
         store.dispatch({type: 'log/addLog', payload: {line: `Seed Purchased for ${seedPrice[0]} pickles`, cycle: cycles}});
+        } else if (count > 1) {
+            store.dispatch({type: 'log/addLog', payload: {line: `${count} Seeds Purchased for ${seedPrice[0] * count} pickles`, cycle: cycles}});   
+        }
     } else {
-        store.dispatch({type: 'log/addLog', payload: {line: `Need ${seedPrice[0]} pickles to purchase a seed`, cycle: cycles}});
+        store.dispatch({type: 'log/addLog', payload: {line: `Need ${(seedPrice[0] * count)} pickles to purchase seeds`, cycle: cycles}});
     }
 }
 
@@ -100,7 +103,9 @@ export const buttonCall = (name, upgrade) => {
         case 'Buy Planter Bot': buyBot('planter'); break;
         case 'Buy Picker Bot': buyBot('picker'); break;
         case 'Buy Pickler Bot': buyBot('pickler'); break;
-        case 'Buy Seed': buySeeds(); break;
+        case 'Buy Seed': buySeeds(1); break;
+        case 'Buy 10 Seeds': buySeeds(10); break;
+        case 'Buy 100 Seeds': buySeeds(100);break;
         case 'upgrade': sendUpgrade(upgrade); break;
     }
 }

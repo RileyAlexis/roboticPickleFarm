@@ -43,7 +43,7 @@ const initialState = [
         disabled: false,
         showAt: 2500,
         dispatch: { type: 'plants/changeAllGrowthRate', payload: 10 },
-        data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10%',
+        data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10% / Cost 2500',
         log: 'Pickle juice hack unlocked!'
 },
 

@@ -13,6 +13,12 @@ export function checkButtons() {
     if (state.resources.pickles[state.resources.pickles.length-1] >= 50 && !state.farmMenu[3].show) {
         store.dispatch({ type: 'farmMenu/showItem', payload: 'Buy Seed' });
     }
+    if (state.resources.pickles[state.resources.pickles.length-1] >= 500 && !state.farmMenu[4].show) {
+        store.dispatch({ type: 'farmMenu/showItem', payload: 'Buy 10 Seeds' });
+    }
+    if (state.resources.pickles[state.resources.pickles.length-1] >= 5000 && !state.farmMenu[5].show) {
+        store.dispatch({ type: 'farmMenu/showItem', payload: 'Buy 100 Seeds' });
+    }
 }
 
 export function checkTabs() {

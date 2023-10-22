@@ -4,7 +4,7 @@ const initialState =
     [
         {name: 'Plant', 
             coolDown: 4000, 
-            show: true, 
+            show: true,
             data: "Start a new cucumber plant" 
         },
         {name: 'Pick', 
@@ -25,8 +25,14 @@ const initialState =
         {name: 'Buy 10 Seeds',
             coolDown:2000,
             show: false,
-            data: "Buy 10 Seeds to plant"
-    }
+            data: "Buy 10 Seeds to plant! / Cost 500"
+        },
+        {name: 'Buy 100 Seeds',
+            coolDown: 2000,
+            show: false,
+            data: "Buy 100 Seeds to plant! / Cost 5000"
+    
+        }
     ];
 
     export const farmMenuSlice = createSlice({
