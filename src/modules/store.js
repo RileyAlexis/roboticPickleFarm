@@ -57,7 +57,16 @@ const runEngine = (state = false, action) => {
   return state;
 }
 
-  const rootReducer = combineReducers({
+//Wrapping the allReducers in a root reducer allows the entire store 
+//to be reset to initialstate without adding a reducer to every slice
+const rootReducer = (state, action) => {
+  if (action.type === 'RESET_ENTIRE_STORE') {
+    state = undefined;
+  }
+  return allReducers(state, action);
+}
+
+  const allReducers = combineReducers({
     resources: resourcesSlice,
     stats: statsSlice,
     robots: robotsSlice,
@@ -81,7 +90,7 @@ const runEngine = (state = false, action) => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(
       { thunk: false, serializableCheck: false })
       .concat(sagaMiddleware, 
-        // logger
+        logger
         ),
   })
 
