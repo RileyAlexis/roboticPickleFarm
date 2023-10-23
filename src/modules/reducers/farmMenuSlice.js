@@ -20,16 +20,19 @@ const initialState =
         {name: 'Buy Seed', 
             coolDown:2000, 
             show: false, 
+            showAt: 50,
             data: "Buy 1 Seed to plant" 
         },
         {name: 'Buy 10 Seeds',
             coolDown:2000,
             show: false,
+            showAt: 1000,
             data: "Buy 10 Seeds to plant! / Cost 500"
         },
         {name: 'Buy 100 Seeds',
             coolDown: 2000,
             show: false,
+            showAt: 10000,
             data: "Buy 100 Seeds to plant! / Cost 5000"
     
         }

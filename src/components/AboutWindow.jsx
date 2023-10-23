@@ -8,7 +8,7 @@ function AboutWindow({onClose}) {
         <div className="settingsWindow">
             <div className="settingsWindowText">
             <Typography variant="h6">About Robotic Pickle Farm</Typography>
-            <button onClick={onClose}>X</button>
+            <button id="closeBtn" onClick={onClose}>X</button>
             <br />
             <Typography variant="body">Robotic Pickle Farm is an incremental/clicker 
             game created by Riley Alexis as her first web dev project. 
