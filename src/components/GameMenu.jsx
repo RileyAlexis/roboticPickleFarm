@@ -31,7 +31,7 @@ function GameMenu () {
         dispatch({ type: 'SAVE_GAME' });
         removeCookie('Email');
         removeCookie('AuthToken');
-        window.location.reload();
+        dispatch({ type: 'RESET_ENTIRE_STORE'});
         }
 
     const saveGame = () => {

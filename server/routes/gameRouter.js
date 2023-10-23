@@ -175,6 +175,16 @@ router.post('/loadgame', verifyToken, (req, res) => {
 
     })
 
+router.post('/deleteGame', verifyToken, (req, res) => {
+    let userId = req.body.dataObj.userId;
+    let queryString = `DELETE FROM "games" WHERE "user_id" = $1;`;
 
+    pool.query(queryString, [userId])
+    .then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        res.sendStatus(500);
+    })
+})
 
 module.exports = router;

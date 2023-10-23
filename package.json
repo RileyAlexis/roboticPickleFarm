@@ -28,6 +28,7 @@
     "redux": "^4.2.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
+    "sweetalert": "^2.1.2",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },

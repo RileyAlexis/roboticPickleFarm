@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Typography, Switch, FormControlLabel } from "@mui/material";
+import swal from 'sweetalert';
+import { Typography, Switch, FormControlLabel, Button } from "@mui/material";
 
 function SettingsWindow({ onClose }) {
 
@@ -30,6 +31,22 @@ function SettingsWindow({ onClose }) {
         console.log(gameSpeed);
     }
 
+    const newGame = () => {
+        swal({
+            title: "Confirm delete game",
+            text: "This will erase your current game forever and cannot be undone!",
+            icon: "warning",
+            dangerMode: true,
+            buttons: true,
+            closeOnClickOutside: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                dispatch({type: 'START_NEW_GAME'});
+            } 
+        })
+    }
+
     return (
         <> 
         <div className="overlay">
@@ -37,7 +54,7 @@ function SettingsWindow({ onClose }) {
         <div className="settingsWindow">
             <div className="settingsWindowText">
             <Typography variant="h6">Settings</Typography>
-            <button onClick={onClose}>X</button>
+            <button id="closeBtn" onClick={onClose}>X</button>
             <br /><br />
             <FormControlLabel control={ <Switch
                               color="secondary"
@@ -47,6 +64,9 @@ function SettingsWindow({ onClose }) {
                 label="x2 GameSpeed"
                 labelPlacement="start"
                 />
+                <br /><br />
+            <Button variant="outlined" onClick={newGame}>Start New Game</Button>
+            
 
 
            

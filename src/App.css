@@ -39,7 +39,7 @@ body {
     margin: 10px;
   }
 
-  .settingsWindowText button {
+  .settingsWindow #closeBtn {
     position: absolute;
     top: 0%;
     left: 95%;
