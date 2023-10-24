@@ -39,6 +39,10 @@ function CheatsForTesting() {
         
     }
 
+    const addCucumbers = () => {
+        dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: 100 }})
+    }
+
     return (
         <div className="cheatBox">
             <br />
@@ -46,6 +50,7 @@ function CheatsForTesting() {
         <button onClick={addMoreSeeds}>Add 1000 Seeds</button><br />
         <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
         <button onClick={addBots}>+5 Bots</button><br />
+        <button onClick={addCucumbers}>+100 cucumbers</button><br />
         <button onClick={addPickles}>+50000 Pickles</button><br />
         <button onClick={increaseSeed}>+10% Seedchance</button><br />
         <button onClick={resetStore}>Reset the Whole Game</button>

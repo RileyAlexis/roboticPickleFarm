@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = [
     {id: 'farm', 
         name: 'Farm', 
-        show: true },
+        show: true,
+        showAt: 0 },
     {id: 'robots', 
         name: 'Robots', 
         show: false,
@@ -36,7 +37,7 @@ const locationMenuSlice = createSlice({
             showItem: (state, action) => {
                 const title = action.payload;
                 for (let i = 0; i < state.length; i++) {
-                    if (state[i].title === title) {
+                    if (state[i].id === title) {
                         state[i].show = true;
                         }
                     }

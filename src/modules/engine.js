@@ -190,7 +190,8 @@ export function updateTicker() {
 
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
-        checkTabs(resources.pickles[resources.pickles.length-1], state.locationMenu);
+        console.log(state.locationMenu);
+        checkTabs(stats.totalProduction, state.locationMenu);
         checkUpgrades(stats.totalProduction, state.upgrades);
         checkBuildings(stats.totalProduction, state.buildings);
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });

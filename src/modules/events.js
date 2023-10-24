@@ -19,16 +19,18 @@ export function checkButtons() {
     }
 }
 
-export function checkTabs(pickles, locationMenu) {
+export function checkTabs(totalProduction, locationMenu) {
     const state = store.getState();
-    if (pickles === undefined && locationMenu === undefined) {
-        pickles = state.resources.pickles[state.resources.pickles.length-1];
+
+    if (totalProduction === undefined && locationMenu === undefined) {
+        totalProduction = state.resources.pickles[state.resources.pickles.length-1];
         locationMenu = state.locationMenu;
     }
+    
     for (let i = 0; i < locationMenu.length; i++) {
-        if (pickles >= locationMenu[i].showAt && !locationMenu[i].show) {
-
-            store.dispatch({ type: 'locationMenu/showItem', payload: locationMenu[i].title});
+        if ((totalProduction >= locationMenu[i].showAt) && !locationMenu[i].show) {
+            console.log(locationMenu[i].id);
+            store.dispatch({ type: 'locationMenu/showItem', payload: locationMenu[i].id});
         }
     }
 }
