@@ -80,17 +80,18 @@ function buySeeds(count) {
     const pickles = state.resources.pickles[state.resources.pickles.length-1];
     const seedPrice = state.prices.seeds;
     const cycles = state.stats.cycles;
-
-    if ((pickles * count) >= ( seedPrice[0] * count)) {
+    console.log('Pickles * count', pickles * count);
+    console.log('Seedprice[0] * count', seedPrice[0] * count);
+    if ((pickles) >= ( seedPrice[0] * count)) {
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: (seedPrice[1] * count)}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -(seedPrice[0] * count)}})
-        if (count ===1 ) {
+        if (count === 1 ) {
         store.dispatch({type: 'log/addLog', payload: {line: `Seed Purchased for ${seedPrice[0]} pickles`, cycle: cycles}});
         } else if (count > 1) {
             store.dispatch({type: 'log/addLog', payload: {line: `${count} Seeds Purchased for ${seedPrice[0] * count} pickles`, cycle: cycles}});   
         }
     } else {
-        store.dispatch({type: 'log/addLog', payload: {line: `Need ${(seedPrice[0] * count)} pickles to purchase seeds`, cycle: cycles}});
+        store.dispatch({type: 'log/addLog', payload: {line: `Need ${(seedPrice[0] * count)} pickles to purchase ${count} seeds`, cycle: cycles}});
     }
 }
 

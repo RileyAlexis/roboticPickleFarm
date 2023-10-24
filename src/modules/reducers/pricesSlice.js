@@ -9,6 +9,7 @@ export const pricesSlice = createSlice({
     name: 'prices',
     initialState: initialState,
     reducers: {
+        //This may be broken do not use it
         updatePrice: (state, action) => {
             return [...state, action.payload];
         }
