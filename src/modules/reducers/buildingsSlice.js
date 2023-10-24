@@ -61,7 +61,7 @@ const buildingsSlice = createSlice({
                 }
             },
         toggleActiveItem: (state, action) => {
-            const title = action.payload;
+            const title = action.payload.title;
             for (let i = 0; i < state.length; i++) {
                 if (state[i].name === title) {
                     state[i].active = !state[i].active;
