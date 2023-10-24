@@ -16,6 +16,7 @@ import plantSettingsSlice from './reducers/plantSettings';
 import statsSlice from './reducers/statsSlice';
 import deltaSlice from './reducers/deltas';
 import upgradesSlice from './reducers/upgradesSlice';
+import buildingsSlice from './reducers/buildingsSlice';
 
 //Saga
 import rootSaga from './sagas/rootSaga';
@@ -82,6 +83,7 @@ const rootReducer = (state, action) => {
     plantSettings: plantSettingsSlice,
     deltas: deltaSlice,
     upgrades: upgradesSlice,
+    buildings: buildingsSlice,
     runEngine: runEngine
 });
 
