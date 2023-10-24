@@ -10,6 +10,7 @@ const initialState = [
         price: 5000,
         recurringCost: 5,
         options: [1, 5, 10],
+        operations: 0,
         selectedOption: 1,
         expanded: false,
         disabled: false,
@@ -91,11 +92,17 @@ const buildingsSlice = createSlice({
                     state[i].selectedOption = action.payload.value;
                 }
             }
-        }
-        
-    }
+            },
+        cycleBulding: (state, action) => {
+            const title = action.payload;
+            for (let i = 0; i < state.length; i++) {
+                if (state[i].name === title) {
+                    state[i].operations += 1;
+                }
+            }
+            },
 
-});
+    }})
 
-export const { setAllBuildings, showItem, disableItem, toggleActiveItem, toggleExpander, buyBuilding, changeOption } = buildingsSlice.actions;
+export const { setAllBuildings, showItem, disableItem, toggleActiveItem, toggleExpander, buyBuilding, changeOption, cycleBulding } = buildingsSlice.actions;
 export default buildingsSlice.reducer;

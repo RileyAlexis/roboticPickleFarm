@@ -1,8 +1,9 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
 import { condensor } from './condensor';
-import { countPlants, averageProperty } from './utilFunction';
+import { countPlants } from './utilFunction';
 import { checkButtons, checkTabs, checkUpgrades, checkBuildings } from './events';
+import { getRecurringCost, runBuilding } from './cycleBuildings';
 
 export class Plants {
     constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
@@ -48,7 +49,7 @@ function generateSeeds(plants) {
     return newSeeds;
 }
 
-function updateStats(plants, stats) {
+function updateStats(buildings, plants, stats) {
     let totalGrowthRate = 0;
     let averageAge = 0;
     let maxYield = 0;
@@ -61,6 +62,11 @@ function updateStats(plants, stats) {
         averageAge += plant.age;
         maxYield += plant.maxYield;
     });
+
+    buildings.forEach((item) => {
+        if (buildings.active && buildings.purchased)
+        stats.recurringCosts.push({building: item.name, cost: item.recurringCost});
+    })
 
     stats.averageAge = averageAge / plantsQty;
     stats.totalGrowthRate = totalGrowthRate;
@@ -134,6 +140,7 @@ export function updateTicker() {
     const robots = state.robots;
     const resources = state.resources;
     const plantSettings = state.plantSettings;
+    const buildings = state.buildings;
     const log = deepUnfreeze(state.log);
     //Prevents more than 10,000 objects being created - uses plants.modifier to maintain numbers
     if (plants.length >= 10000) {
@@ -146,11 +153,21 @@ export function updateTicker() {
     let picked = runPickerBots(plants, robots, stats);
     let pickled = runPicklerBots(resources, robots, stats);
     let seeds = runPlanterBots(plants, resources, robots, plantSettings);
-    
+    let recurringCost = getRecurringCost(buildings);
     let newLog = cycleLog(log);
 
     stats.totalProduction += pickled;
-    updateStats(plants, stats);
+
+    //Cycle through function for buildings if they are active and purchased
+    buildings.forEach((item) => {
+        if (item.active && item.purchased) {
+            runBuilding(item);
+        }
+    })
+
+    updateStats(buildings, plants, stats);
+
+    
 
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
@@ -163,7 +180,7 @@ export function updateTicker() {
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     store.dispatch({ type: 'stats/setAllStats', payload: stats });
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
-    store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: pickled }});
+    store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: (pickled - recurringCost) }});
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: seeds + newSeeds }});
     store.dispatch({ type: 'log/setAllLog', payload: newLog });
     store.dispatch({ type: 'deltas/cycleDeltas' });

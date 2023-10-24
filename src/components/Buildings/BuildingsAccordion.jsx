@@ -14,7 +14,6 @@ function BuildingsAccordion({building}) {
     }
 
     const handleSelectChange = (e) => {
-        console.log('Dispatch',building.name, e.target.value)
         dispatch({ type: 'buildings/changeOption', payload: { title: building.name, value: e.target.value}})
     }
 
@@ -28,7 +27,6 @@ function BuildingsAccordion({building}) {
 
     return (
         <div>
-            {console.log(building.name, building.selectedOption)}
             <Accordion 
             sx={{
                 backgroundColor: 'transparent',
@@ -38,6 +36,22 @@ function BuildingsAccordion({building}) {
             expanded={building.expanded} onChange={handleChange(building.name)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant='body'>{building.name}</Typography>
+                    { building.active ? (
+                          <Typography 
+                          sx={{
+                              marginLeft: '5px'
+                          }}
+                          variant='caption'>-{building.recurringCost} /s</Typography>
+                    )
+                        :
+                        (<Typography 
+                            sx={{
+                                marginLeft: '5px'
+                            }}
+                            variant='caption'>-0/s</Typography>)
+                }
+                    
+                  
                     <div style={{ marginLeft: 'auto' }}>
                     <FormControlLabel
                         control={<Switch 
@@ -49,6 +63,7 @@ function BuildingsAccordion({building}) {
                 </div>
                 </AccordionSummary>
                 <AccordionDetails>
+                  
                 <Typography sx={{
                 marginRight: '10px'
                 }}
