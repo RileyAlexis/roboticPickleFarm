@@ -11,8 +11,11 @@ function Buildings() {
     return (
         <div className="buidlingsContainer">
             {buildings.map((item) => (
-                item.show && !item.purchased ? (
-                <div className="buyButtonsBox" key={item.name}>
+                <>
+                
+                {item.show && !item.purchased &&
+                
+                    <div className="buyButtonsBox" key={item.name}>
                  <BuildingsButton
                  name={item.name}
                  buttonCall={() => buttonCall('buyBuilding', item)} 
@@ -22,13 +25,14 @@ function Buildings() {
                  item={item}
                  coolDown={item.coolDown} />
                  </div>
-                )
-                :
-                (
+                }
+                 
+              {item.purchased &&
                 <div className="accordionBox">
                     <BuildingsAccordion building={item} />
                     </div>
-                )
+                }
+                </>
             
                  
             ))}

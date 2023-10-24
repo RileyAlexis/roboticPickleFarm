@@ -190,7 +190,6 @@ export function updateTicker() {
 
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
-        console.log(state.locationMenu);
         checkTabs(stats.totalProduction, state.locationMenu);
         checkUpgrades(stats.totalProduction, state.upgrades);
         checkBuildings(stats.totalProduction, state.buildings);
