@@ -1,8 +1,8 @@
 export function formatNumber(number) {
     // Convert the number to a string and use regex to add commas
-    if (typeof(number) === 'number') {
+    // if (typeof(number) === 'number') {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    } else return 0;
+    // } else return 0;
   }
 
   export function countPlants(plants) {

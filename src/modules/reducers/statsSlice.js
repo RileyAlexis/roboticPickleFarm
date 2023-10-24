@@ -13,10 +13,10 @@ const initialState = {
     pickerDelta: 0,
     picklerDelta: 0,
     totalProduction: 0,
+    totalGoal: 2800000000000,
     timeframe: 60,
     gameSpeed: 1000,
     recurringCosts: [],
-    
 }
 
 export const statsSlice = createSlice({

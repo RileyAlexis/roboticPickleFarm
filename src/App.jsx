@@ -11,6 +11,7 @@ import GameMenu from './components/GameMenu';
 import MainBox from './components/MainBox/MainBox';
 import LogBox from './components/LogBox/LogBox';
 import LandingPage from './components/landingPage';
+import TotalGoal from './components/TotalGoal';
 
 //Modules
 import { updateTicker } from './modules/engine';
@@ -54,10 +55,10 @@ useEffect(() => {
         <div className="resources-box">
           <MainBoxLeft />
           </div>
-      {/* <div className="main-menu-box">
-      <p></p><br />
+      <div className="main-menu-box">
+        <TotalGoal />
       
-      </div> */}
+      </div>
       <div className="main-box">
         
         <MainBox />
