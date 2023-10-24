@@ -12,9 +12,6 @@ function BuildingsAccordion({building}) {
     const handleChange = (name) => (event) => {
         dispatch({ type: 'buildings/toggleExpander', payload: name });
     }
-    const setOptions = (e) => {
-        setSelectTheThing(e.target.value);
-    }
 
     const handleSelectChange = (e) => {
         console.log('Dispatch',building.name, e.target.value)
@@ -26,19 +23,35 @@ function BuildingsAccordion({building}) {
             {console.log(building.name, building.selectedOption)}
             <Accordion 
             sx={{
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                width: '100%'
             }}
+            disableGutters
             expanded={building.expanded} onChange={handleChange(building.name)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant='body'>{building.name}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                <FormControl sx={{
-                    width: .3
-                            }} 
-                    variant="outlined" margin="normal">
-                    <InputLabel id="building-select-label">{building.label}</InputLabel>
+                <Typography sx={{
+                marginRight: '10px'
+                }}
+                variant='caption'>{building.line}</Typography>
+                <FormControl 
+                    style={{
+                        alignItems: 'flex-end',
+                    }}
+
+                    size='small'
+                    variant="outlined" margin="small">
+                    <InputLabel 
+                        sx={{
+                            minWidth: 'min-content'
+                        }}
+                        id="building-select-label">{building.label}</InputLabel>
                     <Select
+                    style={{
+                        width: '90px',
+                    }}
                         labelId="building-select-label"
                         id="building-select"
                         label={building.label}
