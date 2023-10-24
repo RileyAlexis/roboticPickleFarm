@@ -45,11 +45,20 @@ const initialState = [
         dispatch: { type: 'plants/changeAllGrowthRate', payload: 10 },
         data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10% / Cost 2500',
         log: 'Pickle juice hack unlocked!'
+},    
+    {name: 'Super Duper Upgrade',
+        show: false,
+        price: 50000,
+        disabled: false,
+        showAt: 50000,
+        dispatch: { type: 'resources/changeResources', payload: {title: 'seeds', value: 10000 }},
+        data: 'Get lots of seeds / Cost 50000',
+        log: 'I bought a bunch of seeds'
 },
 
 ];
 
-export const updgradesSlice = createSlice({
+const updgradesSlice = createSlice({
     name: 'upgrades',
     initialState: initialState,
     reducers: {
@@ -79,7 +88,7 @@ export const updgradesSlice = createSlice({
                     state[i].disabled = true;
                     }
                 }
-        }
+            }
     }
 })
 

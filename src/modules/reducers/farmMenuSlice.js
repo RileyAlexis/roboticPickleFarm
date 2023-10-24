@@ -38,7 +38,7 @@ const initialState =
         }
     ];
 
-    export const farmMenuSlice = createSlice({
+    const farmMenuSlice = createSlice({
         name: 'farmMenu',
         initialState: initialState,
         reducers: {

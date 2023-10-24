@@ -1,14 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
-    {id: 'farm', title: 'Farm', show: true },
-    {id: 'robots', title: 'Robots', show: false },
-    {id: 'buildings', title: 'Buildings', show: false },
-    {id: 'upgrades', title: 'Upgrades', show:false },
-    {id: 'cheatOptopns', title: 'Cheats', show: true }
+    {id: 'farm', 
+        name: 'Farm', 
+        show: true },
+    {id: 'robots', 
+        name: 'Robots', 
+        show: false,
+        showAt: 100 },
+    {id: 'buildings', 
+        name: 'Buildings', 
+        show: false,
+        showAt: 5000 },
+    {id: 'upgrades', 
+        name: 'Upgrades', 
+        show:false,
+        showAt: 500 },
+    {id: 'cheatOptopns', 
+        name: 'Cheats', 
+        show: true }
 ];
 
-    export const locationMenuSlice = createSlice({
+const locationMenuSlice = createSlice({
         name: 'locationMenu',
         initialState: initialState,
         reducers: {

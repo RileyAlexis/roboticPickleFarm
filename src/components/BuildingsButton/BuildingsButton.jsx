@@ -1,7 +1,7 @@
 import TipBox from '../TipBox';
-import './UpgradeButton.css';
+// import './UpgradeButton.css';
 
-function UpgradeButton ({name, buttonCall, disable, show, data, item}) {
+function BuildingsButton ({name, buttonCall, disable, show, data, item}) {
     const handleClick = () => {
         buttonCall(name, item);
     }
@@ -27,4 +27,4 @@ function UpgradeButton ({name, buttonCall, disable, show, data, item}) {
     )
 }
 
-export default UpgradeButton;
+export default BuildingsButton;

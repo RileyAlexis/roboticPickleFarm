@@ -94,6 +94,17 @@ function buySeeds(count) {
     }
 }
 
+const buyBuilding = (item) => {
+    const state = store.getState();
+    const pickles = state.resources.pickles[state.resources.pickles.length-1];
+
+    if (pickles >= item.price && !item.purchased) {
+        store.dispatch({ type: 'buildings/buyBuilding', payload: item.name });
+        store.dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: -item.price}});
+        store.dispatch({ type: 'buildings/disableItem', payload: item.name });
+    }
+}
+
 export const buttonCall = (name, upgrade) => {
     console.log(name, upgrade);
     switch (name) {
@@ -107,5 +118,6 @@ export const buttonCall = (name, upgrade) => {
         case 'Buy 10 Seeds': buySeeds(10); break;
         case 'Buy 100 Seeds': buySeeds(100);break;
         case 'upgrade': sendUpgrade(upgrade); break;
+        case 'buyBuilding': buyBuilding(upgrade); break;
     }
 }

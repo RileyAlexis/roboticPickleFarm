@@ -7,7 +7,9 @@ import FarmMenu from '../FarmMenu';
 import RobotMenu from '../RobotMenu';
 import CheatsForTesting from '../cheatsForTesting';
 import UpgradeMenu from '../UpgradesMenu';
+import Buildings from '../Buildings/Buildings';
 import './MainBox.css';
+
 
 function MainBox() {
 
@@ -30,7 +32,7 @@ function MainBox() {
           return (
             <Tab
               key={tab.id}
-              label={tab.title}
+              label={tab.name}
               value={index}
               style={tabStyle}
             />
@@ -41,6 +43,7 @@ function MainBox() {
     </Tabs>
     {value === 0 && <FarmMenu />}
     {value === 1 && <RobotMenu />}
+    {value === 2 && <Buildings />}
     {value === 3 && <UpgradeMenu />}
     {value === 4 && <CheatsForTesting />}
     

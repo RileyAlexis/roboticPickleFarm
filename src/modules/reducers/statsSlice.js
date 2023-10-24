@@ -15,6 +15,7 @@ const initialState = {
     totalProduction: 0,
     timeframe: 60,
     gameSpeed: 1000,
+    recurringCosts: [],
     
 }
 
