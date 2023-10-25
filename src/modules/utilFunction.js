@@ -45,3 +45,36 @@ export function formatNumber(number) {
     const average = sum / validObjects.length;
     return average;
 }
+
+function countZerosAfterDecimal(number) {
+  // Convert the number to a string to handle decimal points
+  const numString = number.toString();
+
+  // Check if the number has a decimal point
+  if (numString.includes('.')) {
+      // Split the number by the decimal point
+      const decimalPart = numString.split('.')[1];
+      
+      // Count the number of zeros after the decimal point
+      let count = 0;
+      for (let i = 0; i < decimalPart.length; i++) {
+          if (decimalPart[i] === '0') {
+              count++;
+          } else {
+              // Break the loop if a non-zero digit is encountered
+              break;
+          }
+      }
+      return count;
+  } else {
+      // If the number doesn't have a decimal point, return 0
+      return 0;
+  }
+}
+
+export function calculatePercentage(progress, goal) {
+  const complete = progress / goal;
+  const decs = countZerosAfterDecimal(complete);
+  return parseFloat(complete).toFixed(Number(decs) + 2)
+  }
+

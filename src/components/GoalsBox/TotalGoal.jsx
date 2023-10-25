@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { formatNumber } from "../../modules/utilFunction";
+import { calculatePercentage, formatNumber } from "../../modules/utilFunction";
 import GameProgressBar from "./GameProgressBar";
 import { Typography } from "@mui/material";
 import './TotalGoal.css';
@@ -14,8 +14,10 @@ const calcSeconds = () => {
     return parseFloat(years).toFixed(2);
 }
 
+
 const yearsUntilGoal = formatNumber(calcSeconds());
-const filled = parseFloat(totalProduction / totalGoal).toFixed(5);
+// const filled = parseFloat(totalProduction / totalGoal).toFixed(8);
+const filled = calculatePercentage(totalProduction, totalGoal)
 const empty = 100 - filled;
 
     return (
