@@ -28,6 +28,7 @@ function pickCucumbers() {
     for (let i = 0; i < plants.length; i++) {
         if (plants[i].currentYield >= 1) {
             plants[i].currentYield--;
+            plants[i].maxedOut = false;
             picked++;
             break;
         }

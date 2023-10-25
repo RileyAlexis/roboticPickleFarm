@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Button from '@mui/material/Button';
 
-import SettingsWindow from './SettingsWindow';
+import SettingsWindow from './Settings/SettingsWindow'
 import AboutWindow from './AboutWindow';
 
 function GameMenu () {

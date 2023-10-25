@@ -4,6 +4,7 @@ const initialState = {
     maxYield: 0,
     ripeCucumbers: 0,
     totalGrowthRate: 0,
+    totalMaxedOut: 0,
     averageAge: 0,
     cycles: 0,
     planterActive: false,
@@ -16,6 +17,7 @@ const initialState = {
     totalGoal: 2800000000000,
     timeframe: 60,
     gameSpeed: 1000,
+    autoSaveInterval: 120,
     recurringCosts: [],
 }
 
@@ -29,7 +31,6 @@ export const statsSlice = createSlice({
         changeStat: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
-            let newState = state;
             state[title] = value;
         },
         setStats: (state, action) => {

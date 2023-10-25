@@ -4,11 +4,11 @@ import { Typography } from "@mui/material";
 import { formatNumber, calculateTrend } from "../modules/utilFunction";
 
 function Resources() {
-
+  const timeframe = useSelector(store => store.stats.timeframe);
   const resources = useSelector(store => store.resources);
-  let cucumberTrend = calculateTrend(resources.cucumbers);
-  let picklesTrend = calculateTrend(resources.pickles);
-  let seedTrend = calculateTrend(resources.seeds);
+  let cucumberTrend = calculateTrend(resources.cucumbers, timeframe);
+  let picklesTrend = calculateTrend(resources.pickles, timeframe);
+  let seedTrend = calculateTrend(resources.seeds, timeframe);
   
   return (
     <>

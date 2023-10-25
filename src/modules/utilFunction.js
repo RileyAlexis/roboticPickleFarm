@@ -1,8 +1,7 @@
 export function formatNumber(number) {
     // Convert the number to a string and use regex to add commas
-    // if (typeof(number) === 'number') {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    // } else return 0;
+    
   }
 
   export function countPlants(plants) {
@@ -16,8 +15,8 @@ export function formatNumber(number) {
   }
 
   
-  export const calculateTrend = (array) => {
-    let newArr = array.slice(-60);
+  export const calculateTrend = (array, timeframe) => {
+    let newArr = array.slice(timeframe);
     let diff = newArr[newArr.length-1] - newArr[0];
     let sign = '';
     if (diff > 0) sign = '+';

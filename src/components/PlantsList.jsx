@@ -14,15 +14,14 @@ function PlantsList () {
     const maxAge = useSelector(store => store.plantSettings.maxAge);
     const totalGrowthRate = useSelector(store => store.stats.totalGrowthRate)
     const seedChance = useSelector(store => store.plantSettings.seedChance);
-
-
+    const maxedOut = useSelector(store => store.stats.totalMaxedOut);
 
     return (
         <>
         <br /><br />
         <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Plants: {formatNumber(countPlants(plants))}</Typography>
       <br />
-    <TipBox title="Average Growth Rate" data="Average growth rate for all plants">
+    <TipBox title="Total Growth Rate" data="Average growth rate for all plants">
         <Typography variant="body">Growth Rate: {formatNumber(totalGrowthRate)} /s </Typography><br />
         </TipBox>
         <br />
@@ -33,6 +32,10 @@ function PlantsList () {
       <br />
       <TipBox data="Average Age of all plants / Once a plant reaches its maximum age it will be retired">
       <Typography variant="body">Average Age: {parseFloat(averageProperty(plants, 'age')).toFixed(2)} / {maxAge} </Typography>
+      </TipBox>
+      <br />
+      <TipBox data="The # of plants that have stopped growing because they're full">
+      <Typography variant="body">Maxed Out: {formatNumber(maxedOut)}</Typography>
       </TipBox>
       <br />
       <TipBox data="Ripe cucumbers can be picked / maximum # of cucumbers that can stay on the vine">

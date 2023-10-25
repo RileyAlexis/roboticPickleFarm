@@ -31,7 +31,10 @@ function growPlants(plants) {
         if (plant.age > plant.maxAge) {
             plant.dead = true;
         }
-        if (plant.currentYield >= plant.maxYield) plant.currentYield = plant.maxYield;
+        if (plant.currentYield >= plant.maxYield) { 
+            plant.currentYield = plant.maxYield;
+            plant.maxedOut = true;
+        }
     });
     let deadPlants = plants.filter((plant) => !plant.dead);
     // store.dispatch({ type: 'log/addLog', payload: `${deadPlants.length} plants have been retired`});
@@ -54,14 +57,20 @@ function updateStats(buildings, plants, stats) {
     let averageAge = 0;
     let maxYield = 0;
     let ripeCucumbers = 0;
+    let totalModifier = 0;
     let plantsQty = countPlants(plants);
+    stats.totalMaxedOut = 0;
 
     plants.forEach((plant) => {
         ripeCucumbers += Math.floor(plant.currentYield);
-        totalGrowthRate += (plant.growthRate + plant.growthModifer) * plant.modifier;
+        if (plant.maxedOut) { stats.totalMaxedOut++; }
+        if (!plant.maxedOut) totalGrowthRate += (plant.growthRate + plant.growthModifer) * plant.modifier;
+        if (plant.modifier > 1) totalModifier += plant.modifier;
         averageAge += plant.age;
         maxYield += plant.maxYield;
     });
+
+    // totalGrowthRate = totalGrowthRate / (plants.length * totalModifier);
 
     buildings.forEach((item) => {
         if (buildings.active && buildings.purchased)
@@ -85,19 +94,18 @@ function updateStats(buildings, plants, stats) {
 
 function runPickerBots(plants, robots, stats) {
     let picked = 0;
-    let pickerRuns = (robots.pickerBots * robots.pickerSpeed > stats.ripeCucumbers) 
-    ? stats.ripeCucumbers 
-    : robots.pickerBots * robots.pickerSpeed;
-    
+    let pickerRuns = robots.pickerBots * robots.pickerSpeed 
+
     if (pickerRuns > 0) {
     stats.pickerActive = true;
     stats.pickerDelta++;
     }
     
-    for (let i = 0; i < pickerRuns; i++) {
+    for (let i = 0; i < (pickerRuns); i++) {
         for (let i = 0; i < plants.length; i++) {
             if (plants[i].currentYield >= 1) {
                 plants[i].currentYield--;
+                plants[i].maxedOut = false;
                 picked++;
                 break;
         }  //End If
@@ -205,7 +213,7 @@ export function updateTicker() {
     store.dispatch({ type: 'deltas/cycleDeltas' });
 } //End initial if statement
 
-if (state.deltas.autoSaveDelta >= 120) {
+if (state.deltas.autoSaveDelta >= stats.autoSaveInterval) {
     store.dispatch({ type: 'SAVE_GAME' });
     store.dispatch({ type: 'deltas/resetDelta', payload: 'resetAutoSaveDelta'});
 }

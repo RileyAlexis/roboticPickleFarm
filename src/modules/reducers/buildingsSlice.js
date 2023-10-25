@@ -9,7 +9,7 @@ const initialState = [
         showAt: 5000,
         price: 5000,
         recurringCost: 5,
-        options: [1, 5, 10],
+        options: [1, 5, 10, 20, 50, 100, 500, 1000],
         operations: 0,
         selectedOption: 1,
         expanded: false,
