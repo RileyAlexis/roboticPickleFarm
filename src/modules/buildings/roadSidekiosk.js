@@ -6,7 +6,6 @@ export function runKiosk(building) {
     let pickles = state.resources.pickles[state.resources.pickles.length-1];
     let seedPrice = state.prices.seeds;
 
-    console.log('Seeds', seeds, 'pickles', pickles);
     if (seeds === 0 && pickles >= (seedPrice[0] * building.selectedOption)) {
 
         store.dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: building.selectedOption }});
