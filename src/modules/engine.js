@@ -17,29 +17,39 @@ export class Plants {
     this.age = 0;
     this.currentYield = 0;
     this.seedChance = seedChance;
-    this.dead = false;
+    this.isDead = false;
     this.maxedOut = false;
     }
 }
 
-function growPlants(plants) {
+function growPlants(plants, growthModifer) {
     plants.forEach((plant) => {
         if (!plant.isDead) {
-        plant.currentYield += ((plant.growthRate + plant.growthModifer) * plant.modifier);
-        plant.age += plant.aging * plant.modifier;
+        plant.currentYield += ((plant.growthRate + growthModifer) * plant.modifier);
+        plant.age += plant.aging;
         }
-        if (plant.age > plant.maxAge) {
-            plant.dead = true;
+        // if (plant.isDead) console.log(plant.age);
+        if (plant.age >= plant.maxAge) {
+            plant.isDead = true;
         }
         if (plant.currentYield >= plant.maxYield) { 
             plant.currentYield = plant.maxYield;
             plant.maxedOut = true;
         }
     });
-    let deadPlants = plants.filter((plant) => !plant.dead);
-    // store.dispatch({ type: 'log/addLog', payload: `${deadPlants.length} plants have been retired`});
     return [...plants];
 }
+
+function countDeadPlants(plants, cycle) {
+ let deadplants = plants.filter((plant) => plant.isDead);
+ return deadplants;
+}
+
+function removeDeadPlants(plants) {
+    plants = plants.filter((plant) => !plant.isDead);
+    return [...plants];
+}
+
 
 function generateSeeds(plants) {
     let newSeeds = 0;
@@ -63,8 +73,8 @@ function updateStats(buildings, plants, stats) {
 
     plants.forEach((plant) => {
         ripeCucumbers += Math.floor(plant.currentYield);
-        if (plant.maxedOut) { stats.totalMaxedOut++; }
-        if (!plant.maxedOut) totalGrowthRate += (plant.growthRate + plant.growthModifer) * plant.modifier;
+        if (plant.maxedOut) { stats.totalMaxedOut += plant.modifier; }
+        if (!plant.maxedOut) totalGrowthRate += (plant.growthRate + stats.growthModifer) * plant.modifier;
         if (plant.modifier > 1) totalModifier += plant.modifier;
         averageAge += plant.age;
         maxYield += plant.maxYield;
@@ -175,13 +185,14 @@ export function updateTicker() {
     }
 
  if (plants.length > 0) {
-    growPlants(plants);
+    growPlants(plants, stats.growthModifer);
     let newSeeds = generateSeeds(plants);
     let picked = runPickerBots(plants, robots, stats);
     let pickled = runPicklerBots(resources, robots, stats);
     let seeds = runPlanterBots(plants, resources, robots, plantSettings, stats);
     let recurringCost = getRecurringCost(buildings);
     let newLog = cycleLog(log);
+    
 
     stats.totalProduction += pickled;
 
@@ -194,8 +205,6 @@ export function updateTicker() {
 
     updateStats(buildings, plants, stats);
 
-    
-
     if (state.deltas.buttonDelta >= 5) {
         checkButtons();
         checkTabs(stats.totalProduction, state.locationMenu);
@@ -203,7 +212,13 @@ export function updateTicker() {
         checkBuildings(stats.totalProduction, state.buildings);
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
     }
-
+    if (state.deltas.deadplantsDelta >= 5) {
+        let deadplants = countDeadPlants(plants, stats.cycle);
+        plants = removeDeadPlants(plants);
+        store.dispatch({ type: 'log/addLog', payload: { line: `${deadplants.length} plant retired this turn`, cycle: stats.cycles }})
+        store.dispatch({ type: 'deltas/resetDelta', payload: 'resetDeadplantsDelta'});
+    }
+    
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     store.dispatch({ type: 'stats/setAllStats', payload: stats });
     store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked - pickled}});
@@ -218,4 +233,5 @@ if (state.deltas.autoSaveDelta >= stats.autoSaveInterval) {
     store.dispatch({ type: 'deltas/resetDelta', payload: 'resetAutoSaveDelta'});
 }
 
+// console.log(plants);
 }//End updateTicker()

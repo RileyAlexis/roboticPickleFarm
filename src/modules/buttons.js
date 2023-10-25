@@ -81,8 +81,6 @@ function buySeeds(count) {
     const pickles = state.resources.pickles[state.resources.pickles.length-1];
     const seedPrice = state.prices.seeds;
     const cycles = state.stats.cycles;
-    console.log('Pickles * count', pickles * count);
-    console.log('Seedprice[0] * count', seedPrice[0] * count);
     if ((pickles) >= ( seedPrice[0] * count)) {
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: (seedPrice[1] * count)}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -(seedPrice[0] * count)}})
@@ -108,7 +106,6 @@ const buyBuilding = (item) => {
 }
 
 export const buttonCall = (name, upgrade) => {
-    console.log(name, upgrade);
     switch (name) {
         case 'Plant': plantSeed(); break;
         case 'Pick': pickCucumbers(); break;
