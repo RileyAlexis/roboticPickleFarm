@@ -18,6 +18,7 @@ const calcSeconds = () => {
 const yearsUntilGoal = formatNumber(calcSeconds());
 // const filled = parseFloat(totalProduction / totalGoal).toFixed(8);
 const filled = calculatePercentage(totalProduction, totalGoal)
+// const filled = totalProduction / totalGoal;
 const empty = 100 - filled;
 
     return (

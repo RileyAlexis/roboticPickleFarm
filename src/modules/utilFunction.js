@@ -72,8 +72,13 @@ function countZerosAfterDecimal(number) {
 }
 
 export function calculatePercentage(progress, goal) {
-  const complete = progress / goal;
+  const complete = (progress / goal);
+  const lowValue = 0.00001;
   const decs = countZerosAfterDecimal(complete);
-  return parseFloat(complete).toFixed(Number(decs) + 2)
+  if (lowValue >= complete) {
+    console.log(lowValue);
+    return parseFloat(complete).toFixed(Number(decs) + 8);
+  } else {
+  return parseFloat(complete).toFixed(Number(decs) + 4)
   }
-
+  }
