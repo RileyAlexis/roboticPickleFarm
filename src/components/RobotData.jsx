@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
+import TipBox from "./TipBox";
+
+import { formatNumber } from "../modules/utilFunction";
 
 function RobotData () {
 
@@ -12,22 +15,37 @@ function RobotData () {
             <br />
             <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Robots:</Typography>
             <br />
+           
             <Typography variant="body">
+              {/* Placing the TipBox to not include the active tag prevents the tooltip from shifting position */}
+            <TipBox data={`Running at ${formatNumber(robots.planterBots * robots.planterSpeed)} /s`}>
               Planter Bots: {robots.planterBots} at {robots.planterSpeed} /s
+              </TipBox>
               {planterActive &&
                <span>- Planting</span>
               }
+              </Typography>
+                
               <br />
+              <Typography variant="body">
+              <TipBox data={`Running at ${formatNumber(robots.pickerBots * robots.pickerSpeed)} /s`}>
               Picker Bots: {robots.pickerBots} at {robots.pickerSpeed} /s
+              </TipBox>
               {pickerActive &&
                <span>- Picking</span>
               }
+              </Typography>
               <br />
+              <Typography variant="body">
+              <TipBox data={`Running at ${formatNumber(robots.picklerBots * robots.picklerSpeed)} /s`}>
               Pickling Bots: {robots.picklerBots} at {robots.picklerSpeed} /s
+              </TipBox>
               {picklerActive &&
                <span>- Pickling</span>
               }
-              </Typography>
+               </Typography>
+              
+           
             </>
             )
             

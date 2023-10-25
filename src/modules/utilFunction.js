@@ -16,6 +16,7 @@ export function formatNumber(number) {
 
   
   export const calculateTrend = (array, timeframe) => {
+
     let newArr = array.slice(timeframe);
     let diff = newArr[newArr.length-1] - newArr[0];
     let sign = '';
@@ -73,12 +74,11 @@ function countZerosAfterDecimal(number) {
 
 export function calculatePercentage(progress, goal) {
   const complete = (progress / goal);
-  const lowValue = 0.00001;
+  const lowValue = 0.000001;
   const decs = countZerosAfterDecimal(complete);
   if (lowValue >= complete) {
-    console.log(lowValue);
     return parseFloat(complete).toFixed(Number(decs) + 8);
   } else {
-  return parseFloat(complete).toFixed(Number(decs) + 4)
+  return parseFloat(complete).toFixed(Number(decs) + 3)
   }
   }
