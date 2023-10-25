@@ -64,17 +64,18 @@ function LandingPage() {
                     })
                         .then((response) => {
                             //Set game data Here
+                            console.log(response.data.upgrades);
                             dispatch({ type: 'log/setAllLog', payload: response.data.log });
                             dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
                             dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
                             dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
                             dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
                             dispatch({ type: 'upgrades/setAllUpgrades', payload: response.data.upgrades })
+                            dispatch({ type: 'buildings/setAllBuildings', payload: response.data.buildings })
                             dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
                             dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
                             checkButtons();
                             checkTabs();
-                            checkUpgrades();
                         }).catch((error) => {
                             console.log(error);
                         })

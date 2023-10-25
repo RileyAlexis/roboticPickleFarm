@@ -22,6 +22,7 @@ function* saveGame() {
         robots: store.robots,
         upgrades: store.upgrades,
         stats: store.stats,
+        buildings: store.buildings,
         plantSettings: store.plantSettings
     }
  try {

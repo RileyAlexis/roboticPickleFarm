@@ -93,7 +93,7 @@ let dataArr = [
     req.body.dataObj.robots,
     req.body.dataObj.plantSettings,
     req.body.dataObj.prices,
-    {Placeholder: 'buildings'},
+    JSON.stringify(req.body.dataObj.buildings),
     JSON.stringify(req.body.dataObj.upgrades),
     JSON.stringify(req.body.dataObj.log)
 ];
