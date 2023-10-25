@@ -21,7 +21,7 @@ function PlantsList () {
         <br /><br />
         <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Plants: {formatNumber(countPlants(plants))}</Typography>
       <br />
-    <TipBox title="Total Growth Rate" data="Average growth rate for all plants">
+    <TipBox title="Total Growth Rate" data="Total growth rate for all plants">
         <Typography variant="body">Growth Rate: {formatNumber(totalGrowthRate)} /s </Typography><br />
         </TipBox>
         <br />

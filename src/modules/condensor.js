@@ -11,8 +11,10 @@ export function condensor(plants) {
     for (let i = 0; i < discarded.length; i++) {
         if (discarded[i].modifier) {
         condensed[i].modifier += discarded[i].modifier;
-        condensed[i].maxAge += discarded[i].maxAge;
+        // condensed[i].maxAge += discarded[i].maxAge;
         condensed[i].age += discarded[i].age;
+        condensed[i].currentYield += condensed[i].currentYield;
+        
     }}
     return condensed;
 

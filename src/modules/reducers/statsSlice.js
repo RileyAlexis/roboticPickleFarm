@@ -4,6 +4,7 @@ const initialState = {
     maxYield: 0,
     ripeCucumbers: 0,
     totalGrowthRate: 0,
+    growthModifer: 0,
     totalMaxedOut: 0,
     averageAge: 0,
     cycles: 0,
