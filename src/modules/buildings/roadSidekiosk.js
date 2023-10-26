@@ -2,7 +2,6 @@ import { storeInstance as store} from '../store';
 
 export function runKiosk(building) {
     const state = store.getState();
-    let seeds = state.resources.seeds[state.resources.seeds.length-1];
     let pickles = state.resources.pickles[state.resources.pickles.length-1];
     let seedPrice = state.prices.seeds;
     let recurringCost = 0;

@@ -19,12 +19,13 @@ function BuildingsAccordion({building}) {
 
     const handleSwitchChange = (e) => {
         dispatch({ type: 'buildings/toggleActiveItem', payload: { title: building.name, value: e.target.value}})
+        if (!e.target.value) { dispatch({ type: 'buildings/setActiveCost', payload: { title: building.name, value: 0 }}) }
     }
 
     const handleSwitchClick = event => {
         event.stopPropagation(); // Stop event propagation to prevent the accordion from expanding/collapsing
       };
-
+console.log(`Active Cost of ${building.name}`, building.activeCost);
     return (
         <div>
             <Accordion 
@@ -63,7 +64,11 @@ function BuildingsAccordion({building}) {
                 </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                  
+                <Typography sx={{
+                marginRight: '10px'
+                }}
+                variant='caption'>{building.data}</Typography>
+                <br /><br />
                 <Typography sx={{
                 marginRight: '10px'
                 }}

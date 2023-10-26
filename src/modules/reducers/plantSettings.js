@@ -20,7 +20,6 @@ export const plantSettingsSlice = createSlice({
         changePlantSettings: (state, action) => {
             const value = action.payload.value / 100;
             const title = action.payload.title;
-            console.log('PlantSettings Reducer', title, value);
             switch (title) {
                 case 'modifier': state.modifier += value;break;
                 case 'growthRate': state.growthRate += (state.growthRate * value);break;

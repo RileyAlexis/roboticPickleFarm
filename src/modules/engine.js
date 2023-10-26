@@ -151,7 +151,6 @@ function runPlanterBots(plants, resources, robots, plantSettings, stats) {
     let planterRuns = (robots.planterBots * robots.planterSpeed > resources.seeds[resources.seeds.length-1])
     ? resources.seeds[resources.seeds.length-1]
     : robots.planterBots * robots.planterSpeed;
-        console.log(plantSettings.maxAge);
     if (planterRuns > 0) {
     stats.planterActive = true;
     stats.planterDelta++;

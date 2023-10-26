@@ -2,7 +2,7 @@ import { storeInstance as store} from './store';
 import { Plants } from './engine';
 import { deepUnfreeze } from './deepUnfreeze';
 import { sendUpgrade } from './sendUpgrade';
-
+import { formatNumber } from './utilFunction';
 
 function plantSeed() {
     const state = store.getState();
@@ -97,11 +97,13 @@ function buySeeds(count) {
 const buyBuilding = (item) => {
     const state = store.getState();
     const pickles = state.resources.pickles[state.resources.pickles.length-1];
-
+    const cycles = state.stats.cycles;
     if (pickles >= item.price && !item.purchased) {
         store.dispatch({ type: 'buildings/buyBuilding', payload: item.name });
         store.dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: -item.price}});
         store.dispatch({ type: 'buildings/disableItem', payload: item.name });
+    } else {
+        store.dispatch({type: 'log/addLog', payload: {line: `Need ${(formatNumber(item.price))} pickles to purchase ${item.name}`, cycle: cycles}});
     }
 }
 
