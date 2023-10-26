@@ -2,7 +2,6 @@ import { UseSelector, useDispatch, useSelector } from "react-redux"
 
 function CheatsForTesting() {
     const dispatch = useDispatch();
-    const plantSettings = useSelector(store => store.plantSettings);
     const robots = useSelector(store => store.robots);
     const resources = useSelector(store => store.resources);
 
@@ -27,32 +26,34 @@ function CheatsForTesting() {
         dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: 500000 }});
         dispatch({ type: 'stats/setStats', payload: {title: 'totalProduction', value: 500000 }});
     }
-    const increaseSeed = () => {
-        let value = (plantSettings.seedChance * 0.1) + plantSettings.seedChance;
-        console.log(value);
-        dispatch({ type: 'plantSettings/changePlantSettings', payload: {title: 'seedChance', value: value}});
-        // dispatch({ type: 'plants/changeAllSeedChance', payload: value })
-    }
-
     const resetStore = () => {
         dispatch({ type: 'RESET_ENTIRE_STORE'});
         
     }
-
     const addCucumbers = () => {
         dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: 100 }})
+    }
+
+    const increaseGrowthRate = () => {
+        dispatch({ type: 'plants/addPercentageTo', payload: { title: 'growthRate', value: 20 }});
+    }
+
+    const addMoreBots = (value, bot) => {
+        dispatch({ type: 'robots/addBot', payload: { title: bot, value: value }})
     }
 
     return (
         <div className="cheatBox">
             <br />
+        <button onClick={increaseGrowthRate}>+20% growth rate</button><br />
         <button onClick={addSeeds}>Add 100 Seeds</button><br />
         <button onClick={addMoreSeeds}>Add 1000 Seeds</button><br />
         <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
         <button onClick={addBots}>+5 Bots</button><br />
+        <button onClick={() => addMoreBots(1000, 'picker')}>Add 1000 Pickers</button><br />
+        <button onClick={() => addMoreBots(1000, 'pickler')}>Add 1000 Picklers</button><br />
         <button onClick={addCucumbers}>+100 cucumbers</button><br />
         <button onClick={addPickles}>+500000 Pickles</button><br />
-        <button onClick={increaseSeed}>+10% Seedchance</button><br />
         <button onClick={resetStore}>Reset the Whole Game</button>
             
         </div>

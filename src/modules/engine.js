@@ -1,61 +1,17 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
-import { condensor } from './condensor';
-import { countPlants } from './utilFunction';
 import { checkButtons, checkTabs, checkUpgrades, checkBuildings } from './events';
 import { getRecurringCost, runBuilding } from './cycleBuildings';
 
-export class Plants {
-    constructor(modifier, growthRate, growthModifer, maxYield, deathChance, aging, maxAge, seedChance) {
-    this.modifier = modifier;
-    this.growthRate = growthRate;
-    this.growthModifer = growthModifer;
-    this.maxYield = maxYield;
-    this.deathChance = deathChance;
-    this.aging = aging;
-    this.maxAge = maxAge;
-    this.age = 0;
-    this.currentYield = 0;
-    this.seedChance = seedChance;
-    this.isDead = false;
-    this.maxedOut = false;
-    }
+function growPlants(plants) {
+    plants.currentYield += (plants.plantCount * plants.growthRate) * plants.growthRateModifier;
 }
-
-function growPlants(plants, growthModifer) {
-    plants.forEach((plant) => {
-        if (!plant.isDead) {
-        plant.currentYield += ((plant.growthRate + growthModifer) * plant.modifier);
-        plant.age += plant.aging;
-        }
-        // if (plant.isDead) console.log(plant.age);
-        if (plant.age >= plant.maxAge) {
-            plant.isDead = true;
-        }
-        if (plant.currentYield >= plant.maxYield) { 
-            plant.currentYield = plant.maxYield;
-            plant.maxedOut = true;
-        }
-    });
-    return [...plants];
-}
-
-function countDeadPlants(plants, cycle) {
- let deadplants = plants.filter((plant) => plant.isDead);
- return deadplants;
-}
-
-function removeDeadPlants(plants) {
-    plants = plants.filter((plant) => !plant.isDead);
-    return [...plants];
-}
-
 
 function generateSeeds(plants) {
     let newSeeds = 0;
-    for (let i = 0; i < plants.length; i++) {
+    for (let i = 0; i < plants.plantCount; i++) {
         const seed = Math.random();
-        if (plants[i].seedChance * plants[i].modifier >= seed) {
+        if (plants.seedChance >= seed) {
             newSeeds += 1;
         }
     }
@@ -66,22 +22,14 @@ function updateStats(buildings, plants, stats) {
     let totalGrowthRate = 0;
     let averageAge = 0;
     let maxYield = 0;
-    let ripeCucumbers = 0;
+    let newRipeCucumbers = 0;
     let totalModifier = 0;
-    let plantsQty = countPlants(plants);
+    
     stats.totalMaxedOut = 0;
 
-    plants.forEach((plant) => {
-        ripeCucumbers += Math.floor(plant.currentYield);
-        if (plant.maxedOut) { stats.totalMaxedOut += plant.modifier; }
-        if (!plant.maxedOut) totalGrowthRate += (plant.growthRate + stats.growthModifer) * plant.modifier;
-        if (plant.modifier > 1) totalModifier += plant.modifier;
-        averageAge += plant.age;
-        maxYield += plant.maxYield;
-    });
-
-    // totalGrowthRate = totalGrowthRate / (plants.length * totalModifier);
-
+    newRipeCucumbers += Math.floor(plants.currentYield);
+    plants.currentYield -= newRipeCucumbers;
+    totalGrowthRate = (plants.plantCount * plants.growthRate) * plants.growthRateModifier;
     //Tracks costs of buldings for stats tooltip display
     stats.recurringCosts = [];
     buildings.forEach((item) => {
@@ -96,37 +44,29 @@ function updateStats(buildings, plants, stats) {
     if (stats.planterDelta >= 3) { stats.planterActive = false; stats.planterDelta = 0}
     if (stats.picklerDelta >= 3) { stats.picklerActive = false; stats.picklerDelta = 0}
 
-    stats.averageAge = averageAge / plantsQty;
+    
     stats.totalGrowthRate = totalGrowthRate;
     stats.maxYield = maxYield;
-    stats.ripeCucumbers = ripeCucumbers;
+    stats.ripeCucumbers += newRipeCucumbers;
     stats.averageAge = parseFloat(averageAge.toFixed(2));
     stats.totalGrowthRate = parseFloat(totalGrowthRate.toFixed(2));
     stats.cycles += 1;
     return [stats];
 }
 
-function runPickerBots(plants, robots, stats) {
+function runPickerBots(robots, stats) {
     let picked = 0;
-    let pickerRuns = robots.pickerBots * robots.pickerSpeed 
+    let pickerRuns = (robots.pickerBots * robots.pickerSpeed) >= stats.ripeCucumbers ? 
+    ( picked = stats.ripeCucumbers )
+    :
+    ( picked = (robots.pickerBots * robots.pickerSpeed) )
 
     if (pickerRuns > 0) {
     stats.pickerActive = true;
     stats.pickerDelta++;
     }
-    
-    for (let i = 0; i < (pickerRuns); i++) {
-        for (let i = 0; i < plants.length; i++) {
-            if (plants[i].currentYield >= 1) {
-                plants[i].currentYield--;
-                plants[i].maxedOut = false;
-                picked++;
-                break;
-        }  //End If
-    } //End plants for loop
-    } //End pickerRuns for loop
 
-    return [...plants], picked;
+    return picked;
 
 } //End runPickerBots()
 
@@ -139,35 +79,30 @@ function runPicklerBots(resources, robots, stats) {
     stats.picklerActive = true;
     stats.picklerDelta++;
     }
-    
-    for (let i = 0; i < picklerRuns; i++) {
-        pickled++;
-    } //End picklerRuns for loop
+    pickled = picklerRuns;
     return pickled;
 } //End picklerBots();
 
-function runPlanterBots(plants, resources, robots, plantSettings, stats) {
+function runPlanterBots(plants, resources, robots, stats) {
     let seeds = 0;
     let planterRuns = (robots.planterBots * robots.planterSpeed > resources.seeds[resources.seeds.length-1])
     ? resources.seeds[resources.seeds.length-1]
     : robots.planterBots * robots.planterSpeed;
+    
     if (planterRuns > 0) {
     stats.planterActive = true;
     stats.planterDelta++;
     }
     
+    plants.plantCount += planterRuns;
+    seeds = -planterRuns;
 
-    for (let i = 0; i < planterRuns; i++) {
-        const newPlant = new Plants(plantSettings.modifier, plantSettings.growthRate, plantSettings.growthModifer, plantSettings.maxYield, plantSettings.deathChance, plantSettings.aging, plantSettings.maxAge, plantSettings.seedChance);
-        plants.push(newPlant);
-        seeds--;
-    }
-    return [...plants], seeds;
+    return seeds;
 }
 
 function cycleLog(log) {
-    if (log.length > 25) {
-        log = log.splice(0, -25);
+    if (log.length > 35) {
+        log = log.splice(0, -35);
     }
     return log;
 }
@@ -175,30 +110,30 @@ function cycleLog(log) {
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
-    let plants = deepUnfreeze([...state.plants]);
+    let plants = deepUnfreeze(state.plants);
     let stats = deepUnfreeze(state.stats);
     const robots = state.robots;
     const resources = state.resources;
-    const plantSettings = state.plantSettings;
     const buildings = state.buildings;
     const log = deepUnfreeze(state.log);
     //Prevents more than 10,000 objects being created - uses plants.modifier to maintain numbers
-    if (plants.length >= 10000) {
-        plants = condensor(plants);
-    }
+    // if (plants.length >= 10000) {
+    //     plants = condensor(plants);
+    // }
 
- if (plants.length > 0) {
-    growPlants(plants, stats.growthModifer);
+ if (plants.plantCount > 0) {
+    if (stats.ripeCucumbers < (plants.maxYield * plants.plantCount)) growPlants(plants);
     let newSeeds = generateSeeds(plants);
-    let picked = runPickerBots(plants, robots, stats);
+    let picked = runPickerBots(robots, stats);
     let pickled = runPicklerBots(resources, robots, stats);
-    let seeds = runPlanterBots(plants, resources, robots, plantSettings, stats);
+    let seeds = runPlanterBots(plants, resources, robots, stats);
     let recurringCost = getRecurringCost(buildings);
     let newLog = cycleLog(log);
     
 
     stats.totalProduction += pickled;
-
+    stats.ripeCucumbers -= picked;
+    
     //Cycle through function for buildings if they are active and purchased
     buildings.forEach((item) => {
         if (item.active && item.purchased) {
@@ -215,12 +150,12 @@ export function updateTicker() {
         checkBuildings(stats.totalProduction, state.buildings);
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
     }
-    if (state.deltas.deadplantsDelta >= 5) {
-        let deadplants = countDeadPlants(plants, stats.cycle);
-        plants = removeDeadPlants(plants);
-        store.dispatch({ type: 'log/addLog', payload: { line: `${deadplants.length} plant retired this turn`, cycle: stats.cycles }})
-        store.dispatch({ type: 'deltas/resetDelta', payload: 'resetDeadplantsDelta'});
-    }
+    // if (state.deltas.deadplantsDelta >= 5) {
+    //     let deadplants = countDeadPlants(plants, stats.cycle);
+    //     plants = removeDeadPlants(plants);
+    //     store.dispatch({ type: 'log/addLog', payload: { line: `${deadplants.length} plant retired this turn`, cycle: stats.cycles }})
+    //     store.dispatch({ type: 'deltas/resetDelta', payload: 'resetDeadplantsDelta'});
+    // }
     
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     store.dispatch({ type: 'stats/setAllStats', payload: stats });

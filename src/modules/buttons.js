@@ -1,5 +1,4 @@
 import { storeInstance as store} from './store';
-import { Plants } from './engine';
 import { deepUnfreeze } from './deepUnfreeze';
 import { sendUpgrade } from './sendUpgrade';
 import { formatNumber } from './utilFunction';
@@ -9,9 +8,7 @@ function plantSeed() {
     const cycles = state.stats.cycles;
 
     if (state.resources.seeds[state.resources.seeds.length-1] > 0) {
-        const decon = state.plantSettings;
-        const newPlant = new Plants(decon.modifier, decon.growthRate, decon.growthModifer, decon.maxYield, decon.deathChance, decon.aging, decon.maxAge, decon.seedChance);
-        store.dispatch({type: 'plants/addNewPlant', payload: newPlant});
+        store.dispatch({type: 'plants/addNewPlant', payload: 1 });
         store.dispatch({type: 'log/addLog', payload: {line: 'New Seedling Planted!', cycle: cycles}});
         store.dispatch({type: 'resources/changeResources', payload: {title: 'seeds', value: -1}});
     } else if (state.resources.seeds[state.resources.seeds.length-1] === 0) {
@@ -21,21 +18,13 @@ function plantSeed() {
 
 function pickCucumbers() {
     const state = store.getState();
-    const plants = deepUnfreeze([...state.plants]);
+    const ripeCucumbers = state.stats.ripeCucumbers;
     const cycles = state.stats.cycles;
     let picked = 0;
-
-    for (let i = 0; i < plants.length; i++) {
-        if (plants[i].currentYield >= 1) {
-            plants[i].currentYield--;
-            plants[i].maxedOut = false;
-            picked++;
-            break;
-        }
-    }
+    if (ripeCucumbers > 0) picked++;
     if (picked >= 1) {
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'cucumbers', value: 1}});
-        store.dispatch({ type: 'plants/setAllPlants', payload: plants })
+        store.dispatch({type: 'resources/changeResources', payload: { title: 'cucumbers', value: picked }});
+        store.dispatch({ type: 'stats/changeStat', payload: { title: 'ripeCucumbers', value: -picked }});
     }
     }
 

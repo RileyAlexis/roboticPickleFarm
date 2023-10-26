@@ -4,15 +4,15 @@ export function formatNumber(number) {
     
   }
 
-  export function countPlants(plants) {
-    return plants.reduce((sum, obj) => {
-      if (obj.hasOwnProperty('modifier') && typeof obj['modifier'] === 'number') {
-        return sum + obj['modifier'];
-      } else {
-        return sum;
-      }
-    }, 0);
-  }
+  // export function countPlants(plants) {
+  //   return plants.reduce((sum, obj) => {
+  //     if (obj.hasOwnProperty('modifier') && typeof obj['modifier'] === 'number') {
+  //       return sum + obj['modifier'];
+  //     } else {
+  //       return sum;
+  //     }
+  //   }, 0);
+  // }
 
   
   export const calculateTrend = (array, timeframe) => {

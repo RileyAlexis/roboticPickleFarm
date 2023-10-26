@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, Typography } from "@mui/material";
 import './LogBox.css';
 
 function LogBox() {

@@ -13,19 +13,11 @@ function Resources() {
   let picklesTrend = calculateTrend(resources.pickles, timeframe);
   let seedTrend = calculateTrend(resources.seeds, timeframe);
   
-  const costsDisplay = () => {
-    if (recurringCosts.length === 0) return `0 /s`;
-    for (let i = 0; i < recurringCosts.length; i++) {
-      return `${recurringCosts[i].building} (-${recurringCosts[i].cost}/s)`;
-    }
-  }
-
-
   return (
     <>
       <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Resources:</Typography>
       <br />
-      <Typography variant="body">Seeds: {resources.seeds[resources.seeds.length - 1]}</Typography>
+      <Typography variant="body">Seeds: {formatNumber(resources.seeds[resources.seeds.length - 1])}</Typography>
       <Typography variant="caption"> ( {seedTrend.sign}{formatNumber(seedTrend.trend)} /s )</Typography>
       <br />
       <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])}</Typography>
