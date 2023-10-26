@@ -6,7 +6,7 @@ const initialState = [
         price: 500, 
         disabled: false, 
         showAt: 500,
-        dispatch: { type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }},
+        dispatch: [{ type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }}],
         data: 'Refit all Picker Bots with ruggedized wheels - speed +1 / Cost: 500',
         log: 'All Picker Bots refitted with ruggedized wheels'
     },
@@ -15,7 +15,7 @@ const initialState = [
         price: 500, 
         disabled: false, 
         showAt: 500,
-        dispatch: { type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }},
+        dispatch: [{ type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }}],
         data: 'Refit all Pickling Bots with a grabber claw - speed +1 / Cost: 500',
         log: 'All Pickling Bots refitted with grabber claws'
     },
@@ -24,7 +24,7 @@ const initialState = [
         price: 500, 
         disabled: false, 
         showAt: 500,
-        dispatch: { type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }},
+        dispatch: [{ type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }}],
         data: 'Refit all Planter Bots with a shovel arm - speed +1 / Cost: 500',
         log: 'All Planter Bots refitted with shovel arms'
     },
@@ -33,7 +33,7 @@ const initialState = [
         price: 1500,
         disabled: false,
         showAt: 1500,
-        dispatch: { type: 'plantsSettings/changePlantSettings', payload: {title: 'seedChance', value: 0.0001}},
+        dispatch: [{ type: 'plantsSettings/changePlantSettings', payload: {title: 'seedChance', value: 0.0001}}],
         data: 'Increase the chance new plants generate a seed by 0.0001% / Cost 1500',
         log: 'Seed Chances increased by 0.0001%'
     },
@@ -42,7 +42,7 @@ const initialState = [
         price: 2500,
         disabled: false,
         showAt: 2500,
-        dispatch: { type: 'plants/changeAllGrowthRate', payload: 10 },
+        dispatch: [{ type: 'plants/changeAllGrowthRate', payload: 10 }],
         data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10% / Cost 2500',
         log: 'Pickle juice hack unlocked!'
 },    
@@ -51,7 +51,7 @@ const initialState = [
         price: 50000,
         disabled: false,
         showAt: 50000,
-        dispatch: { type: 'resources/changeResources', payload: {title: 'seeds', value: 10000 }},
+        dispatch: [{ type: 'resources/changeResources', payload: {title: 'seeds', value: 10000 }}],
         data: 'Get lots of seeds / Cost 50000',
         log: 'I bought a bunch of seeds'
 },
