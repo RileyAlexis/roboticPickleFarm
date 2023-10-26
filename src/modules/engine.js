@@ -81,10 +81,15 @@ function updateStats(buildings, plants, stats) {
     });
 
     // totalGrowthRate = totalGrowthRate / (plants.length * totalModifier);
-
+    
+    //Tracks costs of buldings for stats tooltip display
+    stats.recurringCosts = [];
     buildings.forEach((item) => {
-        if (buildings.active && buildings.purchased)
-        stats.recurringCosts.push({building: item.name, cost: item.recurringCost});
+        if (item.active && item.purchased) {
+        stats.recurringCosts.push({building: item.name, cost: item.recurringCost + item.activeCost });
+        console.log(stats.recurringCosts);
+        }
+        
     })
 
     //Reset visual cues for active bots

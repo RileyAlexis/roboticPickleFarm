@@ -2,14 +2,24 @@ import { useSelector } from "react-redux";
 
 import { Typography } from "@mui/material";
 import { formatNumber, calculateTrend } from "../modules/utilFunction";
+import TipBox from '../components/TipBox';
 
 function Resources() {
   const timeframe = useSelector(store => store.stats.timeframe);
   const resources = useSelector(store => store.resources);
+  const recurringCosts = useSelector(store => store.stats.recurringCosts);
   let cucumberTrend = calculateTrend(resources.cucumbers, timeframe);
   let picklesTrend = calculateTrend(resources.pickles, timeframe);
   let seedTrend = calculateTrend(resources.seeds, timeframe);
   
+  const costsDisplay = () => {
+    if (recurringCosts.length === 0) return `0 /s`;
+    for (let i = 0; i < recurringCosts.length; i++) {
+      return `${recurringCosts[i].building} (-${recurringCosts[i].cost}/s)`;
+    }
+  }
+
+
   return (
     <>
       <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Resources:</Typography>
@@ -20,8 +30,10 @@ function Resources() {
       <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])}</Typography>
       <Typography variant="caption"> ( {cucumberTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
       <br />
+      <TipBox data={costsDisplay()}>
       <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
       <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
+      </TipBox>
     </>
   )
 }

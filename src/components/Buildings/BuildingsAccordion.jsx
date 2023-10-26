@@ -41,7 +41,7 @@ function BuildingsAccordion({building}) {
                           sx={{
                               marginLeft: '5px'
                           }}
-                          variant='caption'>-{building.recurringCost} /s</Typography>
+                          variant='caption'>-{building.recurringCost + building.activeCost} /s</Typography>
                     )
                         :
                         (<Typography 

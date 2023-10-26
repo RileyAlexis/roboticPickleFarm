@@ -9,6 +9,7 @@ const initialState = [
         showAt: 5000,
         price: 5000,
         recurringCost: 5,
+        activeCost: 0,
         options: [1, 5, 10, 20, 50, 100, 500, 1000],
         operations: 0,
         selectedOption: 1,
@@ -92,6 +93,15 @@ const buildingsSlice = createSlice({
                     state[i].selectedOption = action.payload.value;
                 }
             }
+            },       
+        setActiveCost: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            for (let i = 0; i < state.length; i++) {
+                if (state[i].name === title) {
+                    state[i].activeCost = value;
+                }
+            }
             },
         cycleBulding: (state, action) => {
             const title = action.payload;
@@ -104,5 +114,5 @@ const buildingsSlice = createSlice({
 
     }})
 
-export const { setAllBuildings, showItem, disableItem, toggleActiveItem, toggleExpander, buyBuilding, changeOption, cycleBulding } = buildingsSlice.actions;
+export const { setAllBuildings, showItem, disableItem, toggleActiveItem, toggleExpander, buyBuilding, changeOption, cycleBulding, setActiveCost } = buildingsSlice.actions;
 export default buildingsSlice.reducer;
