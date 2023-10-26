@@ -17,10 +17,24 @@ const plantSlice = createSlice({
             }))
         },
         changeAllSeedChance: (state, action) => {
-            state.plants.forEach(plant => {
-                plant.seedChance +=  action.payload;
-            })
-        }
+            const percentage = action.payload;
+            return state.map((plant) => ({
+                ...plant, seedChance: plant.seedChance + (plant.seedChance * percentage) / 100,
+            }))
+        },
+        changeAllMaxYield: (state, action) => {
+            const percentage = action.payload;
+            return state.map((plant) => ({
+                ...plant, maxYield: plant.maxYield + (plant.maxYield * percentage) / 100,
+            })) 
+        },
+        changeAllMaxAge: (state, action) => {
+            const percentage = action.payload;
+            return state.map((plant) => ({
+                ...plant, maxAge: plant.maxAge + (plant.maxAge * percentage) / 100,
+            })) 
+        },
+        
     }
 })
 

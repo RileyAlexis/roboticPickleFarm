@@ -24,8 +24,8 @@ function CheatsForTesting() {
         dispatch({ type: 'robots/addBot', payload: {title: 'pickler', value: 5 }});
     }
     const addPickles = () => {
-        dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: 50000 }});
-        dispatch({ type: 'stats/setStats', payload: {title: 'totalProduction', value: 50000 }});
+        dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: 500000 }});
+        dispatch({ type: 'stats/setStats', payload: {title: 'totalProduction', value: 500000 }});
     }
     const increaseSeed = () => {
         let value = (plantSettings.seedChance * 0.1) + plantSettings.seedChance;
@@ -51,7 +51,7 @@ function CheatsForTesting() {
         <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
         <button onClick={addBots}>+5 Bots</button><br />
         <button onClick={addCucumbers}>+100 cucumbers</button><br />
-        <button onClick={addPickles}>+50000 Pickles</button><br />
+        <button onClick={addPickles}>+500000 Pickles</button><br />
         <button onClick={increaseSeed}>+10% Seedchance</button><br />
         <button onClick={resetStore}>Reset the Whole Game</button>
             
