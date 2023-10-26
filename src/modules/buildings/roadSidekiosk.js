@@ -6,7 +6,6 @@ export function runKiosk(building) {
     let pickles = state.resources.pickles[state.resources.pickles.length-1];
     let seedPrice = state.prices.seeds;
     let recurringCost = 0;
-    console.log('Building Active Cost', building.activeCost);
     if (building.active) {
         recurringCost = seedPrice[0] * building.selectedOption;
     }

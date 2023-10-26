@@ -87,7 +87,6 @@ function updateStats(buildings, plants, stats) {
     buildings.forEach((item) => {
         if (item.active && item.purchased) {
         stats.recurringCosts.push({building: item.name, cost: item.recurringCost + item.activeCost });
-        console.log(stats.recurringCosts);
         }
         
     })
