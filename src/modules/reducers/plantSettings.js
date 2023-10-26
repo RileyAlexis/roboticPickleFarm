@@ -18,17 +18,18 @@ export const plantSettingsSlice = createSlice({
             return action.payload;
         },
         changePlantSettings: (state, action) => {
-            const value = action.payload.value;
+            const value = action.payload.value / 100;
             const title = action.payload.title;
+            console.log('PlantSettings Reducer', title, value);
             switch (title) {
-                case 'modifier': state.modifier += value; break;
-                case 'growthRate': state.growthRate += value;break;
+                case 'modifier': state.modifier += value;break;
+                case 'growthRate': state.growthRate += (state.growthRate * value);break;
                 case 'growthModifier': state.growthModifer += value;break;
-                case 'maxYield': state.maxYield += value;break;
+                case 'maxYield': state.maxYield += (state.maxYield * value);break;
                 case 'deathChance': state.deathChance += value;break;
                 case 'aging': state.aging += value;break;
-                case 'maxAge': state.maxAge += value;break;
-                case 'seedChance': state.seedChance += value; break;
+                case 'maxAge': state.maxAge += (state.maxAge * value);break;
+                case 'seedChance': state.seedChance += value;break;
             }
         }
     }

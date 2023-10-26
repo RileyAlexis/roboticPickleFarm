@@ -33,28 +33,124 @@ const initialState = [
         price: 1500,
         disabled: false,
         showAt: 1500,
-        dispatch: [{ type: 'plantsSettings/changePlantSettings', payload: {title: 'seedChance', value: 0.0001}}],
-        data: 'Increase the chance new plants generate a seed by 0.0001% / Cost 1500',
-        log: 'Seed Chances increased by 0.0001%'
+        dispatch: [
+            { type: 'plantsSettings/changePlantSettings', payload: {title: 'seedChance', value: 5 }},
+            { type: 'plants/changeAllSeedChance', payload: 5 }
+        ],
+        data: 'Increase the chance plants generate a seed by 5% / Cost 1500',
+        log: 'Seed Chances increased by 5%'
     },
     {name: 'Pickle Juice',
         show: false,
         price: 2500,
         disabled: false,
         showAt: 2500,
-        dispatch: [{ type: 'plants/changeAllGrowthRate', payload: 10 }],
+        dispatch: [
+            { type: 'plants/changeAllGrowthRate', payload: 10 },
+            { type: 'plantSettings/changePlantSettings', payload: {title: 'growthRate', value: 10 }}
+            ],
         data: 'Bio-hack those vines with sweet vinegary pickle juice. Increase growth rate of all plants by 10% / Cost 2500',
         log: 'Pickle juice hack unlocked!'
 },    
-    {name: 'Super Duper Upgrade',
+    {name: 'Bigger Batteries',
         show: false,
-        price: 50000,
+        price: 5000,
         disabled: false,
-        showAt: 50000,
-        dispatch: [{ type: 'resources/changeResources', payload: {title: 'seeds', value: 10000 }}],
-        data: 'Get lots of seeds / Cost 50000',
-        log: 'I bought a bunch of seeds'
+        showAt: 5000,
+        dispatch: [
+            { type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }},
+            { type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }},
+            { type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }},
+            ],
+        data: 'Refit all bots with bigger batteries - speed +1 / Cost 5000',
+        log: 'Bigger batteries make all bots go zoomier!'
 },
+    {name: 'C18H24O2',
+        show: false,
+        price: 15000,
+        disabled: false,
+        showAt: 15000,
+        dispatch: [
+            { type: 'plants/changeAllGrowthRate', payload: 20 },
+            { type: 'plantSettings/changePlantSettings', payload: {title: 'growthRate', value: 20 }}
+            ],
+        data: 'Super charge your plants - Growth Rate +20% / Cost 15,000',
+        log: 'Plants fertilized!'
+        },
+    {name: 'Skittles for Robots',
+        show: false,
+        price: 25000,
+        disabled: false,
+        showAt: 25000,
+        dispatch: [
+            { type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }},
+            { type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }},
+            { type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }},
+            ],
+        data: 'Robots love skittles - speed +1 / Cost 25,000',
+        log: 'Robot sugar rush!'
+        },
+    {name: 'Bot Goes Spinny!',
+        show: false,
+        price: 100000,
+        disabled: false,
+        showAt: 100000,
+        dispatch: [
+            { type: 'robots/changeSpeed', payload: {title: 'planter', value: 1 }},
+            { type: 'robots/changeSpeed', payload: {title: 'picker', value: 1 }},
+            { type: 'robots/changeSpeed', payload: {title: 'pickler', value: 1 }},
+            ],
+        data: 'Robots all go spinny! - speed +1 / Cost 100,000',
+        log: 'Robot goes spinny'
+        },
+    {name: 'Heat From Fire',
+        show: false,
+        price: 200000,
+        disabled: false,
+        showAt: 200000,
+        dispatch: [
+            { type: 'plants/changeAllMaxYield', payload: 20 },
+            { type: 'plantSettings/changePlantSettings', payload: {title: 'maxYield', value: 20 }}
+            ],
+        data: 'Increase the Max Yield of each plant - max Yield + 20% / Cost 200,000',
+        log: 'Vines are getting heavy!'
+        },
+    {name: 'Fire From Heat',
+        show: false,
+        price: 500000,
+        disabled: false,
+        showAt: 500000,
+        dispatch: [
+            { type: 'plants/changeAllMaxYield', payload: 30 },
+            { type: 'plantSettings/changePlantSettings', payload: {title: 'maxYield', value: 30 }}
+            ],
+        data: 'Increase the Max Yield of each plant - max Yield + 30% / Cost 500,000',
+        log: 'Vines are getting heavy!'
+        },
+    {name: 'Gene Splicing',
+        show: false,
+        price: 700000,
+        disabled: false,
+        showAt: 700000,
+        dispatch: [
+            { type: 'plantSettings/changePlantSettings', payload: {title: 'seedChance', value: 10 }},
+            { type: 'plants/changeAllSeedChance', payload: 10 }
+            ],
+        data: 'Increase chance plants generate a new seed - seed chance + 10% / Cost 700,000',
+        log: 'Seed chance increased by 10%'
+        },
+    {name: 'Temporality',
+        show: false,
+        price: 2000000,
+        disabled: false,
+        showAt: 2000000,
+        dispatch: [
+            { type: 'plantSettings/changePlantSettings', payload: {title: 'maxAge', value: 20 }},
+            { type: 'plants/changeAllMaxAge', payload: 20 }
+            ],
+        data: 'Let plants get older - max age + 20% / Cost 2,000,000',
+        log: 'Max Age increased by 20%'
+        },
 
 ];
 

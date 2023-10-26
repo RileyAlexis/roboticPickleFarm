@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
 
 import TipBox from "./TipBox";
 
@@ -27,7 +26,7 @@ function PlantsList () {
         <br />
       
       <TipBox data="Each plant has a chance of creating a plantable seed on each cycle">
-      <Typography variant="body">Seed Chance /s: {parseFloat(averageProperty(plants, 'seedChance')).toFixed(4)}%</Typography>
+      <Typography variant="body">Seed Chance /s: {parseFloat(averageProperty(plants, 'seedChance')).toFixed(6)}%</Typography>
       </TipBox>
       <br />
       <TipBox data="Average Age of all plants / Once a plant reaches its maximum age it will be retired">
@@ -39,7 +38,7 @@ function PlantsList () {
       </TipBox>
       <br />
       <TipBox data="Ripe cucumbers can be picked / maximum # of cucumbers that can stay on the vine">
-      <Typography variant="body">Ripe Cucumbers: {formatNumber(ripeCucumbers)} / {formatNumber(maxYield)}</Typography>
+      <Typography variant="body">Ripe Cucumbers: {formatNumber(ripeCucumbers)} / {formatNumber(parseFloat(maxYield).toFixed(0))}</Typography>
       </TipBox>
       <br />
       </>
