@@ -7,7 +7,6 @@ export function runBotHouse(building) {
     let botPrice = state.prices.bots;
     let recurringCost = 0;
    
-
     if (totalGrowthRate > pickerBotsRun) {
         if (building.active) (recurringCost = botPrice[0] * building.selectedOption);
         store.dispatch({ type: 'robots/addBot', payload: { title: 'picker', value: building.selectedOption }});

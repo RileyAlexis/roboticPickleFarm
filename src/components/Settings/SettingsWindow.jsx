@@ -26,10 +26,10 @@ function SettingsWindow({ onClose }) {
     const handleChange = () => {
         console.log('handleChange', checked);
         if (!checked) {
-        dispatch({ type: 'stats/changeStat', payload: { title: 'gameSpeed', value: 500 }});
+        dispatch({ type: 'stats/setStat', payload: { title: 'gameSpeed', value: 500 }});
         setChecked(true);
         } else if (checked) {
-            dispatch({ type: 'stats/changeStat', payload: { title: 'gameSpeed', value: 1000 }})
+            dispatch({ type: 'stats/setStat', payload: { title: 'gameSpeed', value: 1000 }})
             setChecked(false);
         }
         console.log(gameSpeed);
@@ -52,12 +52,12 @@ function SettingsWindow({ onClose }) {
     }
 
 const setStatsInterval = (e) => {
-    dispatch({ type: 'stats/changeStat', payload: { title: 'timeframe', value: e.target.value }})
+    dispatch({ type: 'stats/setStat', payload: { title: 'timeframe', value: e.target.value }})
     console.log(timeframe);
 }
 
 const setAutoSaveInterval = (e) => {
-    dispatch({ type: 'stats/changeStat', payload: { title: 'autoSaveInterval', value: e.target.value }})
+    dispatch({ type: 'stats/setStat', payload: { title: 'autoSaveInterval', value: e.target.value }})
 }
 
 const intervalMarks = [

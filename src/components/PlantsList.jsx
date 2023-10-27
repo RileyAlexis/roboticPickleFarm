@@ -4,40 +4,34 @@ import { Typography } from "@mui/material";
 import TipBox from "./TipBox";
 
 
-import { formatNumber, countPlants, averageProperty } from "../modules/utilFunction";
+import { formatNumber } from "../modules/utilFunction";
 
 function PlantsList () {
     const plants = useSelector(store => store.plants);
     const ripeCucumbers = useSelector(store => store.stats.ripeCucumbers);
-    const maxYield = useSelector(store => store.stats.maxYield);
-    const maxAge = useSelector(store => store.plantSettings.maxAge);
-    const totalGrowthRate = useSelector(store => store.stats.totalGrowthRate)
-    const seedChance = useSelector(store => store.plantSettings.seedChance);
-    const maxedOut = useSelector(store => store.stats.totalMaxedOut);
+    const maxYield = useSelector(store => store.plants.maxYield) * plants.plantCount;
+    const currentYield = useSelector(store => store.plants.currentYield);
+    const totalGrowthRate = plants.plantCount * plants.growthRate;
+    const seedChance = useSelector(store => store.plants.seedChance);
 
     return (
         <>
         <br /><br />
-        <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Plants: {formatNumber(countPlants(plants))}</Typography>
+        <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Plants: {formatNumber(plants.plantCount)}</Typography>
       <br />
     <TipBox title="Total Growth Rate" data="Total growth rate for all plants">
-        <Typography variant="body">Growth Rate: {formatNumber(totalGrowthRate)} /s </Typography><br />
+        <Typography variant="body">Growth Rate: {formatNumber( parseFloat(totalGrowthRate).toFixed(2))} /s </Typography><br />
         </TipBox>
         <br />
-      
-      <TipBox data="Each plant has a chance of creating a plantable seed on each cycle">
-      <Typography variant="body">Seed Chance /s: {parseFloat(averageProperty(plants, 'seedChance')).toFixed(6)}%</Typography>
+    {/* <TipBox data="The current yield may not be picked until ripe">
+      <Typography variant="body">Current Yield: {formatNumber(parseFloat(currentYield).toFixed(2))}</Typography>
+      </TipBox>
+      <br />  */}
+    <TipBox data="Each plant has a chance of creating a plantable seed on each cycle">
+      <Typography variant="body">Seed Chance /s: {parseFloat(seedChance).toFixed(6)}%</Typography>
       </TipBox>
       <br />
-      <TipBox data="Average Age of all plants / Once a plant reaches its maximum age it will be retired">
-      <Typography variant="body">Average Age: {parseFloat(averageProperty(plants, 'age')).toFixed(2)} / {maxAge} </Typography>
-      </TipBox>
-      <br />
-      <TipBox data="The # of plants that have stopped growing because they're full">
-      <Typography variant="body">Maxed Out: {formatNumber(maxedOut)}</Typography>
-      </TipBox>
-      <br />
-      <TipBox data="Ripe cucumbers can be picked / maximum # of cucumbers that can stay on the vine">
+    <TipBox data="Ripe cucumbers can be picked / maximum # of cucumbers that can stay on the vine">
       <Typography variant="body">Ripe Cucumbers: {formatNumber(ripeCucumbers)} / {formatNumber(parseFloat(maxYield).toFixed(0))}</Typography>
       </TipBox>
       <br />

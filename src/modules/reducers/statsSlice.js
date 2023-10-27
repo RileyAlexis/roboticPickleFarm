@@ -32,6 +32,11 @@ export const statsSlice = createSlice({
         changeStat: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
+            state[title] += value;
+        },
+        setStat: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
             state[title] = value;
         },
         setStats: (state, action) => {

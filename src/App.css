@@ -10,6 +10,8 @@ body {
     grid-template-rows: 0.1fr 0.2ft repeat(8, 1fr);
     row-gap: 2px;
     column-gap: 10px;
+    min-height: 700px;
+    max-height: 700px;
   }
 
   .landingPage {
@@ -64,6 +66,8 @@ body {
     padding: 0px;
     margin: 0px;
     border: 1px solid black;
+    min-width: min-content;
+    overflow-x: scroll;
   }
 
   .main-box-nav {

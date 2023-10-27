@@ -86,12 +86,10 @@ router.post('/savegame', verifyToken, (req, res) => {
 
 let dataArr = [
     req.body.dataObj.userId,
-    // req.body.dataObj.plants,
     JSON.stringify(req.body.dataObj.plants).replace(/\s/g, ''),
     req.body.dataObj.resources,
     req.body.dataObj.stats,
     req.body.dataObj.robots,
-    req.body.dataObj.plantSettings,
     req.body.dataObj.prices,
     JSON.stringify(req.body.dataObj.buildings),
     JSON.stringify(req.body.dataObj.upgrades),
@@ -109,11 +107,10 @@ pool.query(queryString, [req.body.dataObj.userId])
                     "resources" = $3,
                     "stats" = $4,
                     "robots" = $5,
-                    "plantSettings" = $6,
-                    "prices" = $7,
-                    "buildings" = $8,
-                    "upgrades" = $9,
-                    "log" = $10
+                    "prices" = $6,
+                    "buildings" = $7,
+                    "upgrades" = $8,
+                    "log" = $9
                 WHERE "user_id" = $1;`
         } else {
             //ID does not exist - write INSERT sql code here
@@ -124,12 +121,11 @@ pool.query(queryString, [req.body.dataObj.userId])
                     "resources", 
                     "stats", 
                     "robots", 
-                    "plantSettings", 
                     "prices", 
                     "buildings", 
                     "upgrades", 
                     "log")
-                VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+                VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
 
         } //End userId if exists statement
         pool.query(queryString, dataArr)
@@ -159,7 +155,6 @@ router.post('/loadgame', verifyToken, (req, res) => {
                 resources: result.rows[0].resources,
                 stats: result.rows[0].stats,
                 robots: result.rows[0].robots,
-                plantSettings: result.rows[0].plantSettings,
                 prices: result.rows[0].prices,
                 buildings: result.rows[0].buildings,
                 upgrades: result.rows[0].upgrades,

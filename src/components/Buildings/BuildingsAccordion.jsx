@@ -9,6 +9,7 @@ function BuildingsAccordion({building}) {
     const dispatch = useDispatch();
     const [selectTheThing, setSelectTheThing] = useState(0);
     const selectedOption = building.selectedOption;
+    
     const handleChange = (name) => (event) => {
         dispatch({ type: 'buildings/toggleExpander', payload: name });
     }

@@ -23,7 +23,6 @@ function* saveGame() {
         upgrades: store.upgrades,
         stats: store.stats,
         buildings: store.buildings,
-        plantSettings: store.plantSettings
     }
  try {
     yield axios.post('/game/savegame', {headers: { 'Authorization': `${AuthToken}`}, dataObj})

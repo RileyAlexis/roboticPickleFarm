@@ -12,7 +12,6 @@ import robotsMenuSlice from './reducers/robotsMenuSlice';
 import locationMenuSlice from './reducers/locationMenuSlice';
 import farmMenuSlice from './reducers/farmMenuSlice';
 import pricesSlice from './reducers/pricesSlice';
-import plantSettingsSlice from './reducers/plantSettings';
 import statsSlice from './reducers/statsSlice';
 import deltaSlice from './reducers/deltas';
 import upgradesSlice from './reducers/upgradesSlice';
@@ -32,13 +31,6 @@ const userId = (state = '', action) => {
   
   const userEmail = (state = '', action) => {
     if (action.type === 'SET_EMAIL') {
-      return action.payload;
-    }
-    return state;
-  }
-  
-  const gameId = (state = '', action) => {
-    if (action.type === 'SET_GAMEID') {
       return action.payload;
     }
     return state;
@@ -80,7 +72,6 @@ const rootReducer = (state, action) => {
     locationMenu: locationMenuSlice,
     robotMenu: robotsMenuSlice,
     prices: pricesSlice,
-    plantSettings: plantSettingsSlice,
     deltas: deltaSlice,
     upgrades: upgradesSlice,
     buildings: buildingsSlice,
