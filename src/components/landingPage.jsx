@@ -67,7 +67,6 @@ function LandingPage() {
                             console.log(response.data.upgrades);
                             dispatch({ type: 'log/setAllLog', payload: response.data.log });
                             dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
-                            dispatch({ type: 'plantSettings/setAllPlantSettings', payload: response.data.plantSettings });
                             dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
                             dispatch({ type: 'robots/setAllBots', payload: response.data.robots });
                             dispatch({ type: 'upgrades/setAllUpgrades', payload: response.data.upgrades })

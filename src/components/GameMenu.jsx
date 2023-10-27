@@ -22,7 +22,6 @@ function GameMenu () {
     const prices = useSelector(store => store.prices);
     const log = useSelector(store => store.log);
     const plants = useSelector(store => store.plants);
-    const plantSettings = useSelector(store => store.plantSettings);
     const robots = useSelector(store => store.robots);
     const upgrades = useSelector(store => store.upgrades);
     const stats = useSelector(store => store.stats);

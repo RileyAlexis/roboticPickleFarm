@@ -5,7 +5,6 @@ CREATE TABLE "games" (
     "resources" JSONB,
     "stats" JSONB,
     "robots" JSONB,
-    "plantSettings" JSONB,
     "prices" JSONB,
     "buildings" JSONB,
     "upgrades" JSONB,
