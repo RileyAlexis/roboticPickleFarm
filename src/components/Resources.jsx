@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 
 import { Typography } from "@mui/material";
 import { formatNumber, calculateTrend } from "../modules/utilFunction";
-import TipBox from '../components/TipBox';
 import TipWindow from "./TipWindow/TipWindow";
 
 function Resources() {
@@ -23,10 +22,23 @@ function Resources() {
       <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])}</Typography>
       <Typography variant="caption"> ( {cucumberTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
       <br />
-      <TipWindow data={recurringCosts}>
+      {console.log(recurringCosts.length)}
+      {recurringCosts.length >= 1 ? 
+      ( 
+        <>
+        <TipWindow data={recurringCosts}>
       <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
       <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
       </TipWindow>
+      </>
+      )
+      :
+      (<>
+        <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
+        <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
+        </>
+        )
+      }
     </>
   )
 }

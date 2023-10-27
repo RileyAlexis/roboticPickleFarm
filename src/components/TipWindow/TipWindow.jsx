@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { formatNumber } from '../../modules/utilFunction';
 import './TipWindow.css';
@@ -7,6 +7,7 @@ import { Typography } from '@mui/material';
 function TipWindow({data, children}) {
 
     const [isHovered, setIsHovered] = useState(false);
+
     const handleMouseOver = () => {
         setIsHovered(true);
         };
