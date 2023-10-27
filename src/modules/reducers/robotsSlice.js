@@ -35,6 +35,11 @@ export const robotsSlice = createSlice({
                 case 'pickler': state.picklerSpeed += value; break;
                 default: return state;
             }
+        },
+        changeSpeedPercentage: (state, action) => {
+            const percentage = action.payload.value / 100;
+            const title = action.payload.title;
+            state[title] += (state[title] * percentage);
         }
 }
 });

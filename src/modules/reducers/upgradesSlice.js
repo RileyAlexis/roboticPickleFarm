@@ -133,6 +133,111 @@ const initialState = [
         data: 'Increase chance plants generate a new seed - seed chance + 10% / Cost 700,000',
         log: 'Seed chance increased by 10%'
         },
+    {name: 'Snappy Crispy',
+        show: false,
+        price: 1500000,
+        disabled: false,
+        showAt: 1500000,
+        dispatch: [
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'picklerSpeed', value: 100 }}
+            ],
+        data: 'Double the speed of pickling bots / Cost 1,500,000',
+        log: 'Pickling Bots speed doubles'
+        },
+    {name: 'Extra Claw',
+        show: false,
+        price: 2500000,
+        disabled: false,
+        showAt: 2500000,
+        dispatch: [
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'pickerSpeed', value: 100 }}
+            ],
+        data: 'Double the speed of picker bots / Cost 2,500,000',
+        log: 'Two claws = twice as terrifying - picker bots double their speed'
+        },
+    {name: 'Atomic Reactors',
+        show: false,
+        price: 5000000,
+        disabled: false,
+        showAt: 5000000,
+        dispatch: [
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'picklerSpeed', value: 100 }},
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'pickerSpeed', value: 100 }},
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'planterSpeed', value: 100 }}
+            ],
+        data: 'Double the speed of all bots with a mostly safe atomic reactor / Cost 5,000,000',
+        log: 'All Bots speed doubles bots go nucelar!'
+        },
+    {name: 'Glow-up',
+        show: false,
+        price: 10000000,
+        disabled: false,
+        showAt: 10000000,
+        dispatch: [
+            { type: 'plants/addPercentageTo', payload: { title: 'growthRate', value: 100 }},
+            ],
+        data: 'Double the growth rate of all plants / Cost 10,000,000',
+        log: 'Doubled the growth of all plants by singing sweet lullabies and spreading glitter'
+        },
+    {name: 'Giant Pickle-stalk',
+        show: false,
+        price: 30000000,
+        disabled: false,
+        showAt: 30000000,
+        dispatch: [
+            { type: 'plants/addPercentageTo', payload: { title: 'growthRate', value: 50 }},
+            { type: 'plants/addPercentageTo', payload: { title: 'maxYield', value: 100 }}
+            ],
+        data: 'With clever gene editing and lots of I-beams double the size of all plants - Growth +50%, Max Yield +100% / Cost 30,000,000',
+        log: 'Your plants have overgrown several small cities - Growth +50%, Max Yield +100%'
+        },
+    {name: 'Cat-girl Army',
+        show: false,
+        price: 100000000,
+        disabled: false,
+        showAt: 100000000,
+        dispatch: [
+            { type: 'plants/addPercentageTo', payload: { title: 'plantCount', value: 100 }},
+            ],
+        data: 'Assemble your cat-girl army to take over land and turn it into cucumber fields - Double the number of plants / Cost 100,000,000',
+        log: 'The cats have gone feral - # of plants doubled'
+        },
+    {name: 'Bring in the A.I',
+        show: false,
+        price: 500000000,
+        disabled: false,
+        showAt: 500000000,
+        dispatch: [
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'picklerSpeed', value: 100 }},
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'pickerSpeed', value: 100 }},
+            { type: 'robots/changeSpeedPercentage', payload: { title: 'planterSpeed', value: 100 }}
+            ],
+        data: 'Add some buzzwords to your bots - Double their speed / Cost 500,000,000',
+        log: 'If the T1000 liked pickles - bot speed doubled'
+        },    
+    {name: 'Pickle Yacht',
+        show: false,
+        price: 1000000000,
+        disabled: false,
+        showAt: 1000000000,
+        dispatch: [
+            { type: 'plants/addPercentageTo', payload: { title: 'growthRate', value: 50 }},
+            ],
+        data: 'Everyone needs a yacht made of pickles to inspire the plants - Growth Rate +50% / Cost 1,000,000,000',
+        log: 'It kinda floats - Growth Rate +50%'
+        },
+    {name: 'Upgrade Roadside Kiosk',
+        show: false,
+        price: 1500000000,
+        disabled: false,
+        showAt: 1500000000,
+        dispatch: [
+            { type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 5000, }},
+            { type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 10000, }},
+            ],
+        data: 'Allow Farmers Roadside Kiosk to purchase up to 10,000 seeds per turn / Cost 1,500,000,000',
+        log: 'Its more of its own town now - Farmers Kiosk upgrade'
+        },
 ];
 
 const updgradesSlice = createSlice({
@@ -165,6 +270,9 @@ const updgradesSlice = createSlice({
                     state[i].disabled = true;
                     }
                 }
+            },
+        resetUpgrades: (state, action) => {
+                return initialState;
             }
     }
 })

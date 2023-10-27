@@ -42,6 +42,19 @@ function CheatsForTesting() {
         dispatch({ type: 'robots/addBot', payload: { title: bot, value: value }})
     }
 
+    const upgradeKiosk = () => {
+        dispatch({ type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 5000 }})
+        dispatch({ type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 10000 }})
+    }
+
+    const resetBuildings = () => {
+        dispatch({ type: 'buildings/resetBuildings'});
+    }
+
+    const resetUpgrades = () => {
+        dispatch({ type: 'upgrades/resetUpgrades'});
+    }
+
     return (
         <div className="cheatBox">
             <br />
@@ -54,6 +67,9 @@ function CheatsForTesting() {
         <button onClick={() => addMoreBots(1000, 'pickler')}>Add 1000 Picklers</button><br />
         <button onClick={addCucumbers}>+100 cucumbers</button><br />
         <button onClick={addPickles}>+500000 Pickles</button><br />
+        <button onClick={upgradeKiosk}>Upgrade Kiosk</button><br />
+        <button onClick={resetBuildings}>Reset Buildings</button>
+        <button onClick={resetUpgrades}>Reset Upgrades</button>
         <button onClick={resetStore}>Reset the Whole Game</button>
             
         </div>

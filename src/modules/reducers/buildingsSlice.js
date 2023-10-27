@@ -112,7 +112,16 @@ const buildingsSlice = createSlice({
                     state[i].selectedOption = action.payload.value;
                 }
             }
-            },       
+            },    
+        pushOption: (state, action) => {
+            const title = action.payload.title;
+            const value = action.payload.value;
+            for (let i = 0; i < state.length; i++) {
+                if (state[i].name === title) {
+                    state[i].options.push(value);
+                }
+            }
+        },
         setActiveCost: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
@@ -130,6 +139,9 @@ const buildingsSlice = createSlice({
                 }
             }
             },
+        resetBuildings: (state, action) => {
+            return initialState;
+        }
 
     }})
 
