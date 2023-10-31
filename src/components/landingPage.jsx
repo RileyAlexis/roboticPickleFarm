@@ -102,6 +102,7 @@ function LandingPage() {
                         dispatch({ type: 'SET_USERID', payload: response.data.userId });
                         dispatch({ type: 'SET_AUTH', payload: true });
                         dispatch({ type: 'RUN_ENGINE'});
+                        dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' }})
 
                     }
                 })
@@ -165,7 +166,7 @@ function LandingPage() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <br />
-                    <FormGroup variant="standard">
+                    {/* <FormGroup variant="standard">
                         <FormControlLabel
                         sx={{
                             marginLeft: '25px',
@@ -178,7 +179,7 @@ function LandingPage() {
                         label="Show Player Guide on game start" />
                              
                         
-                    </FormGroup>
+                    </FormGroup> */}
                     <br /> <br /><br />
                     <div className="buttonBox" >
                         <Button variant='outlined' onClick={createNewUser}>Create New User</Button>
