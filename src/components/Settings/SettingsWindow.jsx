@@ -60,6 +60,10 @@ const setAutoSaveInterval = (e) => {
     dispatch({ type: 'stats/setStat', payload: { title: 'autoSaveInterval', value: e.target.value }})
 }
 
+const showGuide = () => {
+    dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' }})
+}
+
 const intervalMarks = [
     {value: 30, label: '30s'},
     {value: 60, label: '60s'},
@@ -128,6 +132,9 @@ const autosaveMarks = [
                     max={autosaveMarks[autosaveMarks.length-1].value}
                     onChange={setAutoSaveInterval}
                 />
+            </div>
+            <div className="singleSetting">
+                <Button variant="outlined" onClick={showGuide}>Show Player Guide</Button>
             </div>
                                     
                <div className="singleSetting">

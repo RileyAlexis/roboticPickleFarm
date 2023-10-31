@@ -20,6 +20,7 @@ const initialState = {
     gameSpeed: 1000,
     autoSaveInterval: 120,
     recurringCosts: [],
+    playGuide: false,
 }
 
 export const statsSlice = createSlice({
@@ -58,6 +59,7 @@ export const statsSlice = createSlice({
                 case 'planter': state.planterActive = !state.planterActive; state.planterDelta = value; break;
                 case 'picker': state.pickerActive = !state.pickerActive; state.pickerDelta = value; break;
                 case 'pickler': state.picklerActive = !state.picklerActive; state.picklerDelta = value; break;
+                case 'playGuide': state.playGuide = !state.playGuide; break;
             }
         },
         runCycle: (state, action) => {

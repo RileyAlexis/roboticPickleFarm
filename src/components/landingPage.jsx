@@ -6,10 +6,11 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 
 //Material UI Components
-import { Button, Typography } from '@mui/material';
+import { Button, FormControlLabel, FormGroup, Typography, Checkbox } from '@mui/material';
 import { TextField } from '@mui/material';
 
 import { checkButtons, checkTabs, checkUpgrades } from '../modules/events';
+
 
 
 function LandingPage() {
@@ -19,7 +20,7 @@ function LandingPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-
+    const [guideChecked, setGuideChecked] = useState(true);
     const [cookies, setCookie, removeCookie] = useCookies(['Email', 'AuthToken']);
 
     const dispatch = useDispatch();
@@ -64,7 +65,6 @@ function LandingPage() {
                     })
                         .then((response) => {
                             //Set game data Here
-                            console.log(response.data.upgrades);
                             dispatch({ type: 'log/setAllLog', payload: response.data.log });
                             dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
                             dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
@@ -99,7 +99,6 @@ function LandingPage() {
                         setCookie('Email', response.data.email);
                         setCookie('AuthToken', response.data.token);
                         dispatch({ type: 'SET_EMAIL', payload: response.data.email });
-                        console.log('New User Data', response.data.userId)
                         dispatch({ type: 'SET_USERID', payload: response.data.userId });
                         dispatch({ type: 'SET_AUTH', payload: true });
                         dispatch({ type: 'RUN_ENGINE'});
@@ -107,6 +106,11 @@ function LandingPage() {
                     }
                 })
         }
+    }
+
+    const playGuide = (e) => {
+        setGuideChecked(e.target.checked);
+        dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' }})
     }
 
     return (
@@ -160,6 +164,21 @@ function LandingPage() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    <br />
+                    <FormGroup variant="standard">
+                        <FormControlLabel
+                        sx={{
+                            marginLeft: '25px',
+                            marginTop: '20px'
+                        }}
+                        control={
+                    <Checkbox 
+                        checked={guideChecked} onChange={playGuide} color="primary" />
+                        }
+                        label="Show Player Guide on game start" />
+                             
+                        
+                    </FormGroup>
                     <br /> <br /><br />
                     <div className="buttonBox" >
                         <Button variant='outlined' onClick={createNewUser}>Create New User</Button>

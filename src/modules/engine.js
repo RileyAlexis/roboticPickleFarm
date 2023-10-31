@@ -1,6 +1,6 @@
 import { storeInstance as store} from './store';
 import { deepUnfreeze } from './deepUnfreeze';
-import { checkButtons, checkTabs, checkUpgrades, checkBuildings } from './events';
+import { checkButtons, checkTabs, checkUpgrades, checkBuildings, checkBotsMenu } from './events';
 import { getRecurringCost, runBuilding } from './cycleBuildings';
 
 function growPlants(plants) {
@@ -23,7 +23,6 @@ function updateStats(buildings, plants, stats) {
     let averageAge = 0;
     let maxYield = 0;
     let newRipeCucumbers = 0;
-    let totalModifier = 0;
     
     stats.totalMaxedOut = 0;
 
@@ -148,14 +147,9 @@ export function updateTicker() {
         checkTabs(stats.totalProduction, state.locationMenu);
         checkUpgrades(stats.totalProduction, state.upgrades);
         checkBuildings(stats.totalProduction, state.buildings);
+        checkBotsMenu(state.totalProduction, state.robotMenu);
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
     }
-    // if (state.deltas.deadplantsDelta >= 5) {
-    //     let deadplants = countDeadPlants(plants, stats.cycle);
-    //     plants = removeDeadPlants(plants);
-    //     store.dispatch({ type: 'log/addLog', payload: { line: `${deadplants.length} plant retired this turn`, cycle: stats.cycles }})
-    //     store.dispatch({ type: 'deltas/resetDelta', payload: 'resetDeadplantsDelta'});
-    // }
     
     store.dispatch({ type: 'plants/setAllPlants', payload: plants })
     store.dispatch({ type: 'stats/setAllStats', payload: stats });

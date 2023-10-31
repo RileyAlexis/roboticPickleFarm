@@ -2,6 +2,7 @@ import { UseSelector, useDispatch, useSelector } from "react-redux"
 
 function CheatsForTesting() {
     const dispatch = useDispatch();
+    const stats = useSelector(store => store.stats);
     const robots = useSelector(store => store.robots);
     const resources = useSelector(store => store.resources);
 
@@ -55,6 +56,15 @@ function CheatsForTesting() {
         dispatch({ type: 'upgrades/resetUpgrades'});
     }
 
+    const resetRobotMenu = () => {
+        dispatch({ type: 'robotsMenu/resetMenu'})
+    }
+
+    const runPlayerGuide = () => {
+        dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' }});
+        console.log(stats.playGuide);
+    }
+
     return (
         <div className="cheatBox">
             <br />
@@ -63,14 +73,16 @@ function CheatsForTesting() {
         <button onClick={addMoreSeeds}>Add 1000 Seeds</button><br />
         <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
         <button onClick={addBots}>+5 Bots</button><br />
-        <button onClick={() => addMoreBots(1000, 'picker')}>Add 1000 Pickers</button><br />
-        <button onClick={() => addMoreBots(1000, 'pickler')}>Add 1000 Picklers</button><br />
+        <button onClick={() => addMoreBots(10000, 'picker')}>Add 10000 Pickers</button><br />
+        <button onClick={() => addMoreBots(10000, 'pickler')}>Add 10000 Picklers</button><br />
         <button onClick={addCucumbers}>+100 cucumbers</button><br />
         <button onClick={addPickles}>+500000 Pickles</button><br />
         <button onClick={upgradeKiosk}>Upgrade Kiosk</button><br />
         <button onClick={resetBuildings}>Reset Buildings</button>
         <button onClick={resetUpgrades}>Reset Upgrades</button>
+        <button onClick={resetRobotMenu}>Reset Robot Menu</button>
         <button onClick={resetStore}>Reset the Whole Game</button>
+        <button onClick={runPlayerGuide}>Run Player Guide</button>
             
         </div>
 

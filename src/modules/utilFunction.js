@@ -3,6 +3,20 @@ export function formatNumber(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     
   }
+
+  export function countPlants(plants) {
+    return plants.reduce((sum, obj) => {
+      if (obj.hasOwnProperty('modifier') && typeof obj['modifier'] === 'number') {
+        return sum + obj['modifier'];
+      } else {
+        return sum;
+      }
+    }, 0);
+  }
+
+export function countDigits(number) {
+  return number.toString().length;
+}
   
   export const calculateTrend = (array, timeframe) => {
 
@@ -68,6 +82,6 @@ export function calculatePercentage(progress, goal) {
   if (lowValue >= complete) {
     return parseFloat(complete).toFixed(Number(decs) + 8);
   } else {
-  return parseFloat(complete).toFixed(Number(decs) + 3)
+  return parseFloat(complete * 100).toFixed(Number(decs) + 3);
   }
   }

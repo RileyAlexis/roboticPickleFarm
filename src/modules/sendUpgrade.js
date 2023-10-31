@@ -8,7 +8,6 @@ export function sendUpgrade(upgrade) {
     
     if (state.resources.pickles[state.resources.pickles.length -1] >= upgrade.price) {
         upgrade.dispatch.forEach(item => {
-            console.log(item);
             store.dispatch(item);
         })
         

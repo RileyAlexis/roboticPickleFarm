@@ -29,7 +29,6 @@ export function checkTabs(totalProduction, locationMenu) {
     
     for (let i = 0; i < locationMenu.length; i++) {
         if ((totalProduction >= locationMenu[i].showAt) && !locationMenu[i].show) {
-            console.log(locationMenu[i].id);
             store.dispatch({ type: 'locationMenu/showItem', payload: locationMenu[i].id});
         }
     }
@@ -49,4 +48,12 @@ export function checkBuildings(totalProduction, buildings) {
             store.dispatch({ type: 'buildings/showItem', payload: buildings[i].name });
         }
     }
+}
+
+export function checkBotsMenu(totalProduction, robotMenu) {
+    for (let i = 0; i < robotMenu.length; i++) {
+        if(totalProduction >= robotMenu[i].showAt && !robotMenu[i].show) {
+            store.dispatch({ type: 'robotsMenu/showItem', payload: robotMenu[i].name });
+        }
+}
 }

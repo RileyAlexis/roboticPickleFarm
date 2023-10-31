@@ -1,0 +1,242 @@
+.guideContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    /* backdrop-filter: blur(2px); */
+    z-index: 1;
+  }
+
+  .doneBox {
+    position: relative;
+    top: 40%;
+    left: 75%;
+  }
+
+  .closeButton {
+
+    background:rgba(120,240,120, 0.8);
+    border: 2px solid white;
+    margin: 2px;
+    width: 160px;
+    height: 100;
+    height: min-content;
+  }
+
+.closeButton:hover {
+    background: rgba(120, 240, 120, 0.6);
+    color: white;
+  }
+  
+  .closeButton:active {
+    background: rgba(52, 64, 58, 0.8);
+  }
+  .closeButton .grayOut {
+    background:rgba(0,0,0,0.3);
+    text-decoration: line-through;
+  }
+
+.stepOne {
+  position: absolute;
+  top: 2%;
+  left: 18%;
+}
+
+.stepOneBox {
+ height: 300px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+.stepOneArrow {
+  position: relative;
+  top: -30%;
+  left: 35%;
+  max-width: 100px;
+  max-width: 100px;
+}
+
+.stepButton {
+  padding-top: 55px;
+}
+
+/* END STEP */
+
+.stepTwo {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+}
+
+.stepTwoBox {
+ height: 300px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+.stepTwoArrow {
+  position: relative;
+  top: -30%;
+  left: 35%;
+  max-width: 100px;
+  max-width: 100px;
+}
+
+/* END STEP */
+
+.stepThree {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}
+
+.stepThreeBox {
+ height: 150px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+.stepThreeArrow {
+  position: relative;
+  top: -30%;
+  left: 35%;
+  max-width: 100px;
+  max-width: 100px;
+  transform:rotateY(180deg);
+}
+
+/* END STEP */
+
+.stepFour {
+  position: absolute;
+  top: 18%;
+  left: 10%;
+}
+
+.stepFourBox {
+ height: 330px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+.stepFourArrow {
+  position: relative;
+  top: -30%;
+  left: 35%;
+  max-width: 100px;
+  max-width: 100px;
+  transform:rotateY(180deg);
+}
+
+/* END STEP */
+
+.stepFive {
+  position: absolute;
+  top: 27%;
+  left: 10%;
+}
+
+.stepFiveBox {
+ height: 390px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+.stepFiveArrow {
+  position: relative;
+  top: -30%;
+  left: 35%;
+  max-width: 100px;
+  max-width: 100px;
+  transform:rotateY(180deg);
+}
+
+/* END STEP */
+
+.stepSix {
+  position: absolute;
+  top: 27%;
+  left: 25%;
+}
+
+.stepSixBox {
+ height: 200px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+.stepSixArrow {
+  position: relative;
+  top: 40%;
+  left: -30%;
+  max-width: 100px;
+  max-width: 100px;
+  transform:rotateY(180deg);
+}
+
+/* END STEP */
+
+.stepSeven {
+  position: absolute;
+  top: 20%;
+  left: 25%;
+}
+
+.stepSevenBox {
+ height: 250px;
+ width: 350px;  
+ border: 2px solid black;
+ font-size: larger;
+ background: rgba(0, 87, 0, 0.6);
+ color: whitesmoke;
+ /* display: flex; */
+ /* justify-content:space-around; */
+
+ padding: 25px;
+}
+
+/* END STEP */

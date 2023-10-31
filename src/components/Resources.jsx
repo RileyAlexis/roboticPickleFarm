@@ -22,7 +22,6 @@ function Resources() {
       <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])}</Typography>
       <Typography variant="caption"> ( {cucumberTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
       <br />
-      {console.log(recurringCosts.length)}
       {recurringCosts.length >= 1 ? 
       ( 
         <>

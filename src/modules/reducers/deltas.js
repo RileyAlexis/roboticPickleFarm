@@ -4,7 +4,7 @@ const initialState = {
     buttonDelta: 0,
     eventDelta: 0,
     autoSaveDelta: 0,
-    deadplantsDelta: 0,
+    numberCalcDelta: 0,
 }
 
 export const deltaSlice = createSlice({
@@ -16,13 +16,14 @@ export const deltaSlice = createSlice({
             state.eventDelta += 1;
             state.autoSaveDelta += 1;
             state.deadplantsDelta += 1;
+            state.numberCalcDelta += 1;
             },
         resetDelta : (state, action) => {
             switch(action.payload) {
                 case 'resetButtonDelta': state.buttonDelta = 0; break;
                 case 'resetEventDelta': state.eventDelta = 0; break;
                 case 'resetAutoSaveDelta': state.autoSaveDelta = 0; break;
-                case 'resetDeadplantsDelta': state.deadplantsDelta = 0; break;
+                case 'resetNumberCalcDelta': state.numberCalcDelta = 0; break;
             }
         }
 }})
