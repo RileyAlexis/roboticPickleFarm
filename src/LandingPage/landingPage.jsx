@@ -139,7 +139,7 @@ function LandingPage() {
                     {error && <Typography m={2} color="red" variant='body'>{error}</Typography>}
                     <br />
                     <Typography variant='caption'>
-                        If no login is provided game data will only be stored locally
+                        If no login is provided game data will not be saved(local storage not implemented yet)
                     </Typography>
                 </div>
             }
