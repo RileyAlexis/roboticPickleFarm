@@ -19,7 +19,7 @@ const initialState = [
         showAt: 500 },
     {id: 'cheatOptopns', 
         name: 'Cheats', 
-        show: true }
+        show: false }
 ];
 
 const locationMenuSlice = createSlice({
@@ -27,12 +27,12 @@ const locationMenuSlice = createSlice({
         initialState: initialState,
         reducers: {
             toggleItem: (state, action) => {
-                for (let i in state) {
-                    if (state[i].name === action.payload) {
+                const title = action.payload;
+                for (let i = 0; i < state.length; i++) {
+                    if (state[i].id === title) {
                         state[i].show = !state[i].show;
+                        }
                     }
-                    return [...state];
-                }
             },
             showItem: (state, action) => {
                 const title = action.payload;

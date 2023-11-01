@@ -1,7 +1,7 @@
 //React
 import react from 'react';
 import { useEffect} from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 //CSS
 import './App.css';
@@ -27,6 +27,7 @@ function App() {
   const authorized = useSelector(store => store.authorized);
   const gameSpeed = useSelector(store => store.stats.gameSpeed);
   const playGuide = useSelector(store => store.stats.playGuide);
+  const dispatch = useDispatch();
 
   //Updates all stats each game interval(default 1/sec);
   function runUpdate() {
@@ -35,10 +36,23 @@ function App() {
 
 //Sets game timer based on gameSpeed setting
 useEffect(() => {
-  const interval = setInterval(() => {
+  const interval = setInterval(() => {    
     runUpdate();
   }, gameSpeed);
-  return () => clearInterval(interval);
+
+  const handleKeyDown = (event) => {
+    // console.log(event.metaKey, event.altKey, event.shiftKey, event.key);
+    if (event.metaKey && event.altKey && event.shiftKey && event.key === 'C' || event.key === 'Ç') {
+      dispatch({ type: 'locationMenu/toggleItem', payload: 'cheatOptopns'});
+    }
+  };
+
+  // Add event listener when component mounts
+  window.addEventListener('keydown', handleKeyDown);
+
+  return () => { clearInterval(interval);
+  window.removeEventListener('keydown', handleKeyDown);
+  }
   }, [gameSpeed]);
 
   return (

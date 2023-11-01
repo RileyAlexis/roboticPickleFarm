@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import { UseSelector, useDispatch, useSelector } from "react-redux"
 
 function CheatsForTesting() {
@@ -23,9 +24,9 @@ function CheatsForTesting() {
         dispatch({ type: 'robots/addBot', payload: {title: 'planter', value: 5 }});
         dispatch({ type: 'robots/addBot', payload: {title: 'pickler', value: 5 }});
     }
-    const addPickles = () => {
-        dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: 500000 }});
-        dispatch({ type: 'stats/setStats', payload: {title: 'totalProduction', value: 500000 }});
+    const addPickles = (value) => {
+        dispatch({ type: 'resources/changeResources', payload: {title: 'pickles', value: value }});
+        dispatch({ type: 'stats/setStats', payload: {title: 'totalProduction', value: value }});
     }
     const resetStore = () => {
         dispatch({ type: 'RESET_ENTIRE_STORE'});
@@ -73,10 +74,18 @@ function CheatsForTesting() {
         <button onClick={addMoreSeeds}>Add 1000 Seeds</button><br />
         <button onClick={increaseBotSpeed}>Bot Speed +1</button><br />
         <button onClick={addBots}>+5 Bots</button><br />
-        <button onClick={() => addMoreBots(10000, 'picker')}>Add 10000 Pickers</button><br />
-        <button onClick={() => addMoreBots(10000, 'pickler')}>Add 10000 Picklers</button><br />
+        <button onClick={() => addMoreBots(10000, 'picker')}>Add 10,000 Pickers</button><br />
+        <button onClick={() => addMoreBots(10000, 'pickler')}>Add 10,000 Picklers</button><br />
         <button onClick={addCucumbers}>+100 cucumbers</button><br />
-        <button onClick={addPickles}>+500000 Pickles</button><br />
+        <Divider />
+        <br />
+        <button onClick={() => addPickles(1000)}>+1,000 Pickles</button><br />
+        <button onClick={() => addPickles(5000)}>+5,000 Pickles</button><br />
+        <button onClick={() => addPickles(50000)}>+50,000 Pickles</button><br />
+        <button onClick={() => addPickles(500000)}>+500,000 Pickles</button><br />
+        <br />
+        <Divider />
+        
         <button onClick={upgradeKiosk}>Upgrade Kiosk</button><br />
         <button onClick={resetBuildings}>Reset Buildings</button>
         <button onClick={resetUpgrades}>Reset Upgrades</button>

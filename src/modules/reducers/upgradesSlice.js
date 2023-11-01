@@ -131,7 +131,7 @@ const initialState = [
             { type: 'plants/addPercentageTo', payload: { title: 'seedChance', value: 10 }}
             ],
         data: 'Increase chance plants generate a new seed - seed chance + 10% / Cost 700,000',
-        log: 'Seed chance increased by 10%'
+        log: 'Splice those genes! Or is it slice? - Seed chance increased by 10%'
         },
     {name: 'Snappy Crispy',
         show: false,
@@ -166,7 +166,7 @@ const initialState = [
             { type: 'robots/changeSpeedPercentage', payload: { title: 'planterSpeed', value: 100 }}
             ],
         data: 'Double the speed of all bots with a mostly safe atomic reactor / Cost 5,000,000',
-        log: 'All Bots speed doubles bots go nucelar!'
+        log: 'All Bots speed doubles, bots go nucelar!'
         },
     {name: 'Glow-up',
         show: false,
@@ -224,7 +224,7 @@ const initialState = [
             { type: 'plants/addPercentageTo', payload: { title: 'growthRate', value: 50 }},
             ],
         data: 'Everyone needs a yacht made of pickles to inspire the plants - Growth Rate +50% / Cost 1,000,000,000',
-        log: 'It kinda floats - Growth Rate +50%'
+        log: 'It floats in a pickle juice ocean - Growth Rate +50%'
         },
     {name: 'Upgrade Roadside Kiosk',
         show: false,
@@ -236,7 +236,7 @@ const initialState = [
             { type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 10000, }},
             ],
         data: 'Allow Farmers Roadside Kiosk to purchase up to 10,000 seeds per turn / Cost 1,500,000,000',
-        log: 'Its more of its own town now - Farmers Kiosk upgrade'
+        log: "It's more of its own town now - Farmers Kiosk upgrade"
         },
 ];
 
