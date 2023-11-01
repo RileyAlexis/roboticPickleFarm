@@ -10,7 +10,7 @@ import './App.css';
 import GameMenu from './components/GameMenu';
 import MainBox from './components/MainBox/MainBox';
 import LogBox from './components/LogBox/LogBox';
-import LandingPage from './components/landingPage';
+import LandingPage from './LandingPage/landingPage';
 import TotalGoal from './components/GoalsBox/TotalGoal';
 
 //Modules

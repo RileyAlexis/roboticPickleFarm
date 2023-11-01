@@ -10,8 +10,7 @@ import { Button, FormControlLabel, FormGroup, Typography, Checkbox } from '@mui/
 import { TextField } from '@mui/material';
 
 import { checkButtons, checkTabs, checkUpgrades } from '../modules/events';
-
-
+import './landingPage.css';
 
 function LandingPage() {
 

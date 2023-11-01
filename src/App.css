@@ -67,6 +67,7 @@ body {
     margin: 0px;
     border: 1px solid black;
     min-width: min-content;
+    max-width: 500px;
     overflow-x: scroll;
   }
 
@@ -115,6 +116,7 @@ body {
     padding-top: 20px;
     text-align: center;
     min-height: 50vh;
+    max-width: 500px;
   }
 
   .buttonBox {
