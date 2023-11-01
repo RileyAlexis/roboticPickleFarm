@@ -147,7 +147,7 @@ export function updateTicker() {
         checkTabs(stats.totalProduction, state.locationMenu);
         checkUpgrades(stats.totalProduction, state.upgrades);
         checkBuildings(stats.totalProduction, state.buildings);
-        checkBotsMenu(state.totalProduction, state.robotMenu);
+        checkBotsMenu(stats.totalProduction, state.robotMenu);
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetButtonDelta' });
     }
     
@@ -164,5 +164,4 @@ if (state.deltas.autoSaveDelta >= stats.autoSaveInterval) {
     store.dispatch({ type: 'SAVE_GAME' });
     store.dispatch({ type: 'deltas/resetDelta', payload: 'resetAutoSaveDelta'});
 }
-console.log(stats.gameSpeed);
 }//End updateTicker()

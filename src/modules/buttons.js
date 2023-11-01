@@ -43,25 +43,25 @@ function makePickles() {
     }
 }
 
-function buyBot(botType) {
+function buyBot(botType, qty) {
     const state = store.getState();
     const pickles = state.resources.pickles[state.resources.pickles.length-1];
     const botPrice = state.prices.bots;
     const cycles = state.stats.cycles;
-    if (botType === 'planter' && pickles >= botPrice[0]) {
-        store.dispatch({type: 'robots/addBot', payload: { title: 'planter', value: botPrice[1]}});
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
+    if (botType === 'planter' && pickles >= (botPrice[0] * qty)) {
+        store.dispatch({type: 'robots/addBot', payload: { title: 'planter', value: qty }});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -(botPrice[0] * qty) }});
         store.dispatch({type: 'log/addLog', payload: {line: 'Planter Bot Purchased!', cycle: cycles}});
-    } else if (botType === 'picker' && pickles >= botPrice[0]) {
-        store.dispatch({type: 'robots/addBot', payload: { title: 'picker', value: botPrice[1]}});
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
+    } else if (botType === 'picker' && pickles >= (botPrice[0] * qty)) {
+        store.dispatch({type: 'robots/addBot', payload: { title: 'picker', value: qty }});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -(botPrice[0] * qty) }});
         store.dispatch({type: 'log/addLog', payload: {line: 'Picker Bot Purchased!', cycle: cycles}});
-    } else if (botType === 'pickler' && pickles >= botPrice[0]) {
-        store.dispatch({type: 'robots/addBot', payload: { title: 'pickler', value: botPrice[1]}});
-        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -botPrice[0] }});
+    } else if (botType === 'pickler' && pickles >= (botPrice[0] * qty)) {
+        store.dispatch({type: 'robots/addBot', payload: { title: 'pickler', value: qty }});
+        store.dispatch({type: 'resources/changeResources', payload: {title: 'pickles', value: -(botPrice[0] * qty) }});
         store.dispatch({type: 'log/addLog', payload: {line: 'Pickler Bot Purchased!', cycle: cycles}});
-    } else if (pickles < botPrice[0]) {
-        store.dispatch({type: 'log/addLog', payload: {line: `Need ${botPrice[0]} pickles to purchase a bot`, cycle: cycles}});
+    } else if (pickles < (botPrice[0] * qty)) {
+        store.dispatch({type: 'log/addLog', payload: {line: `Need ${formatNumber((botPrice[0] * qty))} pickles to purchase ${qty} bots`, cycle: cycles}});
     }
 }
 
@@ -101,9 +101,15 @@ export const buttonCall = (name, upgrade) => {
         case 'Plant': plantSeed(); break;
         case 'Pick': pickCucumbers(); break;
         case 'Pickle': makePickles(); break;
-        case 'Buy Planter Bot': buyBot('planter'); break;
-        case 'Buy Picker Bot': buyBot('picker'); break;
-        case 'Buy Pickler Bot': buyBot('pickler'); break;
+        case 'Buy Planter Bot': buyBot('planter', 1); break;
+        case 'Buy Picker Bot': buyBot('picker', 1); break;
+        case 'Buy Pickler Bot': buyBot('pickler', 1); break;
+        case 'Buy 10 Planter Bots': buyBot('planter', 10); break;
+        case 'Buy 10 Picker Bots': buyBot('picker', 10); break;
+        case 'Buy 10 Pickler Bots': buyBot('pickler', 10); break;
+        case 'Buy 100 Planter Bots': buyBot('planter', 100); break;
+        case 'Buy 100 Picker Bots': buyBot('picker', 100); break;
+        case 'Buy 100 Pickler Bots': buyBot('pickler', 100); break;
         case 'Buy Seed': buySeeds(1); break;
         case 'Buy 10 Seeds': buySeeds(10); break;
         case 'Buy 100 Seeds': buySeeds(100);break;
