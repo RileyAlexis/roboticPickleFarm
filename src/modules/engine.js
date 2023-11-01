@@ -164,6 +164,5 @@ if (state.deltas.autoSaveDelta >= stats.autoSaveInterval) {
     store.dispatch({ type: 'SAVE_GAME' });
     store.dispatch({ type: 'deltas/resetDelta', payload: 'resetAutoSaveDelta'});
 }
-
-// console.log(plants);
+console.log(stats.gameSpeed);
 }//End updateTicker()

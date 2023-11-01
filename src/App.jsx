@@ -39,7 +39,7 @@ useEffect(() => {
     runUpdate();
   }, gameSpeed);
   return () => clearInterval(interval);
-  }, []);
+  }, [gameSpeed]);
 
   return (
     <div className="container">
