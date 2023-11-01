@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Button, FormControlLabel, FormGroup, Typography, Checkbox } from '@mui/material';
 import { TextField } from '@mui/material';
 
-import { checkButtons, checkTabs, checkUpgrades } from '../modules/events';
+import { checkButtons, checkTabs, checkUpgrades } from '../../modules/events'
 import './landingPage.css';
 
 function LandingPage() {
