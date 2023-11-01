@@ -82,7 +82,9 @@ function LandingPage() {
     }
 
     const createNewUser = () => {
-        if (password !== confirmPassword) {
+        console.log(email.length);
+        if (email.length < 5) { setError('User Email must be at least 5 characters'); return; }
+        if (password !== confirmPassword || password === '') {
             setError('Passwords do not match');
             return;
         } else if (password === confirmPassword) {
