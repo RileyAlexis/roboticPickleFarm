@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Button, FormControlLabel, FormGroup, Typography, Checkbox } from '@mui/material';
 import { TextField } from '@mui/material';
 
-import { checkButtons, checkTabs, checkUpgrades } from '../../modules/events'
+import { checkBuildings, checkButtons, checkTabs, checkUpgrades } from '../../modules/events'
 import './landingPage.css';
 
 function LandingPage() {
@@ -74,6 +74,8 @@ function LandingPage() {
                             dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
                             checkButtons();
                             checkTabs();
+                            checkUpgrades();
+                            checkBuildings();
                         }).catch((error) => {
                             console.log(error);
                         })
