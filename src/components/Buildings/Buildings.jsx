@@ -28,7 +28,7 @@ function Buildings() {
                     }
 
                     {item.purchased &&
-                        <div className="accordionBox">
+                        <div className="accordionBox" key={`acc${item.name}`}>
                             <BuildingsAccordion building={item} />
                         </div>
                     }
