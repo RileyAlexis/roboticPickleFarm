@@ -83,7 +83,7 @@ router.post('/newUser', (req, res) => {
 }) //End create new user
 
 router.post('/savegame', verifyToken, (req, res) => {
-
+console.log('Save Game Route Called');
 let dataArr = [
     req.body.dataObj.userId,
     JSON.stringify(req.body.dataObj.plants).replace(/\s/g, ''),

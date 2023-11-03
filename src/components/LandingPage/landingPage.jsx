@@ -1,4 +1,3 @@
-import react from 'react';
 import { useCookies } from 'react-cookie';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +5,7 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 
 //Material UI Components
-import { Button, FormControlLabel, FormGroup, Typography, Checkbox } from '@mui/material';
+import { Button, Typography, Checkbox } from '@mui/material';
 import { TextField } from '@mui/material';
 
 import { checkBuildings, checkButtons, checkTabs, checkUpgrades } from '../../modules/events'
@@ -19,19 +18,17 @@ function LandingPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const [guideChecked, setGuideChecked] = useState(true);
     const [cookies, setCookie, removeCookie] = useCookies(['Email', 'AuthToken']);
 
     const dispatch = useDispatch();
-    const genId = v4();
+    const genId = v4(); //Used for a user ID if no login is provided
     const authorized = useSelector(store => store.authorized);
-    // const store = useSelector(store => store);
 
     const initializeGame = () => {
         if (!authorized) {
             dispatch({ type: 'SET_AUTH', payload: true });
             dispatch({ type: 'SET_USERID', payload: genId });
-            dispatch({ type: 'RUN_ENGINE'});
+            dispatch({ type: 'RUN_ENGINE' });
         }
     }
 
@@ -63,7 +60,8 @@ function LandingPage() {
                         data
                     })
                         .then((response) => {
-                            //Set game data Here
+                            
+                            //Send all game data to redux store
                             dispatch({ type: 'log/setAllLog', payload: response.data.log });
                             dispatch({ type: 'stats/setAllStats', payload: response.data.stats });
                             dispatch({ type: 'resources/setAllResources', payload: response.data.resources });
@@ -72,6 +70,8 @@ function LandingPage() {
                             dispatch({ type: 'buildings/setAllBuildings', payload: response.data.buildings })
                             dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
                             dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
+                            
+                            //Check which buttons should be visible given a users progression through the game
                             checkButtons();
                             checkTabs();
                             checkUpgrades();
@@ -104,21 +104,17 @@ function LandingPage() {
                         dispatch({ type: 'SET_EMAIL', payload: response.data.email });
                         dispatch({ type: 'SET_USERID', payload: response.data.userId });
                         dispatch({ type: 'SET_AUTH', payload: true });
-                        dispatch({ type: 'RUN_ENGINE'});
-                        dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' }})
-
+                        dispatch({ type: 'RUN_ENGINE' });
+                        //Activates tutorial on new user creation
+                        dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' } })
                     }
                 })
         }
     }
 
-    const playGuide = (e) => {
-        setGuideChecked(e.target.checked);
-        dispatch({ type: 'stats/toggleActive', payload: { title: 'playGuide' }})
-    }
-
     return (
         <div className="landingPage">
+            {/* Log in for existing user */}
             {login &&
                 <div className="loginBox">
                     <Typography variant="body">
@@ -148,6 +144,7 @@ function LandingPage() {
                 </div>
             }
 
+            {/* Create new user */}
             {!login &&
                 <div className="loginBox">
                     <Typography variant="body">
@@ -168,21 +165,6 @@ function LandingPage() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
-                    <br />
-                    {/* <FormGroup variant="standard">
-                        <FormControlLabel
-                        sx={{
-                            marginLeft: '25px',
-                            marginTop: '20px'
-                        }}
-                        control={
-                    <Checkbox 
-                        checked={guideChecked} onChange={playGuide} color="primary" />
-                        }
-                        label="Show Player Guide on game start" />
-                             
-                        
-                    </FormGroup> */}
                     <br /> <br /><br />
                     <div className="buttonBox" >
                         <Button variant='outlined' onClick={createNewUser}>Create New User</Button>

@@ -6,21 +6,21 @@ import RobotData from "./RobotData";
 import Resources from "./Resources";
 import PlantsList from "./PlantsList";
 
-function MainBoxLeft () {
+function MainBoxLeft() {
     const stats = useSelector(store => store.stats);
 
     return (
         <div className="mainBoxLeft">
             <div className="totalProduction">
-             <Typography variant="h6" sx={{
+                <Typography variant="h6" sx={{
                     mt: '15px',
                     mb: '15px',
                     fontWeight: 300
-      }}>Total Production: {formatNumber(stats.totalProduction)}</Typography>
-      </div>
-      <Resources />
-      <PlantsList />
-      <RobotData />
+                }}>Total Production: {formatNumber(stats.totalProduction)}</Typography>
+            </div>
+            <Resources />
+            <PlantsList />
+            <RobotData />
 
         </div>
     )

@@ -31,7 +31,7 @@ const TipBox = ({ children, data }) => {
       <span
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={{ display: 'inline-block' }}
+        style={{ display: 'flex' }}
       >
         {children}
       </span>
