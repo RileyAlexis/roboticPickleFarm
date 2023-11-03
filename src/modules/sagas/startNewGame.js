@@ -3,8 +3,13 @@ import axios from "axios";
 
 
 function getAllCookieNames() {
+    const userAgent = navigator.userAgent;
     let cookie = document.cookie;
-    let regex = /AuthToken=(.*)/; // This regex captures everything after "AuthToken="
+    let regex = '';
+    //Browsers parse the cookie string in a different order - Safari Regex: /AuthToken=([^;]+);/ Chrome & Firefox Regex: /AuthToken=(.*)/;
+    if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) { regex = /AuthToken=([^;]+);/ 
+    } else if (userAgent.includes('Chrom') || userAgent.includes('Firefox')) { regex = /AuthToken=(.*)/; }
+
     let match = cookie.match(regex);
     return match[1];
 }
