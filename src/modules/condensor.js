@@ -1,4 +1,5 @@
-
+//No longer used since plants was moved away from objects to integers due to performance constraints
+//But I think this code is kinda cool so I'm leaving it in for reference
 //Condenses the number of objects to half and maintains correct numbers by increasing the modifier value
 export function condensor(plants) {
     let setDead = true;

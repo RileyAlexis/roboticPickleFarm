@@ -1,9 +1,13 @@
+//This file contains various utility functions that are called throughout the application
+
+//Adds commas to large numbers for readability
 export function formatNumber(number) {
     // Convert the number to a string and use regex to add commas
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     
   }
 
+  //No longer used
   export function countPlants(plants) {
     return plants.reduce((sum, obj) => {
       if (obj.hasOwnProperty('modifier') && typeof obj['modifier'] === 'number') {
@@ -14,10 +18,13 @@ export function formatNumber(number) {
     }, 0);
   }
 
+  //Counts the number of digits in a number
 export function countDigits(number) {
   return number.toString().length;
 }
   
+  //Calculates the current trend based on the trend interval (set in the "settings" menu)
+  //The trends are calculated live in the component, not as part of the ticker update cycle
   export const calculateTrend = (array, timeframe) => {
 
     let newArr = array.slice(timeframe);
@@ -29,6 +36,7 @@ export function countDigits(number) {
     return {sign: sign, trend: (Math.abs(parseFloat(diff / newArr.length)).toFixed(2)) };
 }
   
+//No longer used
   export function averageProperty(objectsArray, propertyName) {
     if (!Array.isArray(objectsArray) || objectsArray.length === 0) {
         return 0;
@@ -49,6 +57,9 @@ export function countDigits(number) {
     return average;
 }
 
+//counts the number of zeroes after a decimal.
+//Used to show the percentage progress toward the total goal
+//Prevents the game from continuing to show long decimal numbers when they are no longer relevant
 function countZerosAfterDecimal(number) {
   // Convert the number to a string to handle decimal points
   const numString = number.toString();
@@ -75,6 +86,7 @@ function countZerosAfterDecimal(number) {
   }
 }
 
+//Used for the overall progress percentage
 export function calculatePercentage(progress, goal) {
   const complete = (progress / goal);
   const lowValue = 0.000001;

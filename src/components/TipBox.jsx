@@ -19,6 +19,7 @@ const TipBox = ({ children, data }) => {
       }}
       onClose={() => setIsOpen(false)}
       open={isOpen}
+      // Below three options prevent tooltip from blinking when react refreshes page on game timer cycle
       disableFocusListener
       disableHoverListener
       disableTouchListener
