@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    pickerBots: 0,
+    pickerBots: {value: 0, exponent: ''},
     pickerSpeed: 1,
-    planterBots: 0,
+    planterBots: {value: 0, exponent: ''},
     planterSpeed: 1,
-    picklerBots: 0,
+    picklerBots: {value: 0, exponent: ''},
     picklerSpeed: 1
 }
 
@@ -19,10 +19,11 @@ export const robotsSlice = createSlice({
         addBot: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
+            console.log('Addbot', title, value)
             switch (title) {
-                case 'picker': state.pickerBots += value; break;
-                case 'planter': state.planterBots += value; break;
-                case 'pickler': state.picklerBots += value; break;
+                case 'picker': state.pickerBots.value += value; break;
+                case 'planter': state.planterBots.value += value; break;
+                case 'pickler': state.picklerBots.value += value; break;
                 default: return state;
             }
         },

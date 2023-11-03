@@ -4,7 +4,7 @@ import { calculateTrend } from '../utilFunction';
 export function runPicklerBotStation(building) {
     const state = store.getState();
     let cucumberTrend = calculateTrend(state.resources.cucumbers, 5);
-    const picklerBotsRun = (state.robots.picklerBots * state.robots.picklerSpeed);
+    const picklerBotsRun = (state.robots.picklerBots.value * state.robots.picklerSpeed);
     let botPrice = state.prices.bots;
     let recurringCost = 0;
     //Purchases robots to keep up with picked cucumbers (if more than 300 buys additional bot(s))

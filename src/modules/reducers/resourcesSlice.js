@@ -2,9 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     seeds: [5],
+    seedsExponent: '',
     cucumbers: [0],
+    cucumbersExponent: '',
     pickles: [0],
+    picklesExponent: '',
     pickleJars: [0],
+    pickleJarsExponent: ''
 }
 
 export const resourcesSlice = createSlice({

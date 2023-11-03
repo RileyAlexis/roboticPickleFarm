@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    plantCount: 0,
+    plantCount: {value: 0, exponent: ''},
     growthRate: 0.08,
-    currentYield: 0,
+    currentYield: {value: 0, exponent: ''},
     growthRateModifier: 1,
     seedChance: 0.00001,
-    ripeCucumbers: 0,
     maxYield: 5,
 }
 
@@ -18,7 +17,7 @@ const plantSlice = createSlice({
             return action.payload;
         },
         addNewPlant: (state, action) => {
-            state.plantCount += action.payload;
+            state.plantCount.value += action.payload;
         },
         changeAllGrowthRate: (state, action) => {
             const percentage = action.payload;

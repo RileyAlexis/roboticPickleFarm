@@ -3,9 +3,12 @@
 //Adds commas to large numbers for readability
 export function formatNumber(number) {
     // Convert the number to a string and use regex to add commas
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    
+    if (number === undefined) return 0;
+    else 
+    return number.toString().replace(/(\d)(?=(?:\d{3})+(?!\d)(\.|$))/g, '$1,');
+
   }
+
 
   //No longer used
   export function countPlants(plants) {

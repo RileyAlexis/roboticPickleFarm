@@ -16,7 +16,7 @@ function MainBoxLeft() {
                     mt: '15px',
                     mb: '15px',
                     fontWeight: 300
-                }}>Total Production: {formatNumber(stats.totalProduction)}</Typography>
+                }}>Total Production: {formatNumber(stats.totalProduction.value)}{stats.totalProduction.exponent} </Typography>
             </div>
             <Resources />
             <PlantsList />

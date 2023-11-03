@@ -2,8 +2,8 @@ import { storeInstance as store} from '../store';
 
 export function runBotHouse(building) {
     const state = store.getState();
-    const totalGrowthRate = state.stats.totalGrowthRate;
-    const pickerBotsRun = (state.robots.pickerBots * state.robots.pickerSpeed);
+    const totalGrowthRate = state.stats.totalGrowthRate.value;
+    const pickerBotsRun = (state.robots.pickerBots.value * state.robots.pickerSpeed);
     let botPrice = state.prices.bots;
     let recurringCost = 0;
     //Purchases robots to keep up with plant growth

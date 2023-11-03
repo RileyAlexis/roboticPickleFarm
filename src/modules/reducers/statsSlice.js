@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { convertToMillion } from "../engine";
 
 const initialState = {
-    maxYield: 0,
-    ripeCucumbers: 0,
-    totalGrowthRate: 0,
+    maxYield: {value: 0, exponent: ''},
+    ripeCucumbers: {value: 0, exponent: ''},
+    totalGrowthRate: {value: 0, exponent: ''},
     growthModifer: 0,
     totalMaxedOut: 0,
     averageAge: 0,
@@ -14,8 +15,12 @@ const initialState = {
     planterDelta: 0,
     pickerDelta: 0,
     picklerDelta: 0,
-    totalProduction: 0,
-    totalGoal: 2800000000000,
+    totalProduction: {value: 0, exponent: ''},
+    million: Math.pow(10, 6),
+    billion: Math.pow(10, 9),
+    trillion: Math.pow(10, 12),
+    exponent: '',
+    totalGoal: 2.8,
     timeframe: 60,
     gameSpeed: 1000,
     autoSaveInterval: 120,
@@ -33,23 +38,18 @@ export const statsSlice = createSlice({
         changeStat: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
+            if (typeof state[title] === 'object') { state[title].value += value 
+            } else {
             state[title] += value;
+            }
         },
         setStat: (state, action) => {
             const title = action.payload.title;
             const value = action.payload.value;
+            console.log(typeof state[title]);
+            if (typeof state[title] === 'object') { state[title].value = value 
+            } else {
             state[title] = value;
-        },
-        setStats: (state, action) => {
-            const title = action.payload.title;
-            const value = action.payload.value;
-            switch (title) {
-                case 'maxYield': state.maxYield = parseFloat(value.toFixed(2)); break;
-                case 'ripeCucumbers': state.ripeCucumbers = parseFloat(value.toFixed(2)); break;
-                case 'totalGrowthRate': state.totalGrowthRate = parseFloat(value.toFixed(2)); break;
-                case 'averageAge': state.averageAge = parseFloat(value.toFixed(2)); break;
-                case 'timeFrame': state.timeFrame = value; break;
-                case 'totalProduction': state.totalProduction += value; break;
             }
         },
         toggleActive: (state, action) => {
@@ -68,5 +68,5 @@ export const statsSlice = createSlice({
     }
 })
 
-export const { setAllStats, changeStat, setStats, toggleActive, runCycle} = statsSlice.actions;
+export const { setAllStats, changeStat, setStat, toggleActive, runCycle} = statsSlice.actions;
 export default statsSlice.reducer;

@@ -15,24 +15,24 @@ function RobotData() {
       <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Robots:</Typography>
       <Typography variant="body">
         {/* Placing the TipBox to not include the active tag prevents the tooltip from shifting position */}
-        <TipBox data={`Running at ${formatNumber(robots.planterBots * robots.planterSpeed)} /s`}>
-          Planter Bots: {formatNumber(robots.planterBots)} at {robots.planterSpeed} /s
+        <TipBox data={`Running at ${formatNumber(robots.planterBots.value * robots.planterSpeed)} /s`}>
+          Planter Bots: {formatNumber(robots.planterBots.value)} at {robots.planterSpeed} /s
         </TipBox>
         {planterActive &&
           <span>- Planting</span>
         }
       </Typography>
       <Typography variant="body">
-        <TipBox data={`Running at ${formatNumber(robots.pickerBots * robots.pickerSpeed)} /s`}>
-          Picker Bots: {formatNumber(robots.pickerBots)} at {robots.pickerSpeed} /s
+        <TipBox data={`Running at ${formatNumber(robots.pickerBots.value * robots.pickerSpeed)} /s`}>
+          Picker Bots: {formatNumber(robots.pickerBots.value)} at {robots.pickerSpeed} /s
         </TipBox>
         {pickerActive &&
           <span>- Picking</span>
         }
       </Typography>
       <Typography variant="body">
-        <TipBox data={`Running at ${formatNumber(robots.picklerBots * robots.picklerSpeed)} /s`}>
-          Pickling Bots: {formatNumber(robots.picklerBots)} at {robots.picklerSpeed} /s
+        <TipBox data={`Running at ${formatNumber(robots.picklerBots.value * robots.picklerSpeed)} /s`}>
+          Pickling Bots: {formatNumber(robots.picklerBots.value)} at {robots.picklerSpeed} /s
         </TipBox>
         {picklerActive &&
           <span>- Pickling</span>

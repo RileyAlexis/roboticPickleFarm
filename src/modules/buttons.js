@@ -17,7 +17,7 @@ function plantSeed() {
 
 function pickCucumbers() {
     const state = store.getState();
-    const ripeCucumbers = state.stats.ripeCucumbers;
+    const ripeCucumbers = state.stats.ripeCucumbers.value;
     const cycles = state.stats.cycles;
     let picked = 0;
     if (ripeCucumbers > 0) picked++;
@@ -35,7 +35,7 @@ function makePickles() {
     if (cucumbers >= 5) {
         store.dispatch({ type: 'resources/changeResources', payload: { title: 'cucumbers', value: -5 } });
         store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: +5 } });
-        store.dispatch({ type: 'stats/setStats', payload: { title: 'totalProduction', value: +5 } })
+        store.dispatch({ type: 'stats/changeStat', payload: { title: 'totalProduction', value: +5 } })
         store.dispatch({ type: 'log/addLog', payload: { line: '5 Pickles pickled!', cycle: cycles } });
     } else if (cucumbers < 5) {
         store.dispatch({ type: 'log/addLog', payload: { line: 'Not Enough Cucumbers! Need 5', cycle: cycles } });
@@ -47,6 +47,7 @@ function buyBot(botType, qty) {
     const pickles = state.resources.pickles[state.resources.pickles.length - 1];
     const botPrice = state.prices.bots;
     const cycles = state.stats.cycles;
+    console.log(pickles);
     if (botType === 'planter' && pickles >= (botPrice[0] * qty)) {
         store.dispatch({ type: 'robots/addBot', payload: { title: 'planter', value: qty } });
         store.dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: -(botPrice[0] * qty) } });
@@ -96,6 +97,7 @@ const buyBuilding = (item) => {
 }
 //Calls proper engine function for buttons rendered from redux store objects
 export const buttonCall = (name, upgrade) => {
+    console.log(name);
     switch (name) {
         case 'Plant': plantSeed(); break;
         case 'Pick': pickCucumbers(); break;

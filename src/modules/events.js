@@ -12,7 +12,7 @@ export function checkButtons() {
         }
     }
 
-    if (state.stats.ripeCucumbers > 0 && !state.farmMenu[1].show) {
+    if (state.stats.ripeCucumbers.value > 0 && !state.farmMenu[1].show) {
         store.dispatch({ type: 'farmMenu/showItem', payload: 'Pick' });
     }
     if (state.resources.cucumbers[state.resources.cucumbers.length - 1] >= 5 && !state.farmMenu[2].show) {

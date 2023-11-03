@@ -26,7 +26,7 @@ function CheatsForTesting() {
     }
     const addPickles = (value) => {
         dispatch({ type: 'resources/changeResources', payload: { title: 'pickles', value: value } });
-        dispatch({ type: 'stats/setStats', payload: { title: 'totalProduction', value: value } });
+        dispatch({ type: 'stats/changeStat', payload: { title: 'totalProduction', value: value } });
     }
     const resetStore = () => {
         dispatch({ type: 'RESET_ENTIRE_STORE' });
