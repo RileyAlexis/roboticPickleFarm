@@ -11,7 +11,7 @@ function Resources() {
   let cucumberTrend = calculateTrend(resources.cucumbers, timeframe);
   let picklesTrend = calculateTrend(resources.pickles, timeframe);
   let seedTrend = calculateTrend(resources.seeds, timeframe);
-  
+
   return (
     <>
       <Typography variant="h7" sx={{ fontWeight: 700, mt: '15px', mb: '15px' }}>Resources:</Typography>
@@ -22,19 +22,20 @@ function Resources() {
       <Typography variant="body">Cucumbers: {formatNumber(resources.cucumbers[resources.cucumbers.length - 1])}</Typography>
       <Typography variant="caption"> ( {cucumberTrend.sign}{formatNumber(cucumberTrend.trend)} /s )</Typography>
       <br />
-      {recurringCosts.length >= 1 ? 
-      ( 
-        <>
-        <TipWindow data={recurringCosts}>
-      <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
-      <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
-      </TipWindow>
-      </>
-      )
-      :
-      (<>
-        <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
-        <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
+      {/* Ternary statement - only shows tipWindow if there is data to show - this prevents a blank tipWindow from appearing */}
+      {recurringCosts.length >= 1 ?
+        (
+          <>
+            <TipWindow data={recurringCosts}>
+              <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
+              <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
+            </TipWindow>
+          </>
+        )
+        :
+        (<>
+          <Typography variant="body">Pickles: {formatNumber(resources.pickles[resources.pickles.length - 1])}</Typography>
+          <Typography variant="caption"> ( {picklesTrend.sign}{formatNumber(picklesTrend.trend)} /s )</Typography>
         </>
         )
       }

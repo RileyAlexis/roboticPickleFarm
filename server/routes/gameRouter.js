@@ -11,13 +11,12 @@ const verifyToken = require('../modules/jwtMiddleware');
 const jwtkey = process.env.SECRET_KEY;
 
 router.post('/login', (req, res) => {
-    console.log('login route call');
     const email = req.body.email;
     const password = req.body.password;
     let userRole = '';
     let userId = '';
 
-    const queryString = `SELECT * FROM "users" WHERE "email" ILIKE $1`; 
+    const queryString = `SELECT * FROM "users" WHERE "email" ILIKE $1`;
     //Searches for existing email. Since usernames must be unique the database 
     //will only return 1 or 0 users
 
@@ -45,7 +44,7 @@ router.post('/login', (req, res) => {
                     id: userId,
                     email: email
                 }
-                const token = jwt.sign(user, jwtkey, {expiresIn: '3hr' }); 
+                const token = jwt.sign(user, jwtkey, { expiresIn: '3hr' });
                 res.json({ userId: userId, email: email, token: token });
             }
         })
@@ -65,15 +64,11 @@ router.post('/newUser', (req, res) => {
 
     pool.query(queryString, [email, hashedPassword, 'user'])
         .then((result) => {
-            // console.log('New User Id:', result.rows[0].id); //ID IS HERE!
-            //provess.env.secret created in node terminal : 
-            //node -> require('crypto').randomBytes(64).toString('hex');
-            //require(‘dotenv’).config();
             const user = {
                 id: result.rows[0].id,
                 email: req.body.email
             }
-            const token = jwt.sign(user, jwtkey, {expiresIn: '3hr' });
+            const token = jwt.sign(user, jwtkey, { expiresIn: '3hr' });
             res.json({ userId: result.rows[0].id, email: email, token: token });
         })
         .catch((error) => {
@@ -83,25 +78,24 @@ router.post('/newUser', (req, res) => {
 }) //End create new user
 
 router.post('/savegame', verifyToken, (req, res) => {
+    let dataArr = [
+        req.body.dataObj.userId,
+        JSON.stringify(req.body.dataObj.plants).replace(/\s/g, ''),
+        req.body.dataObj.resources,
+        req.body.dataObj.stats,
+        req.body.dataObj.robots,
+        req.body.dataObj.prices,
+        JSON.stringify(req.body.dataObj.buildings),
+        JSON.stringify(req.body.dataObj.upgrades),
+        JSON.stringify(req.body.dataObj.log)
+    ];
 
-let dataArr = [
-    req.body.dataObj.userId,
-    JSON.stringify(req.body.dataObj.plants).replace(/\s/g, ''),
-    req.body.dataObj.resources,
-    req.body.dataObj.stats,
-    req.body.dataObj.robots,
-    req.body.dataObj.prices,
-    JSON.stringify(req.body.dataObj.buildings),
-    JSON.stringify(req.body.dataObj.upgrades),
-    JSON.stringify(req.body.dataObj.log)
-];
-
-let queryString = 'SELECT 1 FROM "games" WHERE "user_id" = $1'
-pool.query(queryString, [req.body.dataObj.userId])
-    .then((result) => {
-        if (result.rows.length > 0) {
-            //ID Exists write update SQL stuff here
-            queryString = `
+    let queryString = 'SELECT 1 FROM "games" WHERE "user_id" = $1'
+    pool.query(queryString, [req.body.dataObj.userId])
+        .then((result) => {
+            if (result.rows.length > 0) {
+                //ID Exists write update SQL stuff here
+                queryString = `
                 UPDATE "games"
                 SET "plants" = $2,
                     "resources" = $3,
@@ -112,9 +106,9 @@ pool.query(queryString, [req.body.dataObj.userId])
                     "upgrades" = $8,
                     "log" = $9
                 WHERE "user_id" = $1;`
-        } else {
-            //ID does not exist - write INSERT sql code here
-            queryString = `
+            } else {
+                //ID does not exist - write INSERT sql code here
+                queryString = `
                 INSERT INTO "games" 
                     ("user_id", 
                     "plants", 
@@ -127,25 +121,23 @@ pool.query(queryString, [req.body.dataObj.userId])
                     "log")
                 VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
 
-        } //End userId if exists statement
-        pool.query(queryString, dataArr)
-            .then((response) => {
-                res.sendStatus(200);
-            }).catch((error) => {
-                console.log(error);
-                res.sendStatus(500);
-            })
+            } //End userId if exists statement
+            pool.query(queryString, dataArr)
+                .then((response) => {
+                    res.sendStatus(200);
+                }).catch((error) => {
+                    console.log(error);
+                    res.sendStatus(500);
+                })
 
-    }).catch((error) => {
-        console.error(error);
-    })
+        }).catch((error) => {
+            console.error(error);
+        })
 }) //End Save Game
 
 
 router.post('/loadgame', verifyToken, (req, res) => {
-    console.log('Load Game Route');
     let userId = req.body.data.userId;
-    console.log('User ID', userId);
     let queryString = `SELECT * FROM "games" WHERE "user_id" = $1`
     pool.query(queryString, [userId])
         .then((result) => {
@@ -160,26 +152,26 @@ router.post('/loadgame', verifyToken, (req, res) => {
                 upgrades: result.rows[0].upgrades,
                 log: result.rows[0].log,
             }
-                
+
             res.json(data);
- 
+
         }).catch((error) => {
             console.log(error);
             res.sendStatus(500);
         })
 
-    })
+})
 
 router.post('/deleteGame', verifyToken, (req, res) => {
     let userId = req.body.dataObj.userId;
     let queryString = `DELETE FROM "games" WHERE "user_id" = $1;`;
 
     pool.query(queryString, [userId])
-    .then((result) => {
-        res.sendStatus(200);
-    }).catch((error) => {
-        res.sendStatus(500);
-    })
+        .then((result) => {
+            res.sendStatus(200);
+        }).catch((error) => {
+            res.sendStatus(500);
+        })
 })
 
 module.exports = router;

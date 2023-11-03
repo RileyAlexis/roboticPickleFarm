@@ -8,17 +8,17 @@ function LogBox() {
     return (
         <div className="roll-outLog">
             <List dense={true}>
-            
-            {log.length > 0 &&
-            log.map((item, index) => (
-                <div className="entryItem" key={index}>
-                    <Typography variant="caption">{item.cycle}</Typography>
-                    <Typography variant="body"> - {item.line}</Typography>
 
-            </div>
-            ))
-            }
-            
+                {log.length > 0 &&
+                    log.map((item, index) => (
+                        <div className="entryItem" key={index}>
+                            <Typography variant="caption">{item.cycle}</Typography>
+                            <Typography variant="body"> - {item.line}</Typography>
+
+                        </div>
+                    ))
+                }
+
 
             </List>
         </div>

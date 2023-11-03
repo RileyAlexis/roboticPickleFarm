@@ -1,5 +1,5 @@
 import { combineReducers, configureStore, getDefaultMiddleware, applyMiddleware } from '@reduxjs/toolkit';
-import { takeEvery, put, all} from 'redux-saga/effects';
+import { takeEvery, put, all } from 'redux-saga/effects';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
@@ -23,25 +23,25 @@ import rootSaga from './sagas/rootSaga';
 const sagaMiddleware = createSagaMiddleware();
 
 const userId = (state = '', action) => {
-    if (action.type === 'SET_USERID') {
-      return action.payload;
-    }
-    return state;
+  if (action.type === 'SET_USERID') {
+    return action.payload;
   }
-  
-  const userEmail = (state = '', action) => {
-    if (action.type === 'SET_EMAIL') {
-      return action.payload;
-    }
-    return state;
+  return state;
+}
+
+const userEmail = (state = '', action) => {
+  if (action.type === 'SET_EMAIL') {
+    return action.payload;
   }
-  
-  const authorized = (state = false, action) => {
-    if (action.type === 'SET_AUTH') {
-      return action.payload;
-    }
-    return state;
+  return state;
+}
+
+const authorized = (state = false, action) => {
+  if (action.type === 'SET_AUTH') {
+    return action.payload;
   }
+  return state;
+}
 
 const runEngine = (state = false, action) => {
   if (action.type === 'RUN_ENGINE') {
@@ -59,34 +59,34 @@ const rootReducer = (state, action) => {
   return allReducers(state, action);
 }
 
-  const allReducers = combineReducers({
-    resources: resourcesSlice,
-    stats: statsSlice,
-    robots: robotsSlice,
-    plants: plantSlice,
-    log: logSlice,
-    authorized: authorized,
-    userId: userId,
-    userEmail: userEmail,
-    farmMenu: farmMenuSlice,
-    locationMenu: locationMenuSlice,
-    robotMenu: robotsMenuSlice,
-    prices: pricesSlice,
-    deltas: deltaSlice,
-    upgrades: upgradesSlice,
-    buildings: buildingsSlice,
-    runEngine: runEngine
+const allReducers = combineReducers({
+  resources: resourcesSlice,
+  stats: statsSlice,
+  robots: robotsSlice,
+  plants: plantSlice,
+  log: logSlice,
+  authorized: authorized,
+  userId: userId,
+  userEmail: userEmail,
+  farmMenu: farmMenuSlice,
+  locationMenu: locationMenuSlice,
+  robotMenu: robotsMenuSlice,
+  prices: pricesSlice,
+  deltas: deltaSlice,
+  upgrades: upgradesSlice,
+  buildings: buildingsSlice,
+  runEngine: runEngine
 });
 
-  const storeInstance = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(
-      { thunk: false, serializableCheck: false })
-      .concat(sagaMiddleware, 
-        // logger
-        ),
-  })
+const storeInstance = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(
+    { thunk: false, serializableCheck: false })
+    .concat(sagaMiddleware,
+      // logger
+    ),
+})
 
-  sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
-  export { storeInstance };
+export { storeInstance };
