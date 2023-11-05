@@ -110,25 +110,6 @@ function cycleLog(log) {
     return log;
 }
 
-export function convertToMillion() {
- const state = store.getState();
- let stats = state.stats;
- let plants = state.plants;
- let robots = state.robots;
- 
- stats.exponent = 'm';
- stats.totalProduction.value = stats.totalProduction.value / stats.million;
- 
- plants.plantCount.value = plants.plantCount.value / stats.million;
-
- 
-
-
-}
-
-
-
-
 //Primary Update Engine - Runs 1 per second on default(set by gameSpeed)
 export function updateTicker() {
     const state = store.getState();
@@ -144,6 +125,7 @@ export function updateTicker() {
     //Engine stops here if there are no plants. 
     //Calls each function in turn to complete the game update cycle
     if (plants.plantCount.value > 0) {
+        
         if (stats.ripeCucumbers.value < (plants.maxYield * plants.plantCount.value)) growPlants(plants);
         let newSeeds = generateSeeds(plants); //Returns # of new seeds(if any)
         let picked = runPickerBots(robots, stats); //Returns the # of ripe cucumbers picked by picker bots
