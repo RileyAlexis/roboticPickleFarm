@@ -18,7 +18,6 @@ function plantSeed() {
 function pickCucumbers() {
     const state = store.getState();
     const ripeCucumbers = state.stats.ripeCucumbers;
-    const cycles = state.stats.cycles;
     let picked = 0;
     if (ripeCucumbers > 0) picked++;
     if (picked >= 1) {

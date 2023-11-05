@@ -1,11 +1,10 @@
 import { Divider } from "@mui/material";
-import { UseSelector, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 function CheatsForTesting() {
     const dispatch = useDispatch();
     const stats = useSelector(store => store.stats);
-    const robots = useSelector(store => store.robots);
-    const resources = useSelector(store => store.resources);
+    
 
     const addSeeds = () => {
         dispatch({ type: 'resources/changeResources', payload: { title: 'seeds', value: 100 } });
