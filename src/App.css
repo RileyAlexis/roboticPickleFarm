@@ -143,8 +143,8 @@ body {
   .log-box {
     grid-column: 3 / span 1;
     grid-row: 2 / span 4;
-    min-height: 50vh;
-    max-height: 50vh;
+    min-height: 65vh;
+    max-height: 65vh;
     overflow-y: scroll;
     display: flex;
     /* flex-direction:column-reverse; */
