@@ -16,7 +16,7 @@ const initialState = [
     {id: 'upgrades', 
         name: 'Upgrades', 
         show:false,
-        showAt: 500 },
+        showAt: 800 },
     {id: 'cheatOptopns', 
         name: 'Cheats', 
         show: false }
