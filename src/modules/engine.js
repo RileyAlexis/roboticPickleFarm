@@ -146,7 +146,7 @@ export function updateTicker() {
 
         //Every 5th cycle checks the totalProduction against the showAt property for each button, upgrade and building.
         //These functions control the timing of when each game option becomes available to the player
-        if (state.deltas.buttonDelta >= 5) {
+        if (state.deltas.buttonDelta >= 2) {
             checkButtons();
             checkTabs(stats.totalProduction, state.locationMenu);
             checkUpgrades(stats.totalProduction, state.upgrades);
