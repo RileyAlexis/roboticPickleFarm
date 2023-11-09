@@ -3,7 +3,6 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv').config();
 
 const verifyToken = require('../modules/jwtMiddleware');
 
