@@ -5,7 +5,9 @@ console.log(process.env.DATABASE_URL);
 if (process.env.DATABASE_URL) {
     pool = new pg.Pool({
         connectionString: process.env.DATABASE_URL,
-        ssl: true
+        ssl: {
+            rejectUnauthorized: false
+        }
     }) 
 } else {
     pool = new pg.Pool({
