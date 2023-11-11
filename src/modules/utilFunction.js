@@ -33,7 +33,10 @@ export function countDigits(number) {
     if (diff > 0) sign = '+';
     else if (diff < 0) sign ='-';
     else sign = '';
+    if (isNaN(diff)) { return { sign: '', trend: 0 }
+    } else {
     return {sign: sign, trend: (Math.abs(parseFloat(diff / newArr.length)).toFixed(2)) };
+    }
 }
   
 //No longer used

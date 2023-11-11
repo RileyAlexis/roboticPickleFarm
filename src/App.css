@@ -67,7 +67,7 @@ body {
     margin: 0px;
     border: 1px solid black;
     min-width: min-content;
-    max-width: 500px;
+    max-width: 450px;
     overflow-x: scroll;
   }
 
