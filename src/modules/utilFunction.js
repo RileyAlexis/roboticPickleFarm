@@ -1,11 +1,53 @@
 //This file contains various utility functions that are called throughout the application
 
-//Adds commas to large numbers for readability
+//Formats numbers based on the number of digits (thousand, million, billion) and adds commas for readabillity
 export function formatNumber(number) {
-    // Convert the number to a string and use regex to add commas
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    
+
+  if (countDigits(number) >= 10 && countDigits(number) <  13){ return formatToBillion(number, countDigits(number));
+  } else if (countDigits(number) >= 7 && countDigits(number) < 10) {return formatToMillion(number, countDigits(number));
+  } else if (countDigits(number) >= 5 && countDigits(number) < 7) {return formatToThousand(number, countDigits(number));
+  } else return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+// 1,000,000,000 /  = 
+// 10,000,000,000 /
+// 100,000,000,000 /
+export function formatToBillion(number, digits) {
+  let firstSet;
+  let secondSet;
+  switch (digits) {
+    case 10: firstSet = 1; secondSet = [1, 3]; break;
+    case 11: firstSet = 2; secondSet = [2, 4]; break;
+    case 12: firstSet = 3; secondSet = [3, 5]; break;
+  }
+  let firstThree = number.toString().slice(0,firstSet);
+  let nextTwo = number.toString().slice(secondSet[0], secondSet[1]);
+  return `${firstThree}.${nextTwo} B`; 
+}
+
+export function formatToMillion(number, digits) {
+  let firstSet;
+  let secondSet;
+  switch (digits) {
+    case 7: firstSet = 1; secondSet = [1, 3]; break;
+    case 8: firstSet = 2; secondSet = [2, 4]; break;
+    case 9: firstSet = 3; secondSet = [3, 5]; break;
+  }
+  let firstThree = number.toString().slice(0,firstSet);
+  let nextTwo = number.toString().slice(secondSet[0], secondSet[1]);
+  return `${firstThree}.${nextTwo} M`; 
+}
+
+export function formatToThousand(number, digits) {
+  let firstSet;
+  let secondSet;
+  switch (digits) {
+    case 5: firstSet = 2; secondSet = [2, 4]; break;
+    case 6: firstSet = 3; secondSet = [3, 5]; break;
+  }
+  let firstThree = number.toString().slice(0,firstSet);
+  let nextTwo = number.toString().slice(secondSet[0], secondSet[1]);
+  return `${firstThree}.${nextTwo} K`; 
+}
 
   //No longer used
   export function countPlants(plants) {
@@ -20,7 +62,11 @@ export function formatNumber(number) {
 
   //Counts the number of digits in a number
 export function countDigits(number) {
+
+  let decimalIndex = number.toString().indexOf('.');
+  if (decimalIndex === -1) {
   return number.toString().length;
+  } else return decimalIndex;
 }
   
   //Calculates the current trend based on the trend interval (set in the "settings" menu)
