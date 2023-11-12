@@ -12,6 +12,7 @@ import MainBox from './components/MainBox/MainBox';
 import LogBox from './components/LogBox/LogBox';
 import LandingPage from './components/LandingPage/landingPage'
 import TotalGoal from './components/GoalsBox/TotalGoal';
+import WinGame from './components/WinGame/WinGame';
 
 //Modules
 import { updateTicker } from './modules/engine';
@@ -28,6 +29,8 @@ function App() {
   const gameSpeed = useSelector(store => store.stats.gameSpeed);
   const playGuide = useSelector(store => store.stats.playGuide);
   const cycles = useSelector(store => store.stats.cycles);
+  const eventCondition = useSelector(store => store.eventCondition);
+
   const dispatch = useDispatch();
 
   //Updates all stats each game interval(default 1/sec);
@@ -110,6 +113,11 @@ useEffect(() => {
   }, [gameSpeed]);
 
   return (
+    <>
+    {eventCondition &&
+    <WinGame />
+    }
+    
     <div className="container">
       {!authorized &&
       <>
@@ -117,7 +125,7 @@ useEffect(() => {
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Robotic Pickle Farm</Typography>
           </div>
           <LandingPage /> 
-          <div className="intro-box">
+          <div className="intro-box boxShadowClass">
           <Typography variant="h6">About Robotic Pickle Farm</Typography><br /><br />
             <Typography variant="body">Robotic Pickle Farm is an incremental/clicker 
             game created by Riley Alexis as her first web dev project. 
@@ -155,23 +163,24 @@ useEffect(() => {
       <div className="game-Menu-Box">
         <GameMenu />
         </div>
-        <div className="resources-box">
+        <div className="resources-box boxShadowClass">
           <MainBoxLeft />
           </div>
       <div className="main-menu-box">
         <TotalGoal />
       
       </div>
-      <div className="main-box">
+      <div className="main-box boxShadowClass">
         
         <MainBox />
       </div>
-      <div className="log-box">
+      <div className="log-box boxShadowClass">
         <LogBox />
         </div>
       </>
       }
     </div> 
+    </>
   );
 }
 

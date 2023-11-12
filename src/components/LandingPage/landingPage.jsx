@@ -50,7 +50,7 @@ function LandingPage() {
                     dispatch({ type: 'SET_EMAIL', payload: response.data.email });
                     dispatch({ type: 'SET_USERID', payload: response.data.userId })
                     dispatch({ type: 'SET_AUTH', payload: true });
-
+                    dispatch({ type: 'RUN_ENGINE' });
                     const data = {
                         userId: response.data.userId
                     }
@@ -70,7 +70,7 @@ function LandingPage() {
                             dispatch({ type: 'buildings/setAllBuildings', payload: response.data.buildings })
                             dispatch({ type: 'prices/setAllPrices', payload: response.data.prices });
                             dispatch({ type: 'plants/setAllPlants', payload: response.data.plants });
-                            
+                            dispatch({ type: 'RUN_ENGINE' });
                             //Check which buttons should be visible given a users progression through the game
                             checkButtons();
                             checkTabs();
@@ -112,7 +112,7 @@ function LandingPage() {
     }
 
     return (
-        <div className="landingPage">
+        <div className="landingPage boxShadowClass">
             {/* Log in for existing user */}
             {login &&
                 <div className="loginBox">

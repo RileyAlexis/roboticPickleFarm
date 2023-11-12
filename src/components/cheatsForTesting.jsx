@@ -65,6 +65,10 @@ function CheatsForTesting() {
         console.log(stats.playGuide);
     }
 
+    const RainThePickles = () => {
+        dispatch({ type: 'SET_RAIN'});
+    }
+
     return (
         <div className="cheatBox">
             <br />
@@ -90,6 +94,7 @@ function CheatsForTesting() {
             <button onClick={resetRobotMenu}>Reset Robot Menu</button>
             <button onClick={resetStore}>Reset the Whole Game</button>
             <button onClick={runPlayerGuide}>Run Player Guide</button>
+            <button onClick={RainThePickles}>Rain the Pickles!!!</button>
         </div>
     )
 }

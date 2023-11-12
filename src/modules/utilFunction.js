@@ -2,16 +2,28 @@
 
 //Formats numbers based on the number of digits (thousand, million, billion) and adds commas for readabillity
 export function formatNumber(number) {
-
-  if (countDigits(number) >= 10 && countDigits(number) <  13){ return formatToBillion(number, countDigits(number));
+  if (countDigits(number) >= 13) { return formatToTrillion(number, countDigits(number))
+  } else if (countDigits(number) >= 10 && countDigits(number) <  13){ return formatToBillion(number, countDigits(number));
   } else if (countDigits(number) >= 7 && countDigits(number) < 10) {return formatToMillion(number, countDigits(number));
   } else if (countDigits(number) >= 5 && countDigits(number) < 7) {return formatToThousand(number, countDigits(number));
   } else return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-// 1,000,000,000 /  = 
-// 10,000,000,000 /
-// 100,000,000,000 /
-export function formatToBillion(number, digits) {
+
+  function formatToTrillion(number, digits) {
+    let firstSet;
+    let secondSet;
+    switch (digits) {
+      case 13: firstSet = 1; secondSet = [1, 6]; break;
+      case 14: firstSet = 2; secondSet = [2, 6]; break;
+      case 15: firstSet = 3; secondSet = [3, 8]; break;
+    }
+    let firstThree = number.toString().slice(0,firstSet);
+    let nextTwo = number.toString().slice(secondSet[0], secondSet[1]);
+    return `${firstThree}.${nextTwo} T`; 
+  }
+
+
+function formatToBillion(number, digits) {
   let firstSet;
   let secondSet;
   switch (digits) {
@@ -24,7 +36,7 @@ export function formatToBillion(number, digits) {
   return `${firstThree}.${nextTwo} B`; 
 }
 
-export function formatToMillion(number, digits) {
+function formatToMillion(number, digits) {
   let firstSet;
   let secondSet;
   switch (digits) {
@@ -37,7 +49,7 @@ export function formatToMillion(number, digits) {
   return `${firstThree}.${nextTwo} M`; 
 }
 
-export function formatToThousand(number, digits) {
+function formatToThousand(number, digits) {
   let firstSet;
   let secondSet;
   switch (digits) {

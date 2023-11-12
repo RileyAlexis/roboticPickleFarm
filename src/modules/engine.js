@@ -123,7 +123,7 @@ export function updateTicker() {
 
     //Engine stops here if there are no plants. 
     //Calls each function in turn to complete the game update cycle
-    if (plants.plantCount > 0) {
+    if (plants.plantCount > 0 && state.runEngine) {
         if (stats.ripeCucumbers < (plants.maxYield * plants.plantCount)) growPlants(plants);
         let newSeeds = generateSeeds(plants); //Returns # of new seeds(if any)
         let picked = runPickerBots(robots, stats); //Returns the # of ripe cucumbers picked by picker bots
@@ -165,7 +165,7 @@ export function updateTicker() {
     } //End initial if statement
 
     //Runs the auto save
-    if (state.deltas.autoSaveDelta >= stats.autoSaveInterval) {
+    if (state.deltas.autoSaveDelta >= stats.autoSaveInterval && state.runEngine) {
         store.dispatch({ type: 'SAVE_GAME' });
         store.dispatch({ type: 'deltas/resetDelta', payload: 'resetAutoSaveDelta' });
     }
