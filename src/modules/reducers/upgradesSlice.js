@@ -223,7 +223,7 @@ const initialState = [
         dispatch: [
             { type: 'plants/addPercentageTo', payload: { title: 'growthRate', value: 50 }},
             ],
-        data: 'Everyone needs a yacht made of pickles to inspire the plants - Growth Rate +50% / Cost 1,000,000,000',
+        data: 'Everyone needs a yacht made of pickles to inspire the plants - Growth Rate +50% / Cost 1 billion',
         log: 'It floats in a pickle juice ocean - Growth Rate +50%'
         },
     {name: 'Upgrade Roadside Kiosk',
@@ -235,9 +235,35 @@ const initialState = [
             { type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 5000, }},
             { type: 'buildings/pushOption', payload: { title: "Farmer's Roadside Kiosk", value: 10000, }},
             ],
-        data: 'Allow Farmers Roadside Kiosk to purchase up to 10,000 seeds per turn / Cost 1,500,000,000',
+        data: 'Allow Farmers Roadside Kiosk to purchase up to 10,000 seeds per turn / Cost 1.5 billion',
         log: "It's more of its own town now - Farmers Kiosk upgrade"
         },
+    {name: 'Upgrade Picker Bot House',
+        show: false,
+        price: 2500000000,
+        disabled: false,
+        showAt: 2500000000,
+        dispatch: [
+            { type: 'buildings/pushOption', payload: {title: "Picker Bot House", value: 500 }},
+            { type: 'buildings/pushOption', payload: {title: "Picker Bot House", value: 1000 }},
+            { type: 'buildings/pushOption', payload: {title: "Picker Bot House", value: 5000 }},
+        ],
+        data: 'Allows up to 5,000 picker bots to be purchased per turn / Cost 2.5 billion',
+        log: 'Unleashing the dogs of pickle farming! - Picker Bot House upgrade'
+    },
+{name: 'Upgrade Pickler Bot Station',
+    show: false,
+    price: 3000000000,
+    disabled: false,
+    showAt: 3000000000,
+    dispatch: [
+        { type: 'buildings/pushOption', payload: {title: "Pickler Bot Station", value: 500 }},
+        { type: 'buildings/pushOption', payload: {title: "Pickler Bot Station", value: 1000 }},
+        { type: 'buildings/pushOption', payload: {title: "Pickler Bot Station", value: 5000 }},
+    ],
+    data: 'Allows up to 5,000 pickler bots to be purchased per turn / Cost 3 billion',
+    log: 'Unleashing the dogs of pickle farming! - Picker Bot House upgrade'
+},
 ];
 
 const updgradesSlice = createSlice({
