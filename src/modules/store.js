@@ -46,9 +46,18 @@ const authorized = (state = false, action) => {
 const runEngine = (state = false, action) => {
   if (action.type === 'RUN_ENGINE') {
     return true;
+  } else if (action.type === 'STOP_ENGINE') {
+    return false;
   }
   return state;
 }
+
+const eventCondition = (state = false, action) => {
+  if (action.type === 'SET_RAIN') {
+    return true;
+  } else return false;
+  }
+
 
 //Wrapping the allReducers in a root reducer allows the entire store 
 //to be reset to initialstate without adding a reducer to every slice
@@ -75,7 +84,8 @@ const allReducers = combineReducers({
   deltas: deltaSlice,
   upgrades: upgradesSlice,
   buildings: buildingsSlice,
-  runEngine: runEngine
+  runEngine: runEngine,
+  eventCondition: eventCondition,
 });
 
 const storeInstance = configureStore({

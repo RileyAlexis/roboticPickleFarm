@@ -4,7 +4,7 @@ body {
   }
   
   .container {
-    box-shadow: 1px 1px 12px rgba(52, 64, 58, 0.3);
+    /* box-shadow: 1px 1px 12px rgba(52, 64, 58, 0.3); */
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 0.1fr 0.2ft repeat(8, 1fr);
@@ -12,6 +12,10 @@ body {
     column-gap: 10px;
     min-height: 700px;
     max-height: 700px;
+  }
+
+  .boxShadowClass {
+    box-shadow: 1px 1px 12px rgba(52, 64, 58, 0.3);
   }
 
   .landingPage {
@@ -63,11 +67,12 @@ body {
     align-content: flex-start;
     justify-content: flex-start;
     min-height: 50vh;
-    padding: 0px;
+    padding-right: 10px;
+    padding-left: 5px;
     margin: 0px;
     border: 1px solid black;
-    min-width: min-content;
-    max-width: 450px;
+    /* min-width: min-content; */
+    /* max-width: 450px; */
     overflow-x: scroll;
   }
 
@@ -123,6 +128,7 @@ body {
     display:flex;
     width: 100%;
     margin-top: 10px;
+    margin-left: 10px;
     flex-direction: row;
     flex-wrap:wrap;
     justify-content: space-around; 
@@ -145,7 +151,10 @@ body {
     grid-row: 2 / span 4;
     min-height: 65vh;
     max-height: 65vh;
+    padding-right: 10px;
+    padding-left: 10px;
     overflow-y: scroll;
     display: flex;
+    border: 1px solid black;
     /* flex-direction:column-reverse; */
   }
