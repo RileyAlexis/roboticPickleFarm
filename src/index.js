@@ -11,6 +11,10 @@ import { pickles } from './modules/themes';
 //Redux Store
 import { storeInstance } from './modules/store';
 
+//Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

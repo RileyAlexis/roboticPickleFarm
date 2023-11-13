@@ -1,0 +1,8 @@
+.bot-btn {
+    border: none;
+}
+
+.bot-btn:hover {
+    color: darkgreen;
+    background: transparent;
+}

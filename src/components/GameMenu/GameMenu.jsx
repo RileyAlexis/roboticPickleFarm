@@ -2,10 +2,10 @@ import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-import Button from '@mui/material/Button';
+import './GameMenu.css';
 
-import SettingsWindow from './Settings/SettingsWindow'
-import AboutWindow from './AboutWindow';
+import SettingsWindow from '../Settings/SettingsWindow'
+import AboutWindow from '../AboutWindow';
 
 function GameMenu() {
 
@@ -36,14 +36,23 @@ function GameMenu() {
 
     return (
         <>
-            <Button onClick={saveGame} color="primary">Save</Button>
-            <Button onClick={handleSettings} color="primary">Settings</Button>
-            <Button onClick={handleAbout} color="primary">About</Button>
-            <Button onClick={handleSignOut} color="primary">Sign Out</Button>
-
+        <div class="col-md-6">
+            <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={saveGame}>Save</button>
+            <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleSettings}>Settings</button>
+            <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleAbout}>About</button>
+            <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleSignOut}>Sign Out</button>
             {settings && <SettingsWindow onClose={handleSettings} />}
             {about && <AboutWindow onClose={handleAbout} />}
-        </>
+        </div>
+        <div class="col-sm-12">
+            <div class="dropdown">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                    
+                </button>
+            </div>
+
+        </div>
+        </> 
     )
 }
 
