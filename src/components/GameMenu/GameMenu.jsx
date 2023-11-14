@@ -6,6 +6,7 @@ import './GameMenu.css';
 
 import SettingsWindow from '../Settings/SettingsWindow'
 import AboutWindow from '../AboutWindow';
+import About from '../About';
 
 function GameMenu() {
 
@@ -39,10 +40,10 @@ function GameMenu() {
         <div class="col-md-6">
             <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={saveGame}>Save</button>
             <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleSettings}>Settings</button>
-            <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleAbout}>About</button>
+            <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleAbout} data-bs-toggle="modal" data-bs-target="#aboutModal">About</button>
             <button type="button" class="bot-btn btn btn-outline-primary btn-sm" onClick={handleSignOut}>Sign Out</button>
             {settings && <SettingsWindow onClose={handleSettings} />}
-            {about && <AboutWindow onClose={handleAbout} />}
+            {about && <About onClose={handleAbout} />}
         </div>
         <div class="col-sm-12">
             <div class="dropdown">
