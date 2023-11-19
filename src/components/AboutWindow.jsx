@@ -7,7 +7,7 @@ function AboutWindow({ onClose }) {
             </div>
             <div className="settingsWindow">
                 <div className="settingsWindowText">
-                    <Typography variant="h6">About Robotic Pickle Farm</Typography>
+                    <Typography variant="h6">About Robotic Pickle Farm and the Pickle Moon Base</Typography>
                     <button id="closeBtn" onClick={onClose}>X</button>
                     <br />
                     <Typography variant="body">
