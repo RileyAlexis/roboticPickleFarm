@@ -1,83 +1,64 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
-export const pickles = createTheme( {
+export const pickles = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#185205',
-      light: '#8bc34a',
+      main: '#ffeb3b',
+      contrastText: 'rgba(181,181,181,0.87)',
     },
     secondary: {
-      main: '#ffee58',
-      dark: '#504a18',
-    },
-    background: {
-      default: '#dcedc8',
-      paper: '#aebf90',
+      main: '#ffa000',
+      contrastText: '#ffadad',
     },
     text: {
       primary: '#000000',
-      secondary: 'rgba(0,0,0,0.8)',
-      disabled: 'rgba(0,0,0,0.6)',
+      secondary: '#223f20',
+      disabled: '#b1b1b1',
+    },
+    background: {
+      default: 'rgb(130, 159, 144)',
+      paper: '#4d796b',
     },
     error: {
-      main: '#e53935',
-      contrastText: '#a80000',
-    },
-    info: {
-      main: '#fb8c00',
+      main: '#0088ad',
     },
     warning: {
-      main: '#7c4dff',
+      main: '#d50000',
     },
+    info: {
+      main: '#ffab00',
+    },
+    success: {
+      main: '#69f0ae',
+    },
+    divider: '#1e3d10',
   },
   typography: {
     fontFamily: 'Open Sans',
-    fontSize: 15,
-    fontWeightBold: 800,
   },
-  overrides: {
-    MuiButton: {
-      root: {
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        border: 0,
-        borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'white',
-        height: 48,
-        padding: '0 30px',
-      },
-    },
-    MuiSwitch: {
-      root: {
-        width: 42,
-        height: 26,
-        padding: 0,
-        margin: 8,
-      },
-      switchBase: {
-        padding: 1,
-        '&$checked, &$colorPrimary$checked, &$colorSecondary$checked': {
-          transform: 'translateX(16px)',
-          color: '#fff',
-          '& + $track': {
-            opacity: 1,
-            border: 'none',
-          },
-        },
-      },
-      thumb: {
-        width: 24,
-        height: 24,
-      },
-      track: {
-        borderRadius: 13,
-        border: '1px solid #bdbdbd',
-        backgroundColor: '#fafafa',
-        opacity: 1,
-        transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-      },
-    },
+  components: {
+    // MuiButton: {
+    //   styleOverrides: {
+    //     root: {
+    //       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    //       border: 0,
+    //       borderRadius: 3,
+    //       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    //       color: 'white',
+    //       height: 48,
+    //       padding: '0 30px',
+    //     },
+    //   },
+    // },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          padding: '12px',
+          
+        }
+      }
+    }
   },
   props: {
     MuiList: {
@@ -126,6 +107,9 @@ export const pickles = createTheme( {
     MuiTextField: {
       margin: 'dense',
       size: 'small',
+    },
+    MuiTooltip: {
+      arrow: true,
     },
   },
   spacing: 8,

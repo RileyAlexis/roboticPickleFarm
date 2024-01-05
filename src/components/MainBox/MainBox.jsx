@@ -1,31 +1,29 @@
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
-import { Tab, Tabs } from '@mui/material';
+import { Tab, Tabs, Grid, Paper } from "@mui/material";
 
-import FarmMenu from '../FarmMenu';
-import RobotMenu from '../RobotMenu';
-import CheatsForTesting from '../cheatsForTesting';
-import UpgradeMenu from '../UpgradesMenu';
-import Buildings from '../Buildings/Buildings';
-import './MainBox.css';
-
+import FarmMenu from "../FarmMenu";
+import RobotMenu from "../RobotMenu";
+import CheatsForTesting from "../cheatsForTesting";
+import UpgradeMenu from "../UpgradesMenu";
+import Buildings from "../Buildings/Buildings";
+import "./MainBox.css";
 
 function MainBox() {
+  const tabStyle = {
+    transition: "background-color 0.1s",
+  };
 
-    const tabStyle = {
-        transition: 'background-color 0.1s', 
-      };
+  const locationMenu = useSelector((store) => store.locationMenu); //Store location menu controls the tab options
+  const [value, setValue] = useState(0); //Current tab is only in local state
 
-    const locationMenu = useSelector(store => store.locationMenu); //Store location menu controls the tab options
-    const [value, setValue] = useState(0); //Current tab is only in local state
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
-  
-    return (
-    <div className="roll-outTabs">
+  return (
+    <Paper>
       <Tabs value={value} onChange={handleChange}>
         {locationMenu.map((tab, index) => {
           if (tab.show) {
@@ -46,10 +44,8 @@ function MainBox() {
       {value === 2 && <Buildings />}
       {value === 3 && <UpgradeMenu />}
       {value === 4 && <CheatsForTesting />}
-
-    </div>
-
+    </Paper>
   );
-};
+}
 
 export default MainBox;
