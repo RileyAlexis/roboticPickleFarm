@@ -16,6 +16,32 @@ This game is currently in the early stages of development but is playable and wi
 
 **Note: Local storage is not currently implemented. If a player selects New Game without signing in their game will not be saved **
 
+### How to run this game
+
+Clone repository:
+
+```git clone https://github.com/RileyAlexis/roboticPickleFarm.git```
+
+Install NPM dependencies
+
+```npm install```
+
+Install Postgre with Homebrew
+
+```brew install postgresql```
+
+Follow the instructions in database.sql to create the needed tables.
+
+Start Node/Express Server
+
+```npm run server```
+
+Start React/webPack client server
+
+```npm run client```
+
+Direct browser to ```localhost:/3000```
+
 ### Gameplay
 
 Each player starts with 5 seeds that can be planted. The seeds will grow into plants which in turn grow cucumbers. The cucumbers must be picked and then
