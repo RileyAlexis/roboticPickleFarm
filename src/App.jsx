@@ -229,15 +229,17 @@ function App() {
     <ThemeProvider theme={pickles}>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2} justifyContent={"space-around"}>
-          <Grid item sm={12}>
-            <Paper elevation={1}>
-              <Stack direction={"row"}>
-                <Typography variant="h4" color="text.title">Robotic Pickle Farm</Typography>
-                <TotalGoal />
-                <GameMenu />
-              </Stack>
-            </Paper>
-          </Grid>
+          <Paper elevation={1}>
+            <Grid item sm={12} lg={12}>
+              <Typography variant="h4" color="text.title">Robotic Pickle Farm</Typography>
+            </Grid>
+            <Grid item sm={12}>
+              <TotalGoal />
+            </Grid>
+            <Grid item sm={12}>
+              <GameMenu />
+            </Grid>
+          </Paper>
           <Grid item>
             <MainBoxLeft />
 
