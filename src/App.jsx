@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //CSS
-import "./App.css";
+// import "./App.css";
 
 //Components
 import GameMenu from "./components/GameMenu";
@@ -22,11 +22,11 @@ import { updateTicker } from "./modules/engine";
 
 //Material UI
 import { ThemeProvider } from "@mui/material/styles";
-import { Typography, Box, Paper, Grid } from "@mui/material";
+import { Typography, Box, Paper, Grid, Button, Stack, FormControlLabel, Switch, Slider, Checkbox } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 
 //Themes
-import { pickles } from "./modules/themes.js";
+import { pickles } from "./themes/pickles";
 
 function App() {
   //Redux Store variables
@@ -45,6 +45,9 @@ function App() {
 
   //Sets game timer based on gameSpeed setting
   useEffect(() => {
+    document.body.style.backgroundColor = pickles.palette.background.default;
+
+
     const interval = setInterval(() => {
       runUpdate();
     }, gameSpeed);
@@ -224,62 +227,30 @@ function App() {
 
   return (
     <ThemeProvider theme={pickles}>
-      <Box sx={{ flexGrow: 1, margin: 0 }}>
-        <Grid
-          container
-          spacing={2}
-          gap={2}
-          maxWidth={"xl"}
-          justifyContent={"space-between"}
-          alignContent={"stretch"}
-          marginBottom={2}
-        >
-          <Grid item xs={12} md={6} lg={6}>
-            <Typography variant="h4">Robotic Pickle Farm</Typography>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2} justifyContent={"space-around"}>
+          <Grid item sm={12}>
+            <Paper elevation={1}>
+              <Stack direction={"row"}>
+                <Typography variant="h4" color="text.title">Robotic Pickle Farm</Typography>
+                <TotalGoal />
+                <GameMenu />
+              </Stack>
+            </Paper>
           </Grid>
-          {authorized && (
-            <Grid item xs={12} md={6} lg={4}>
-              <TotalGoal />
-            </Grid>
-          )}
+          <Grid item>
+            <MainBoxLeft />
+
+          </Grid>
+          <Grid item>
+            <MainBox />
+          </Grid>
+
         </Grid>
-
-        {!authorized && (
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={2}
-            justifyContent={"flex-start"}
-            alignItems={"center"}
-          >
-            <Grid item sm={12} md={6} lg={6}>
-              <AboutContent />
-            </Grid>
-
-            <Grid item sm={12} md={6} lg={6}>
-              <LandingPage />
-            </Grid>
-          </Grid>
-        )}
-        {/* End !authorized && */}
-
-        {authorized && (
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={2}
-            justifyContent={"flex-start"}
-            alignItems={"flex-start"}
-          >
-            <Grid item sm={12} md={3} lg={4}>
-              <MainBoxLeft />
-            </Grid>
-            <Grid item sm={12} md={3} lg={4}>
-              <MainBox />
-            </Grid>
-          </Grid>
-        )}
       </Box>
+
+
+
     </ThemeProvider>
   );
 }
