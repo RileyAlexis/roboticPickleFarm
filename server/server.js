@@ -20,9 +20,9 @@ app.use(express.static('build'));
 /** ---------- EXPRESS ROUTES ---------- **/
 app.use('/resources/', resourceRouter);
 app.use('/game/', gameRouter);
-app.get('/test', (req, res) => {
-    res.send(process.env.TEST_123);
-})
+// app.get('/test', (req, res) => {
+//     res.send(process.env.TEST_123);
+// })
 // app.use('/user', userRouter);
 
 /** ---------- START SERVER ---------- **/
