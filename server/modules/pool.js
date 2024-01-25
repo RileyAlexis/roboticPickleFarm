@@ -5,6 +5,7 @@ console.log(process.env.DATABASE_URL);
 if (process.env.NODE_ENV === 'production') {
     pool = new pg.Pool({
         user: process.env.PGUSER,
+        password: process.env.PASSWORD,
         host: 'localhost',
         port: 5432,
         database: 'robotic_pickle_farm',
