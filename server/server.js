@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-// require('dotenv').config();
+require('dotenv').config();
 
 const resourceRouter = require('./routes/resourceRouter.js');
 const gameRouter = require('./routes/gameRouter.js');

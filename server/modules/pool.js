@@ -1,7 +1,8 @@
 const pg = require('pg');
 
 let pool;
-console.log(process.env.DATABASE_URL);
+console.log('Nginx Node env', process.env.NODE_ENV);
+console.log('PG', process.env.PGUSER);
 if (process.env.NODE_ENV === 'production') {
     pool = new pg.Pool({
         user: process.env.PGUSER,
