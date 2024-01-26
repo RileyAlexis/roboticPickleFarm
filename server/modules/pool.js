@@ -4,11 +4,11 @@ let pool;
 if (process.env.NODE_ENV === 'production') {
     console.log('Nginx Node env', process.env.NODE_ENV);
     console.log('PG', process.env.PGUSER);
-    console.log('PG', typeof process.env.PASSWORD, process.env.PASSWORD);
+    console.log('PG', typeof process.env.PG_PASSWORD, process.env.PG_PASSWORD);
 
     pool = new pg.Pool({
         user: process.env.PGUSER,
-        password: process.env.PASSWORD,
+        password: process.env.PG_PASSWORD,
         host: 'localhost',
         port: 5432,
         database: 'robotic_pickle_farm',
